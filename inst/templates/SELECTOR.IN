@@ -1,0 +1,144 @@
+Pcp_File_Version=4
+*** BLOCK A: BASIC INFORMATION *****************************************
+Heading
+Welcome to HYDRUS-1D
+LUnit  TUnit  MUnit  (indicated units are obligatory for all input data)
+cm
+days
+mg
+lWat   lChem lTemp  lSink lRoot lShort lWDep lScreen lVariabBC lEquil lInverse
+ t     t     f      t     t     f      f     t       t         f         f
+lSnow  lHP1   lMeteo  lVapor lActiveU lFluxes lIrrig  lDummy  lDummy  lDummy
+ f       f       f       f       f       t       f       f       f       f
+NMat    NLay  CosAlpha
+ 20       1       1
+*** BLOCK B: WATER FLOW INFORMATION ************************************
+MaxIt   TolTh   TolH       (maximum number of iterations and tolerances)
+ 100    0.001      1
+TopInf WLayer KodTop InitCond
+ t     t      -1       f
+BotInf qGWLF FreeD SeepF KodBot DrainF  hSeep
+ f     f     t     f     -1      f      0
+    hTab1   hTabN
+    1e-006   10000
+    Model   Hysteresis
+      6          0
+   thr     ths    Alfa      n         Ks       l     thrIm   thsIm      Omega
+0.02982  0.3153  0.0404  2.3534        252     0.5 0.01278    0.07        0.2 
+0.01911  0.3317  0.0451  1.4847      87.25     0.5 0.00819    0.07        0.2 
+0.02548  0.3328  0.0108  1.5085      39.04     0.5 0.01092    0.07        0.2 
+0.01876   0.334  0.0378  1.4321      80.61     0.5 0.00804    0.07        0.2 
+0.01666  0.3552  0.0248  1.4349      88.53     0.5 0.00714    0.07        0.2 
+0.02114  0.4073  0.0062  1.6754     135.86     0.5 0.00906    0.07        0.2 
+0.02793  0.3228  0.0152  1.4548      30.66     0.5 0.01197    0.07        0.2 
+0.02107  0.3843  0.0066  1.6411     123.71     0.5 0.00903    0.07        0.2 
+ 0.0203  0.3294  0.0499  1.6275     105.37     0.5  0.0087    0.07        0.2 
+0.02695   0.331    0.01  1.5171      34.57     0.5 0.01155    0.07        0.2 
+0.02814  0.3195   0.043  2.7416     373.78     0.5 0.01206    0.07        0.2 
+0.02779  0.3437  0.0064   1.609      51.05     0.5 0.01191    0.07        0.2 
+0.02142  0.3302  0.0518  1.8488      142.9     0.5 0.00918    0.07        0.2 
+0.01946  0.3553  0.0121  1.5078      73.89     0.5 0.00834    0.07        0.2 
+0.03136  0.3147  0.0391   3.113     543.37     0.5 0.01344    0.07        0.2 
+0.03584  0.3248  0.0109  1.4893      15.17     0.5 0.01536    0.07        0.2 
+0.03752  0.3045   0.031  1.8282     115.72     0.5 0.01608    0.07        0.2 
+0.03864  0.3413  0.0051  1.6383      25.48     0.5 0.01656    0.07        0.2 
+0.05404  0.3759  0.0058  1.5925      12.69     0.5 0.02316   0.078        0.2 
+0.03521  0.3073  0.0336   1.895        137     0.5 0.01509    0.07        0.2 
+*** BLOCK C: TIME INFORMATION ******************************************
+        dt       dtMin       dtMax     DMul    DMul2  ItMin ItMax  MPL
+      0.001      1e-005           5     1.3     0.7     3     7     5
+      tInit        tMax
+          0        9125
+  lPrintD  nPrintSteps tPrintInterval lEnter
+     f           1             1       t
+TPrint(1),TPrint(2),...,TPrint(MPL)
+       8370        8708        8812        8822        9125 
+*** BLOCK D: ROOT GROWTH INFORMATION ***********************************
+iRootDepthEntry
+        0
+*** BLOCK F: SOLUTE TRANSPORT INFORMATION *****************************************************
+ Epsi  lUpW  lArtD lTDep    cTolA    cTolR   MaxItC    PeCr  No.Solutes  lTort   iBacter   lFiltr  nChPar
+  0.5     f     f     f         0         0     1        2        2       t       0        f       16
+iNonEqul lWatDep lDualNEq lInitM  lInitEq lTort lDummy  lDummy  lDummy  lDummy  lCFTr
+   5       f       f       t       f       f       t       f       f       f       f
+     Bulk.d.     DisperL.      Frac      Mobile WC (1..NMat)
+     1.6125          90           1           0 
+    1.52667          90           1           0 
+    1.61667          90           1           0 
+        1.5          90           1           0 
+       1.65          90           1           0 
+        1.5          90           1           0 
+        1.6          90           1           0 
+    1.51667          90           1           0 
+       1.65          90           1           0 
+      1.525          90           1           0 
+        1.6          90           1           0 
+       1.51          90           1           0 
+        1.6          90           1           0 
+        1.5          90           1           0 
+        1.5          90           1           0 
+        1.5          90           1           0 
+        1.5          90           1           0 
+        1.5          90           1           0 
+        1.5          90           1           0 
+        1.5          90           1           0 
+         DifW       DifG                n-th solute
+          0           0 
+         Ks          Nu        Beta       Henry       SnkL1       SnkS1       SnkG1       SnkL1'      SnkS1'      SnkG1'      SnkL0       SnkS0       SnkG0        Alfa
+       0.35           0           1           0           0           0           0         0.2           0           0           0           0           0         0.2 
+       0.35           0           1           0           0           0           0         0.2           0           0           0           0           0         0.2 
+       0.35           0           1           0           0           0           0         0.2           0           0           0           0           0         0.2 
+       0.35           0           1           0           0           0           0         0.2           0           0           0           0           0         0.2 
+       0.35           0           1           0           0           0           0         0.2           0           0           0           0           0         0.2 
+       0.35           0           1           0           0           0           0         0.2           0           0           0           0           0         0.2 
+       0.35           0           1           0           0           0           0         0.2           0           0           0           0           0         0.2 
+       0.35           0           1           0           0           0           0         0.2           0           0           0           0           0         0.2 
+       0.35           0           1           0           0           0           0         0.2           0           0           0           0           0         0.2 
+       0.35           0           1           0           0           0           0         0.2           0           0           0           0           0         0.2 
+       0.35           0           1           0           0           0           0         0.2           0           0           0           0           0         0.2 
+       0.35           0           1           0           0           0           0         0.2           0           0           0           0           0         0.2 
+       0.35           0           1           0           0           0           0         0.2           0           0           0           0           0         0.2 
+       0.35           0           1           0           0           0           0         0.2           0           0           0           0           0         0.2 
+       0.35           0           1           0           0           0           0         0.2           0           0           0           0           0         0.2 
+       0.35           0           1           0           0           0           0         0.2           0           0           0           0           0         0.2 
+       0.35           0           1           0           0           0           0         0.2           0           0           0           0           0         0.2 
+       0.35           0           1           0           0           0           0         0.2           0           0           0           0           0         0.2 
+       0.35           0           1           0           0           0           0         0.2           0           0           0           0           0         0.2 
+       0.35           0           1           0           0           0           0         0.2           0           0           0           0           0         0.2 
+         DifW       DifG                n-th solute
+          0           0 
+         Ks          Nu        Beta       Henry       SnkL1       SnkS1       SnkG1       SnkL1'      SnkS1'      SnkG1'      SnkL0       SnkS0       SnkG0        Alfa
+          0           0           1           0           0           0           0           0           0           0           0           0           0         0.2 
+          0           0           1           0           0           0           0           0           0           0           0           0           0         0.2 
+          0           0           1           0           0           0           0           0           0           0           0           0           0         0.2 
+          0           0           1           0           0           0           0           0           0           0           0           0           0         0.2 
+          0           0           1           0           0           0           0           0           0           0           0           0           0         0.2 
+          0           0           1           0           0           0           0           0           0           0           0           0           0         0.2 
+          0           0           1           0           0           0           0           0           0           0           0           0           0         0.2 
+          0           0           1           0           0           0           0           0           0           0           0           0           0         0.2 
+          0           0           1           0           0           0           0           0           0           0           0           0           0         0.2 
+          0           0           1           0           0           0           0           0           0           0           0           0           0         0.2 
+          0           0           1           0           0           0           0           0           0           0           0           0           0         0.2 
+          0           0           1           0           0           0           0           0           0           0           0           0           0         0.2 
+          0           0           1           0           0           0           0           0           0           0           0           0           0         0.2 
+          0           0           1           0           0           0           0           0           0           0           0           0           0         0.2 
+          0           0           1           0           0           0           0           0           0           0           0           0           0         0.2 
+          0           0           1           0           0           0           0           0           0           0           0           0           0         0.2 
+          0           0           1           0           0           0           0           0           0           0           0           0           0         0.2 
+          0           0           1           0           0           0           0           0           0           0           0           0           0         0.2 
+          0           0           1           0           0           0           0           0           0           0           0           0           0         0.2 
+          0           0           1           0           0           0           0           0           0           0           0           0           0         0.2 
+      kTopSolute  SolTop    kBotSolute  SolBot
+         -1           0           0           0           0           0 
+      tPulse
+       9125
+*** BLOCK G: ROOT WATER UPTAKE INFORMATION *****************************
+     Model  (0 - Feddes, 1 - S shape)  cRootMax    OmegaC
+        0                                  10          10           1
+       P0       P2H       P2L       P3          r2H        r2L
+      -10     -1000     -1000     -8000         0.5         0.1
+POptm(1),POptm(2),...,POptm(NMat)
+     -25      -25      -25      -25      -25      -25      -25      -25      -25      -25      -25      -25      -25      -25      -25      -25      -25      -25      -25      -25 
+     Solute Reduction
+        f
+*** END OF INPUT FILE 'SELECTOR.IN' ************************************
