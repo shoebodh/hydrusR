@@ -15,7 +15,7 @@ This is now slightly improved and is more seamless in producing hydrus outputs a
 
 Also check out the package RHydrus that attempts to convert the original FORTRAN code to C and create a more native HYDRUS1D package in R. https://github.com/mespe/RHydrus
 
-installation
+Installation
 
-devtools::install_github("shoebodh/hydrusR", ref = '')
+devtools::install_github("shoebodh/hydrusR", ref = "")
 
