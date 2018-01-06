@@ -14,3 +14,8 @@ Functions for reading the raw simulation output files into R in a more analysis-
 This is now slightly improved and is more seamless in producing hydrus outputs and compiling the simulations. 
 
 Also check out the package RHydrus that attempts to convert the original FORTRAN code to C and create a more native HYDRUS1D package in R. https://github.com/mespe/RHydrus
+
+installation
+
+devtools::install_github("shoebodh/hydrusR", ref = '')
+
