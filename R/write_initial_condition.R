@@ -39,7 +39,7 @@ write.ini.cond<- function(project.path, profile.depth, pr.vec = NULL, wt.depth, 
 
 
 
-      pr_vec_fmt = mapply(FUN = format.scientific, ini_pr_vec, ndec = 6, power.digits = 3)
+      pr_vec_fmt = mapply(FUN = format2sci, ini_pr_vec, ndec = 6, power.digits = 3)
 
       profile_data_new[1:length(pr_vec_fmt), 3] = pr_vec_fmt
 

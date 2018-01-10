@@ -5,21 +5,22 @@
 \title{Creates a new hydrus project folder with "HYDRUS1D.DAT" and "DISCRIPT.TXT" files}
 \usage{
 create.H1D.project(project.name, parent.dir, discription = NULL,
+  TimeUnit = "days", SpaceUnit = "cm", PrintTimes = 1,
   processes = c(WaterFlow = T, RootWaterUptake = T), geometry, initial.cond,
   ...)
 }
 \arguments{
 \item{parent.dir}{Path to the project folder}
 
-\item{processes}{Main processes (e.g., WaterFlow, SoluteTransport etc) to be simualted}
-
-\item{geometry}{Profile geometry info (Depth, # of nodes and # of obs nodes)}
-
 \item{TimeUnit}{Simulation time unit information (default = days)}
 
 \item{SpaceUnit}{Vertical spatial unit (decault = cm)}
 
 \item{PrintTimes}{Time levels at which the outputs should be printed}
+
+\item{processes}{Main processes (e.g., WaterFlow, SoluteTransport etc) to be simualted}
+
+\item{geometry}{Profile geometry info (Depth, # of nodes and # of obs nodes)}
 }
 \description{
 @param project.name Name of the project

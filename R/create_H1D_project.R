@@ -21,6 +21,7 @@
 
 
 create.H1D.project<-function(project.name, parent.dir, discription = NULL,
+                         TimeUnit = "days", SpaceUnit = "cm", PrintTimes = 1,
                              processes = c(WaterFlow = T, RootWaterUptake = T), geometry, initial.cond, ...) {
 
 
@@ -33,6 +34,7 @@ create.H1D.project<-function(project.name, parent.dir, discription = NULL,
       discript_file = file.path(project_path, "DISCRIPT.TXT")
       h1ddat_file = file.path(project_path, "HYDRUS1D.DAT")
       discription = ifelse(is.null(discription), paste("project title", project.name), discription)
+
       prompt_msg = paste("Folder", project.name, "already exists.All files will be deleted.Proceed? y/n \n")
 
       if(dir.exists(project_path)) {
@@ -42,18 +44,15 @@ create.H1D.project<-function(project.name, parent.dir, discription = NULL,
 
             if(dir_answer == "Y") {
                   unlink(project_path, recursive = TRUE, force = TRUE)
-
                   dir.create(project_path)
             } else {
-                  cat("HYDRUS1D project not created\n")
-            }
-      }else {
+                  stop("HYDRUS1D project not created\n")
 
+            }
+      } else {
             dir.create(project_path)
       }
 
-
-      if(dir_answer == "Y"){
             args_vec = as.list(match.call())
             args_vec = lapply(args_vec[-1], FUN = function(x) unlist(x))
             # args_vec = unlist(unclass(args_vec))
@@ -66,8 +65,8 @@ create.H1D.project<-function(project.name, parent.dir, discription = NULL,
             names(args_vec) = gsub("initial.cond.", "", names(args_vec), fixed = TRUE)
 
 
-            args_vec["ProfileDepth"] = toupper(format.scientific(as.numeric(args_vec["ProfileDepth"]),
-                                                                 ndec = 2, power.digits = 3))
+            args_vec["ProfileDepth"] = toupper(format2sci(as.numeric(args_vec["ProfileDepth"]),
+                                                      ndec = 2, power.digits = 3))
 
             args_names = names(args_vec)
 
@@ -90,7 +89,19 @@ create.H1D.project<-function(project.name, parent.dir, discription = NULL,
 
             write(discript_vec, file = discript_file, append = FALSE)
             write(h1d_dat, file = h1ddat_file, append = FALSE)
-      }
 
-}
+      ###
+   selector_in = system.file("templates/SELECTOR.IN", package = "hydrusR")
+   selector_data = readLines(selector_in, n = -1L, encoding = "unknown")
+
+  lunit_ind = grep("LUnit", selector_data)
+  unit_lines = lunit_ind + 1:2
+  selector_data[unit_lines] = c(SpaceUnit, TimeUnit)
+
+  write(selector_data, file = file.path(project_path, "selector.in"), append = F)
+
+ # lwat_ind = lunit_ind + 4
+ # lwat_input = selector_data[c(lwat_ind, lwat_ind)]
+
+ }
 

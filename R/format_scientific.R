@@ -9,7 +9,7 @@
 #' @export
 #'
 #'
-format.scientific<- function (x, ndec, power.digits, ...) {
+format2sci<- function (x, ndec, power.digits, ...) {
 
       format.scalar<- function(x, ndec, power.digits) {
 

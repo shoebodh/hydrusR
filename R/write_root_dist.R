@@ -39,7 +39,7 @@ write.root.dist<- function(project.path, rdepth, rbeta = 0.962, ...) {
       rdist_new = numeric(nrow(profile_data_new))
       rdist_new[1:length(rdist)] = rdist
 
-      root_dist_fmt = mapply(FUN = format.scientific, rdist_new, ndec = 6, power.digits = 3)
+      root_dist_fmt = mapply(FUN = format2sci, rdist_new, ndec = 6, power.digits = 3)
 
       profile_data_new[1:length(root_dist_fmt), 6] = root_dist_fmt
 

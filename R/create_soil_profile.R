@@ -26,7 +26,7 @@ dline_split = dline_split[dline_split!= ""]
 
 dval = dline_split[2]
 
-dformat_new = format.scientific(-profile.depth, ndec = 6, power.digits = 3)
+dformat_new = format2sci(-profile.depth, ndec = 6, power.digits = 3)
 
 dline_split_new = dline_split
 dline_split_new[2] = dformat_new
@@ -68,11 +68,11 @@ one_vec = rep(1, length(depth_vec))
 temp_vec = rep(Temp, length(depth_vec))
 conc_vec = rep(Conc, length(depth_vec))
 
-zero_vec_fmt = mapply(FUN = format.scientific, zero_vec, ndec = 6, power.digits = 3)
-one_vec_fmt = mapply(FUN = format.scientific, one_vec, ndec = 6, power.digits = 3)
+zero_vec_fmt = mapply(FUN = format2sci, zero_vec, ndec = 6, power.digits = 3)
+one_vec_fmt = mapply(FUN = format2sci, one_vec, ndec = 6, power.digits = 3)
 
 
-depth_vec_fmt = mapply(FUN = format.scientific, depth_vec, ndec = 6, power.digits = 3)
+depth_vec_fmt = mapply(FUN = format2sci, depth_vec, ndec = 6, power.digits = 3)
 depth_vec_fmt = paste0("-", depth_vec_fmt)
 head_vec_fmt = zero_vec_fmt
 
@@ -84,8 +84,8 @@ axz_vec_fmt = one_vec_fmt
 bxz_vec_fmt = one_vec_fmt
 dxz_vec_fmt = one_vec_fmt
 
-temp_vec_fmt = mapply(FUN = format.scientific, temp_vec, ndec = 6, power.digits = 3)
-conc_vec_fmt = mapply(FUN = format.scientific, conc_vec, ndec = 6, power.digits = 3)
+temp_vec_fmt = mapply(FUN = format2sci, temp_vec, ndec = 6, power.digits = 3)
+conc_vec_fmt = mapply(FUN = format2sci, conc_vec, ndec = 6, power.digits = 3)
 
 
 profile_df = data.frame(row_counts,
