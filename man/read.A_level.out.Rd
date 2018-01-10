@@ -4,7 +4,8 @@
 \alias{read.A_level.out}
 \title{Read outputs of ALEVEL.OUT}
 \usage{
-read.A_level.out(simulation.path, output = NULL, warn = FALSE, ...)
+read.A_level.out(project.path, out.file = "A_Level.out", output = NULL,
+  warn = FALSE, ...)
 }
 \arguments{
 \item{...}{}
@@ -12,4 +13,3 @@ read.A_level.out(simulation.path, output = NULL, warn = FALSE, ...)
 \description{
 Read outputs of ALEVEL.OUT
 }
-

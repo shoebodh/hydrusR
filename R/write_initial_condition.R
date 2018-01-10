@@ -1,62 +1,64 @@
-#' Write initial conditions in profile.dat
+#' Write root distribution in profile.dat
 #'
-#' @param file.profile.dat
-#' @param pr.vec
-#' @param wt
-#' @param soil.depth
-#' @param n.nodes
+#' @param project.path Path of HYDRUS1D project
+#' @param profile.depth Depth of soil profile
+#' @param pr.vec A vector of pressure head values (length = # of total nodes in the profile)
+#' @param wt.depth Depth of water table (to assign hydrostatic initial condition)
 #' @param ...
 #'
 #' @return
 #' @export
+#'
 #' @examples
-write.ini.cond<- function(file.profile.dat, pr.vec = NULL, wt, soil.depth, n.nodes, ...) {
-  profile_dat = readLines(con = file.profile.dat, n = -1L, encoding = "unknown")
-  skip = 5
+write.ini.cond<- function(project.path, profile.depth, pr.vec = NULL, wt.depth, ...) {
+      file.profile.dat = file.path(project.path, "PROFILE.DAT")
+      profile_dat = readLines(con = file.profile.dat, n = -1L, encoding = "unknown")
+      node_ind = grep(pattern =  ("^[0-9]"), profile_dat)
 
- node_data = profile_dat[(skip+1):(n.nodes+skip)]
+      header_split = unlist(strsplit(profile_dat[5], split = " "))
+      header_split2 = header_split[header_split != ""]
 
-  if(is.null(pr.vec)){
+      if(length(node_ind) == 0) {
+            profile_data = profile_dat[6:length(profile_dat)]
+      } else {
+            profile_data = profile_dat[6:(node_ind - 1)]
+      }
 
-    hTop = -wt
-    hBot = soil.depth - wt
-    pr.vec = seq(hTop, hBot, length.out = n.nodes)
+      profile_data_split = strsplit(profile_data, split = " ")
+      profile_data_split2 = sapply(profile_data_split, FUN = function(x) x[x!= ""])
+      profile_data_new = t(profile_data_split2)
+
+      deltaz = abs(as.numeric(profile_data_new[3, 2]) - as.numeric(profile_data_new[2, 2]))
+
+      if(!is.null(pr.vec)){
+            ini_pr_vec = pr.vec
+      } else {
+            ini_pr_vec = seq(0, profile.depth, by = deltaz) - wt.depth
+
+      }
 
 
-  }
-  pr.vec = format(pr.vec, scientific = TRUE)
 
-  last_line = profile_dat[length(profile_dat)]
-  last_line_split = unlist(strsplit(last_line, split = " "))
-  last_line_split = last_line_split[last_line_split!= ""]
+      pr_vec_fmt = mapply(FUN = format.scientific, ini_pr_vec, ndec = 6, power.digits = 3)
 
-  header_split = unlist(strsplit(profile_dat[5], split = " "))
-  header_split2 = header_split[header_split != ""]
+      profile_data_new[1:length(pr_vec_fmt), 3] = pr_vec_fmt
 
-  node_data_split = strsplit(node_data, split = " ")
-  node_data_split2 = lapply(node_data_split, FUN = function(x) x[x!= ""])
-  node_data_new = do.call('rbind', node_data_split2)
-  # node_data_new = t(node_data_split2)
+      fmt_space = c(5, 15, 15, 5, 5, 15, 15, 15, 15, 15, 15)
+      fmt_vec = paste("%", fmt_space, "s", sep = "")
+      fmt_vec = fmt_vec[1:ncol(profile_data_new)]
 
-    deltaz = abs(as.numeric(node_data_new[3, 2]) - as.numeric(node_data_new[2, 2]))
-  fmt_space = c(5, 15, 15, 5, 5, 15, 15, 15, 15)
-  fmt_vec = paste("%", fmt_space, "s", sep = "")
+      profile_data_fmt = profile_data_new
+      for(n in 1:nrow(profile_data_new)){
 
-  pr_col = 3
-  pr_vec_fmt = sprintf(fmt_vec[pr_col], pr.vec)
-  node_data_new[, 3] = pr_vec_fmt
+            profile_data_fmt[n, ] = sprintf(fmt_vec, profile_data_new[n, ])
+      }
 
-  node_data_fmt = node_data_new
-  for(n in 1:nrow(node_data_new)){
+      tspace = sprintf("%13s", "")
+      profile_data_fmt2 = apply(profile_data_fmt, MARGIN = 1, FUN = paste, collapse = "")
+      profile_data_fmt2 = paste(profile_data_fmt2, tspace)
 
-    node_data_fmt[n, ] = sprintf(fmt_vec, node_data_new[n, ])
-  }
+      profile_data_new = c(profile_dat[1:5], profile_data_fmt2)
 
-  tspace = sprintf("%13s", "")
-  node_data_fmt2 = apply(node_data_fmt, MARGIN = 1, FUN = paste, collapse = "")
-  node_data_fmt2 = paste(node_data_fmt2, tspace)
-  profile_data_new = c(profile_dat[1:5], node_data_fmt2)
-
-  write(profile_data_new, file.profile.dat, append = FALSE)
+      write(profile_data_new, file.profile.dat, append = FALSE)
 
 }

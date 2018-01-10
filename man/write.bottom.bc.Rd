@@ -2,7 +2,7 @@
 % Please edit documentation in R/write_bottom_bc.R
 \name{write.bottom.bc}
 \alias{write.bottom.bc}
-\title{Write bottom BC}
+\title{Write bottom Boundary Condition}
 \usage{
 write.bottom.bc(constant.bc, bc.type, bc.value, project.path, ...)
 }
@@ -10,6 +10,5 @@ write.bottom.bc(constant.bc, bc.type, bc.value, project.path, ...)
 \item{...}{}
 }
 \description{
-Write bottom BC
+Write bottom Boundary Condition
 }
-

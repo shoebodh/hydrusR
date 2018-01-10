@@ -2,14 +2,14 @@
 % Please edit documentation in R/read_obs_node.R
 \name{read.obs_node}
 \alias{read.obs_node}
-\title{Read Outputs of OBS_NOD.OUT}
+\title{Read observation point outputs from}
 \usage{
-read.obs_node(simulation.path, obs.output = c("h", "theta"), obs.nodes, ...)
+read.obs_node(project.path, out.file = "Obs_Node.out", obs.output = c("h",
+  "theta"), obs.nodes, ...)
 }
 \arguments{
 \item{...}{}
 }
 \description{
-Read Outputs of OBS_NOD.OUT
+Read observation point outputs from
 }
-

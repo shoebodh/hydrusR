@@ -2,13 +2,14 @@
 #'
 #' @param project.path
 #' @param hydrus.path
+#' @param show.output Logical (Default = TRUE) whether the shell output should be  visible on R console
 #' @param ...
 #'
 #' @return
 #' @export
 #'
 #' @examples
-call.H1D<- function(project.path, hydrus.path, output.on.console = TRUE, ...){
+call.H1D<- function(project.path, hydrus.path, show.output = TRUE, ...){
       os.type = .Platform$OS.type
 
       hydrus.exe = "H1D_CALC.exe"  #### Windows sepcific executable name
@@ -20,7 +21,7 @@ call.H1D<- function(project.path, hydrus.path, output.on.console = TRUE, ...){
 
       setwd(hydrus.path)
 
-      system(hydrus.exe, show.output.on.console = output.on.console,
+      system(hydrus.exe, show.output.on.console = show.output,
              minimized = TRUE, invisible = TRUE)
 
       setwd(oldwd)

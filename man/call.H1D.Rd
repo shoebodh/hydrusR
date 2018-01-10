@@ -4,12 +4,13 @@
 \alias{call.H1D}
 \title{Executes H1D_CALC.EXE from  Hydrus 1D directory}
 \usage{
-call.H1D(project.path, hydrus.path, ...)
+call.H1D(project.path, hydrus.path, show.output = TRUE, ...)
 }
 \arguments{
+\item{show.output}{Logical (Default = TRUE) whether the shell output should be  visible on R console}
+
 \item{...}{}
 }
 \description{
 Executes H1D_CALC.EXE from  Hydrus 1D directory
 }
-

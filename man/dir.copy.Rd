@@ -12,4 +12,3 @@ dir.copy(src.dir, dest.dir, overwrite = TRUE, ask = FALSE, ...)
 \description{
 Copy contents of a folder to another
 }
-

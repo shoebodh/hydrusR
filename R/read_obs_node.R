@@ -1,6 +1,7 @@
-#' Read Outputs of OBS_NOD.OUT
+#' Read observation point outputs from
 #'
-#' @param simulation.path
+#' @param project.path
+#' @param out.file
 #' @param obs.output
 #' @param obs.nodes
 #' @param ...
@@ -9,7 +10,7 @@
 #' @export
 #'
 #' @examples
-read.obs_node<- function(simulation.path, obs.output = c("h", "theta"), obs.nodes, ...) {
+read.obs_node<- function(project.path, out.file = "Obs_Node.out", obs.output = c("h", "theta"), obs.nodes, ...) {
 
       # obs_node_out = read.table(file.path(simulation.path, "Obs_Node.out"),
       #                           header = F, sep = "", dec = ".",
@@ -23,8 +24,8 @@ read.obs_node<- function(simulation.path, obs.output = c("h", "theta"), obs.node
       #   output_names = obs_node_out[1, ]
       #   obs_node_out = obs_node_out[-c(1, nrow(obs_node_out)), ]
 
-      obs_node_out = data.table::fread(input = file.path(simulation.path, "Obs_Node.out"),
-              fill = TRUE, blank.lines.skip = FALSE)
+      obs_node_out = data.table::fread(input = file.path(project.path, out.file),
+                                       fill = TRUE, blank.lines.skip = FALSE)
 
       output_names = unlist(unclass(obs_node_out[10]))
       output_names = unique(output_names[!is.na(output_names)])

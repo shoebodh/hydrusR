@@ -1,9 +1,9 @@
 #' Write print times in selector.in
 #'
-#' @param project.path
-#' @param tmin
-#' @param tmax
-#' @param tstep
+#' @param project.path Location of the H1D project in the directory
+#' @param tmin Begining print time (e.g., 1)
+#' @param tmax End print time (e.g. 240 hours)
+#' @param tstep Time step to print out put at
 #' @param ...
 #'
 #' @return
@@ -21,7 +21,7 @@ write.print.times<- function(project.path, tmin, tmax, tstep, ...){
 
       ptimes = seq(tmin, tmax, by = tstep)
 
-      decimalplaces <- function(x) {
+      get.decimals <- function(x) {
             if ((x %% 1) != 0) {
                   nchar(strsplit(sub('0+$', '', as.character(x)), ".", fixed=TRUE)[[1]][[2]])
             } else {
@@ -29,10 +29,9 @@ write.print.times<- function(project.path, tmin, tmax, tstep, ...){
             }
       }
 
-      # if(length(ptimes) > 1000){
-      #       stop("ERROR!Hydrus 1D doesnot allow printing > 1000 times!")
-      # }
-
+      if(length(ptimes) > 1000){
+            stop("ERROR!Hydrus 1D doesnot allow printing > 1000 time steps!")
+      }
 
       nrows = floor(length(ptimes)/6)
 
@@ -42,7 +41,7 @@ write.print.times<- function(project.path, tmin, tmax, tstep, ...){
 
       ptimes_mat = matrix(p1, nrow = nrows, ncol = 6, byrow = TRUE)
       fmt_vec = character(6)
-      tstep_decimals = decimalplaces(tstep)
+      tstep_decimals = get.decimals(tstep)
       fmt_vec = c("%11.0f", rep("%12.0f", 5))
 
       if(tstep_decimals > 0){

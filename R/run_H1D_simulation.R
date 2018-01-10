@@ -14,7 +14,7 @@
 #' @param ini.wt Initial water table depth
 #' @param rdepth rooting depth
 #' @param obs.nodes Observation node points (vector)
-#' @param output.on.console Logical, whether the shell output of HYDRUS1D run should be displayed on R console, default = F
+#' @param show.output Logical, whether the shell output of HYDRUS1D run should be displayed on R console, default = F
 #'
 #' #' @return
 #' @export
@@ -24,7 +24,7 @@
 run.H1D.simulation = function(project.path, hydrus.path = NULL, profile.depth,
                               beginT, endT, deltaT, bot.bc.type, bot.bc.value, const.bot.bc,
                               soil.para, atm.bc.data, ini.wt,
-                              rdepth, obs.nodes, output.on.console = TRUE, ...) {
+                              rdepth, obs.nodes, show.output = TRUE, ...) {
 
       if(is.null(hydrus.path)|missing(hydrus.path)){
             hydrus.path = "C:/Program Files (x86)/PC-Progress/Hydrus-1D 4.xx"
@@ -59,7 +59,7 @@ run.H1D.simulation = function(project.path, hydrus.path = NULL, profile.depth,
 
             write.print.times(project.path, tmin = beginT, tmax = endT, tstep = deltaT)
 
-            call.H1D(project.path, hydrus.path = hydrus.path, output.on.console = output.on.console)
+            call.H1D(project.path, hydrus.path = hydrus.path, show.output = show.output)
 
       } else {
 
@@ -81,7 +81,7 @@ run.H1D.simulation = function(project.path, hydrus.path = NULL, profile.depth,
 
             write.print.times(project.path, tmin = beginT, tmax = 960*deltaT, tstep = deltaT)
 
-            call.H1D(project.path, hydrus.path = hydrus.path, output.on.console = output.on.console)
+            call.H1D(project.path, hydrus.path = hydrus.path, show.output = show.output)
 
             cat("simulation from time", 1, "to", 960*deltaT, "success...\n")
 
@@ -153,7 +153,7 @@ run.H1D.simulation = function(project.path, hydrus.path = NULL, profile.depth,
                   write.atmosph.in(project.path, maxAL = nrow(atm_bc_data_s), deltaT = deltaT,
                                    atm.bc.data = atm_bc_data_s)
 
-                  call.H1D(project.path, hydrus.path = hydrus.path, output.on.console = output.on.console)
+                  call.H1D(project.path, hydrus.path = hydrus.path, show.output = show.output)
 
                   cat("simulation from time", ceiling(beginTnew*deltaT), "to",
                       endTnew*deltaT, "success...\n")

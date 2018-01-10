@@ -1,15 +1,15 @@
 #' Format number to scientific format according to HYDRUS inputs
 #'
-#' @param x ### A numeric
-#' @param ndec
-#' @param power.digits
+#' @param x  A numeric vector to be formatted
+#' @param ndec Number of decimal places to apply (e.g, .000xx)
+#' @param power.digits Number of power digits to apply (e.g., e+002)
 #' @param ...
 #'
 #' @return
 #' @export
 #'
 #'
-format.sci<- function (x, ndec, power.digits, ...) {
+format.scientific<- function (x, ndec, power.digits, ...) {
 
       format.scalar<- function(x, ndec, power.digits) {
 

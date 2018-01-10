@@ -1,6 +1,7 @@
 #' READ outputs of NOD_INF.OUT
 #'
-#' @param simulation.path
+#' @param project.path
+#' @param out.file
 #' @param output
 #' @param warn
 #' @param ...
@@ -9,13 +10,13 @@
 #' @export
 #'
 #' @examples
-read.nod_inf<- function(simulation.path, output = NULL, warn = FALSE, ...){
+read.nod_inf<- function(project.path, out.file = "Nod_Inf.out", output = NULL, warn = FALSE, ...){
       if(is.null(output) | missing(output)) {
             output = c("Head", "Moisture", "K", "C", "Flux",
                        "Sink", "Kappa", "v/KsTop", "Temp")
       }
 
-      nod_inf = data.table::fread(input = file.path(simulation.path, "Nod_Inf.out"),
+      nod_inf = data.table::fread(input = file.path(project.path, out.file),
                                   fill = TRUE, blank.lines.skip = FALSE)
 
       colnames(nod_inf) = as.character(nod_inf[10, ])

@@ -4,12 +4,11 @@
 \alias{get.water.table}
 \title{Extracts water table depth at each time step}
 \usage{
-get.water.table(tlevel.out, soil.depth)
+get.water.table(tlevel.out, profile.depth)
 }
 \arguments{
-\item{soil.depth}{}
+\item{profile.depth}{}
 }
 \description{
 Extracts water table depth at each time step
 }
-

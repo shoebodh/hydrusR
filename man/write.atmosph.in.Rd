@@ -4,8 +4,8 @@
 \alias{write.atmosph.in}
 \title{Write atmospheric boundary condition inputs}
 \usage{
-write.atmosph.in(file.atmosph.in = "ATMOSPH.IN", MaxAL, tstep, atm.bc.data,
-  sim_ind = 1, ...)
+write.atmosph.in(project.path, maxAL, deltaT, atm.bc.data, hCritS = 0,
+  input.pet = T, LAI = 0.39, ...)
 }
 \arguments{
 \item{...}{}
@@ -13,4 +13,3 @@ write.atmosph.in(file.atmosph.in = "ATMOSPH.IN", MaxAL, tstep, atm.bc.data,
 \description{
 Write atmospheric boundary condition inputs
 }
-

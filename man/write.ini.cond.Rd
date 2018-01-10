@@ -2,14 +2,21 @@
 % Please edit documentation in R/write_initial_condition.R
 \name{write.ini.cond}
 \alias{write.ini.cond}
-\title{Write initial conditions in profile.dat}
+\title{Write root distribution in profile.dat}
 \usage{
-write.ini.cond(file.profile.dat, pr.vec = NULL, wt, soil.depth, n.nodes, ...)
+write.ini.cond(project.path, profile.depth, pr.vec = NULL, wt.depth, ...)
 }
 \arguments{
+\item{project.path}{Path of HYDRUS1D project}
+
+\item{profile.depth}{Depth of soil profile}
+
+\item{pr.vec}{A vector of pressure head values (length = # of total nodes in the profile)}
+
+\item{wt.depth}{Depth of water table (to assign hydrostatic initial condition)}
+
 \item{...}{}
 }
 \description{
-Write initial conditions in profile.dat
+Write root distribution in profile.dat
 }
-

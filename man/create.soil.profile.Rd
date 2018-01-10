@@ -8,7 +8,17 @@ create.soil.profile(project.path, out.file = "PROFILE.DAT", profile.depth,
   dz = 1, Temp = 20, Conc = 0, ...)
 }
 \arguments{
-\item{Conc}{}
+\item{project.path}{Location of the H1D project in the directory}
+
+\item{out.file}{Default is always 'PROFILE.OUT'}
+
+\item{dz}{Descretization step of the profile.}
+
+\item{Temp}{Temperate input default is 20 degree C}
+
+\item{Conc}{Concentration, zero in initial profile}
+
+\item{obs.nodes}{Vector of observation points in the profile}
 }
 \description{
 Creates a new PROFILE.DAT file using a template included in the package.

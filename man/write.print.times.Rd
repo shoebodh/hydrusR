@@ -4,12 +4,19 @@
 \alias{write.print.times}
 \title{Write print times in selector.in}
 \usage{
-write.print.times(input.file, tmax, tstep, ...)
+write.print.times(project.path, tmin, tmax, tstep, ...)
 }
 \arguments{
+\item{project.path}{Location of the H1D project in the directory}
+
+\item{tmin}{Begining print time (e.g., 1)}
+
+\item{tmax}{End print time (e.g. 240 hours)}
+
+\item{tstep}{Time step to print out put at}
+
 \item{...}{}
 }
 \description{
 Write print times in selector.in
 }
-

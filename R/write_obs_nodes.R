@@ -9,6 +9,7 @@
 #' @export
 #'
 #' @examples
+#'
 write.obs.nodes<- function(project.path, Z, dz, obs.nodes) {
       profile_data =   readLines(con = file.path(project.path, "PROFILE.DAT"),
                                  n = -1L, encoding = "unknown", warn = F)

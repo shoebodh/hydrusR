@@ -1,6 +1,7 @@
 #' READ outputs of TLEVEL.OUT
 #'
-#' @param simulation.path
+#' @param project.path
+#' @param out.file
 #' @param output
 #' @param warn
 #' @param ...
@@ -9,7 +10,7 @@
 #' @export
 #'
 #' @examples
-read.T_level.out<- function(simulation.path, output = NULL, warn = FALSE, ...){
+read.T_level.out<- function(project.path, out.file = "T_Level.out", output = NULL, warn = FALSE, ...){
 
 
    if(is.null(output) | missing(output)) {
@@ -23,7 +24,7 @@ read.T_level.out<- function(simulation.path, output = NULL, warn = FALSE, ...){
 
       }
 
-    tlevel_out<- read.table(file.path(simulation.path, "T_Level.out"),
+    tlevel_out<- read.table(file.path(project.path, out.file),
                            header = T, sep = "", dec = ".",
                            na.strings = "NA", colClasses = NA, as.is = TRUE,
                            skip = 6, check.names = FALSE, fill = T,

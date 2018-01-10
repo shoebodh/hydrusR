@@ -1,4 +1,4 @@
-#' Write bottom BC
+#' Write bottom Boundary Condition
 #'
 #' @param constant.bc
 #' @param bc.type

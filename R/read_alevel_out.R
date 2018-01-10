@@ -1,6 +1,7 @@
 #' Read outputs of ALEVEL.OUT
 #'
-#' @param simulation.path
+#' @param project.path
+#' @param out.file
 #' @param output
 #' @param warn
 #' @param ...
@@ -9,7 +10,7 @@
 #' @export
 #'
 #' @examples
-read.A_level.out<- function(simulation.path, output = NULL, warn = FALSE, ...) {
+read.A_level.out<- function(project.path,out.file = "A_Level.out", output = NULL, warn = FALSE, ...) {
 
    if(is.null(output) | missing(output)) {
       output = c("sum(rTop)", "sum(rRoot)", "sum(vTop)", "sum(vRoot)",
@@ -17,7 +18,7 @@ read.A_level.out<- function(simulation.path, output = NULL, warn = FALSE, ...) {
 
       }
 
-    alevel_out<- read.table(file.path(simulation.path, "A_Level.out"),
+    alevel_out<- read.table(file.path(project.path, out.file),
                            header = T, sep = "", dec = ".",
                            na.strings = "NA", colClasses = NA, as.is = TRUE,
                            skip = 2, check.names = FALSE, fill = T,
@@ -26,11 +27,11 @@ read.A_level.out<- function(simulation.path, output = NULL, warn = FALSE, ...) {
                            allowEscapes = FALSE, flush = FALSE,
                            stringsAsFactors = default.stringsAsFactors(),
                            fileEncoding = "", encoding = "unknown")
- alevel_out = alevel_out[-c(1, nrow(alevel_out)), ]
+    alevel_out = alevel_out[-c(1, nrow(alevel_out)), ]
 
- alevel_out =  apply(alevel_out, MARGIN = 2, FUN = as.numeric)
- alevel_out = data.frame(alevel_out, check.names = FALSE, row.names = NULL)
+    alevel_out =  apply(alevel_out, MARGIN = 2, FUN = as.numeric)
+    alevel_out = data.frame(alevel_out, check.names = FALSE, row.names = NULL)
 
-  return(alevel_out)
+    return(alevel_out)
 
 }
