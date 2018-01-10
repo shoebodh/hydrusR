@@ -19,3 +19,7 @@ Installation
 
 devtools::install_github("shoebodh/hydrusR", ref = "")
 
+To do:
+Add top constant boundary conditions (currently only time variable boundary conditions is checked)
+Add other processes(e.g. solute transport)
+
