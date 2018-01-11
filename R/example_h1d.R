@@ -1,4 +1,4 @@
-#' Runs a test hydrus project on the system
+#' Runs a test hydrus project
 #'
 #' @param ...
 #'
