@@ -1,6 +1,6 @@
 #' Creates a new hydrus project folder with "HYDRUS1D.DAT" and "DISCRIPT.TXT" files
 #'
-#'  @param project.name Name of the project
+#' @param project.name Name of the project
 #' @param parent.dir  Path to the project folder
 #' @param processes Main processes (e.g., WaterFlow, SoluteTransport etc) to be simualted
 #' @param TimeUnit Simulation time unit information (default = days)
@@ -134,9 +134,6 @@ timeinfo_new_str = paste(timeinfo_new_fmt, collapse = "")
 selector_data[timeinfo_ind + 2] = timeinfo_new_str
 
 write(selector_data, file = file.path(project_path, basename(selector_in)), append = F)
-
- # lwat_ind = lunit_ind + 4
- # lwat_input = selector_data[c(lwat_ind, lwat_ind)]
 
  }
 
