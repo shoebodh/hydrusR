@@ -10,7 +10,7 @@
 #' @export
 #'
 #' @examples
-write.print.times<- function(project.path, tmin, tmax, tstep, ...){
+write.print.times<- function(project.path, tmin, tmax, tstep, TimeUnit, ...){
       input.file = file.path(project.path, "selector.in")
 
       hydrus_input = readLines(con = input.file, n = -1L, encoding = "unknown")
@@ -19,7 +19,7 @@ write.print.times<- function(project.path, tmin, tmax, tstep, ...){
       end_Tprint_ind = grep("BLOCK G", hydrus_input)
 
 
-      ptimes = seq(tmin, tmax, by = tstep)
+      ptimes = seq((tmin + tstep), tmax, by = tstep)
 
       get.decimals <- function(x) {
             if ((x %% 1) != 0) {
@@ -94,9 +94,48 @@ write.print.times<- function(project.path, tmin, tmax, tstep, ...){
       input_p2 = ptimes_mat_final
       input_p3 = hydrus_input[end_Tprint_ind:length(hydrus_input)]
 
-      write(input_p1, file = input.file, append = F)
-      write(input_p2, file = input.file, append = T)
-      write(input_p3, file = input.file, append = T)
+
+      selector_data = c(input_p1, input_p2, input_p3)
+
+
+     #  timeinfo_ind = grep("*** BLOCK C", selector_data, fixed = TRUE)
+     #  timeinfo_data = selector_data[timeinfo_ind+2]
+     #
+     #  timeinfo_split = unlist(strsplit(x = timeinfo_data, split = " "))
+     #  timeinfo_split = timeinfo_split[timeinfo_split != ""]
+     #  timeinfo_new = as.numeric(timeinfo_split)
+     #
+     #  names(timeinfo_split) = c("dt", "dtMin",  "dtMax", "DMul", "DMul2", "ItMin", "ItMax", "MPL")
+     #  names(timeinfo_new) = c("dt", "dtMin",  "dtMax", "DMul", "DMul2", "ItMin", "ItMax", "MPL")
+     #
+     #  if(TimeUnit == "hours"){
+     #
+     #        timeinfo_new[c("dt", "dtMin", "dtMax")] = 24*timeinfo_new[c("dt", "dtMin", "dtMax")]
+     #
+     #  } else if (TimeUnit == "minutes") {
+     #        timeinfo_new[c("dt", "dtMin", "dtMax")] = 60*24*timeinfo_new[c("dt", "dtMin", "dtMax")]
+     #
+     #  } else if(TimeUnit == "seconds"){
+     #        timeinfo_new[c("dt", "dtMin", "dtMax")] = 3600*24*timeinfo_new[c("dt", "dtMin", "dtMax")]
+     #
+     #  } else if(TimeUnit == "years") {
+     #        timeinfo_new[c("dt", "dtMin", "dtMax")] = 1/365*timeinfo_new[c("dt", "dtMin", "dtMax")]
+     #
+     #  }
+     #
+     #  timeinfo_new[c("dt", "dtMin", "dtMax")] = format2sci(timeinfo_new[c("dt", "dtMin", "dtMax")], ndec = 3, power.digits = 3)
+     #  fmt_space = c(12, 13, 12, 8, 8, 6, 6, 6)
+     #  fmt_vec = paste("%", fmt_space, "s", sep = "")
+     #  timeinfo_new_fmt = sprintf(fmt = fmt_vec, timeinfo_new)
+     #  timeinfo_new_str = paste(timeinfo_new_fmt, collapse = "")
+     #
+     # selector_data[timeinfo_ind + 2] = timeinfo_new_str
+
+
+
+      write(selector_data, file = input.file, append = F)
+      # write(input_p2, file = input.file, append = T)
+      # write(input_p3, file = input.file, append = T)
       # write(input_p4, file = "selector.in", append = T)
 
 

@@ -94,11 +94,46 @@ create.H1D.project<-function(project.name, parent.dir, discription = NULL,
    selector_in = system.file("templates/SELECTOR.IN", package = "hydrusR")
    selector_data = readLines(selector_in, n = -1L, encoding = "unknown")
 
+
   lunit_ind = grep("LUnit", selector_data)
   unit_lines = lunit_ind + 1:2
   selector_data[unit_lines] = c(SpaceUnit, TimeUnit)
 
-  write(selector_data, file = file.path(project_path, "selector.in"), append = F)
+
+timeinfo_ind = grep("*** BLOCK C", selector_data, fixed = TRUE)
+timeinfo_data = selector_data[timeinfo_ind+2]
+
+timeinfo_split = unlist(strsplit(x = timeinfo_data, split = " "))
+timeinfo_split = timeinfo_split[timeinfo_split != ""]
+timeinfo_new = as.numeric(timeinfo_split)
+
+names(timeinfo_split) = c("dt", "dtMin",  "dtMax", "DMul", "DMul2", "ItMin", "ItMax", "MPL")
+names(timeinfo_new) = c("dt", "dtMin",  "dtMax", "DMul", "DMul2", "ItMin", "ItMax", "MPL")
+
+if(TimeUnit == "hours"){
+
+    timeinfo_new[c("dt", "dtMin", "dtMax")] = 24*timeinfo_new[c("dt", "dtMin", "dtMax")]
+
+} else if (TimeUnit == "minutes") {
+      timeinfo_new[c("dt", "dtMin", "dtMax")] = 60*24*timeinfo_new[c("dt", "dtMin", "dtMax")]
+
+} else if(TimeUnit == "seconds"){
+      timeinfo_new[c("dt", "dtMin", "dtMax")] = 3600*24*timeinfo_new[c("dt", "dtMin", "dtMax")]
+
+} else if(TimeUnit == "years") {
+      timeinfo_new[c("dt", "dtMin", "dtMax")] = 1/365*timeinfo_new[c("dt", "dtMin", "dtMax")]
+
+}
+
+timeinfo_new[c("dt", "dtMin", "dtMax")] = format2sci(timeinfo_new[c("dt", "dtMin", "dtMax")], ndec = 3, power.digits = 3)
+fmt_space = c(12, 13, 12, 8, 8, 6, 6, 6)
+fmt_vec = paste("%", fmt_space, "s", sep = "")
+timeinfo_new_fmt = sprintf(fmt = fmt_vec, timeinfo_new)
+timeinfo_new_str = paste(timeinfo_new_fmt, collapse = "")
+
+selector_data[timeinfo_ind + 2] = timeinfo_new_str
+
+write(selector_data, file = file.path(project_path, basename(selector_in)), append = F)
 
  # lwat_ind = lunit_ind + 4
  # lwat_input = selector_data[c(lwat_ind, lwat_ind)]

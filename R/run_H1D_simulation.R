@@ -23,7 +23,7 @@
 
 run.H1D.simulation = function(project.path, hydrus.path = NULL, profile.depth,
                               beginT, endT, deltaT, bot.bc.type, bot.bc.value, const.bot.bc,
-                              soil.para, atm.bc.data, ini.wt,
+                              soil.para, atm.bc.data, ini.wt, TimeUnit = "days",
                               rdepth, obs.nodes, show.output = TRUE, ...) {
 
       if(is.null(hydrus.path)|missing(hydrus.path)){
@@ -57,7 +57,8 @@ run.H1D.simulation = function(project.path, hydrus.path = NULL, profile.depth,
             write.atmosph.in(project.path, maxAL = maxTp, deltaT = deltaT,
                              atm.bc.data = atm.bc.data[1:maxTp, ])
 
-            write.print.times(project.path, tmin = beginT, tmax = endT, tstep = deltaT)
+            write.print.times(project.path, tmin = beginT, tmax = endT,
+                        tstep = deltaT, TimeUnit = TimeUnit)
 
             call.H1D(project.path, hydrus.path = hydrus.path, show.output = show.output)
 
@@ -79,7 +80,8 @@ run.H1D.simulation = function(project.path, hydrus.path = NULL, profile.depth,
             write.atmosph.in(project.path, maxAL = 960, deltaT = deltaT,
                              atm.bc.data = atm_bc_data[1:960, ])
 
-            write.print.times(project.path, tmin = beginT, tmax = 960*deltaT, tstep = deltaT)
+            write.print.times(project.path, tmin = beginT, tmax = 960,
+                              tstep = deltaT, TimeUnit = TimeUnit)
 
             call.H1D(project.path, hydrus.path = hydrus.path, show.output = show.output)
 
@@ -115,7 +117,7 @@ run.H1D.simulation = function(project.path, hydrus.path = NULL, profile.depth,
                   sim_index = s
 
 
-                  beginTnew = ((sim_index-1)*960 + 1)
+                  beginTnew = ((sim_index-1)*960)
 
                   if(s < sim_number){
                         endTnew =  sim_index*960
@@ -123,7 +125,7 @@ run.H1D.simulation = function(project.path, hydrus.path = NULL, profile.depth,
                         endTnew = nrow(atm.bc.data)
                   }
 
-                  sim_times_s = seq(beginTnew, endTnew)
+                  sim_times_s = seq((beginTnew + deltaT), endTnew)
 
                   # simulations_dir = file.path(rootPath, soil_type, output_folder)
                   # if(!dir.exists(simulations_dir)) dir.create(simulations_dir)
@@ -144,8 +146,8 @@ run.H1D.simulation = function(project.path, hydrus.path = NULL, profile.depth,
 
                   # write.print.times(project.path, tmin = deltaT, atm_bc_data_s$tAtm[nrow(atm_bc_data_s)], tstep = 0.25)
 
-                  write.print.times(project.path, tmin = atm_bc_data_s$tAtm[1],
-                                    tmax = atm_bc_data_s$tAtm[nrow(atm_bc_data_s)], tstep = 0.25)
+                  write.print.times(project.path, tmin = beginTnew, tmax = endTnew,
+                                    tstep = deltaT, TimeUnit = TimeUnit)
 
                   write.bottom.bc(constant.bc = const.bot.bc, bc.type = bot.bc.type,
                                   bc.value = bot.bc.value, project.path = project.path)
@@ -181,17 +183,15 @@ run.H1D.simulation = function(project.path, hydrus.path = NULL, profile.depth,
                   head_profile = hyd.output[to_skip:nrow(hyd.output), c("Node", "Depth", "Head")]
                   head_profile = head_profile[2:(nrow(head_profile) - 1), ]
             }
+
+            cat("combining all calculations, ...\n")
+            #####
+            join.output.files(project.path)
+
+            sim_dirs = dir(project.path, pattern = "sim", full.names = TRUE)
+            mapply(FUN = unlink, sim_dirs, recursive = T, force = T)
+
       }
-
-      cat("The simulation finished successfully...\n")
-
-      cat("combining all calculations, ...\n")
-      #####
-      join.output.files(project.path)
-
-      sim_dirs = dir(project.path, pattern = "sim", full.names = TRUE)
-      mapply(FUN = unlink, sim_dirs, recursive = T, force = T)
-
 
       cat("simulation completed successfully")
 
