@@ -17,7 +17,7 @@ Also check out the package RHydrus that attempts to convert the original FORTRAN
 
 Installation
 
-devtools::install_github("shoebodh/hydrusR", ref = "")
+devtools::install_github("shoebodh/hydrusR")
 
 To do:
 Add top constant boundary conditions (currently only time variable boundary conditions is checked)
