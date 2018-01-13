@@ -5,9 +5,9 @@
 #' @export
 #' @examples
 #'
-#' example.h1d(ntime = 100)
+#' run.H1D.example()
 
-example.h1d<- function(profile.depth = 200, dz = 1, ntime = 1000, rdepth = 100,
+run.H1D.example<- function(profile.depth = 200, dz = 1, ntime = 1000, rdepth = 100,
                    soil.para = list(thr = 0.045, ths = 0.43,
                   Alfa = 0.145, n = 2.69,Ks = 29.7, l = 0.45),
                    hydrus.path =  "C:/Program Files (x86)/PC-Progress/Hydrus-1D 4.xx", ...){
