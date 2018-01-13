@@ -1,16 +1,21 @@
 #' Runs a test hydrus project
 #'
-#' @param ...
+#' @param ntime
 #'
 #' @export
 #' @examples
 #'
 #' run.H1D.example()
 
-run.H1D.example<- function(profile.depth = 200, dz = 1, ntime = 1000, rdepth = 100,
-                   soil.para = list(thr = 0.045, ths = 0.43,
-                  Alfa = 0.145, n = 2.69,Ks = 29.7, l = 0.45),
-                   hydrus.path =  "C:/Program Files (x86)/PC-Progress/Hydrus-1D 4.xx", ...){
+run.H1D.example<- function(ntime = 1000, ...){
+
+      profile.depth = 200
+      dz = 1
+      ntime = 1000
+      rdepth = 100
+      soil.para = list(thr = 0.045, ths = 0.43,
+       Alfa = 0.145, n = 2.69,Ks = 29.7, l = 0.45)
+      hydrus.path =  "C:/Program Files (x86)/PC-Progress/Hydrus-1D 4.xx"
 
       rootPath = path.expand("~") ## where to create the project
       project_name = "testproject"  ## Name of the project
