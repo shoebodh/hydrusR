@@ -1,6 +1,6 @@
 #' Runs a test hydrus project
 #'
-#' @param ntime
+#' @param ntime Number of timesteps to run the examples simulation
 #'
 #' @export
 #' @examples
