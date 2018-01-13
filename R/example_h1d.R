@@ -5,7 +5,7 @@
 #' @export
 #' @examples
 #'
-#' run.H1D.example()
+#' run.H1D.example(ntime = 100)
 
 run.H1D.example<- function(ntime = 1000, ...){
 
