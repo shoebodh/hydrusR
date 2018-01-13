@@ -3,6 +3,7 @@
 #' @param ntime Number of timesteps to run the examples simulation
 #'
 #' @export
+#'
 #' @examples
 #'
 #' run.H1D.example(ntime = 100)
