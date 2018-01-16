@@ -10,6 +10,8 @@ create.H1D.project(project.name, parent.dir, discription = NULL,
   ...)
 }
 \arguments{
+\item{project.name}{Name of the project}
+
 \item{parent.dir}{Path to the project folder}
 
 \item{TimeUnit}{Simulation time unit information (default = days)}
@@ -23,7 +25,7 @@ create.H1D.project(project.name, parent.dir, discription = NULL,
 \item{geometry}{Profile geometry info (Depth, # of nodes and # of obs nodes)}
 }
 \description{
-@param project.name Name of the project
+Creates a new hydrus project folder with "HYDRUS1D.DAT" and "DISCRIPT.TXT" files
 }
 \examples{
 
