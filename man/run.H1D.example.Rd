@@ -4,13 +4,7 @@
 \alias{run.H1D.example}
 \title{Runs a test hydrus project}
 \usage{
-run.H1D.example(profile.depth = 200, dz = 1, ntime = 1000, rdepth = 100,
-  soil.para = list(thr = 0.045, ths = 0.43, Alfa = 0.145, n = 2.69, Ks = 29.7,
-  l = 0.45),
-  hydrus.path = "C:/Program Files (x86)/PC-Progress/Hydrus-1D 4.xx", ...)
-}
-\arguments{
-\item{...}{}
+run.H1D.example()
 }
 \description{
 Runs a test hydrus project
@@ -18,4 +12,5 @@ Runs a test hydrus project
 \examples{
 
 run.H1D.example()
+
 }
