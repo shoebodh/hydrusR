@@ -19,11 +19,9 @@
 #' geometry = c(ProfileDepth = 200, NumberOfNodes = 4,
 #'          ObservationNodes = 0, MaterialNumber = 1, SubregionNumber = 1))
 
-
 create.H1D.project<-function(project.name, parent.dir, discription = NULL,
-                         TimeUnit = "days", SpaceUnit = "cm", PrintTimes = 1,
-                             processes = c(WaterFlow = T, RootWaterUptake = T), geometry, initial.cond, ...) {
-
+      TimeUnit = "days", SpaceUnit = "cm", PrintTimes = 1,
+       processes = c(WaterFlow = T, RootWaterUptake = T), geometry, initial.cond, ...) {
 
       # main_processes = c(WaterFlow = F, SoluteTransport = F, RootWaterUptake = F,
       #                      RootGrowth = F, Unsatchem = F, HP1 = F, EquillibriumAdsorption = F,
@@ -52,6 +50,9 @@ create.H1D.project<-function(project.name, parent.dir, discription = NULL,
       } else {
             dir.create(project_path)
       }
+
+    # args_vec  = (sys.calls())
+    # args_vec = as.list(args_vec[[1]])
 
             args_vec = as.list(match.call())
             args_vec = lapply(args_vec[-1], FUN = function(x) unlist(x))
@@ -134,6 +135,8 @@ timeinfo_new_str = paste(timeinfo_new_fmt, collapse = "")
 selector_data[timeinfo_ind + 2] = timeinfo_new_str
 
 write(selector_data, file = file.path(project_path, basename(selector_in)), append = F)
+
+cat("New H1DRUS-1D project create in", project_path, "...\n")
 
  }
 
