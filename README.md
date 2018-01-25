@@ -18,6 +18,9 @@ Installation
 
 devtools::install_github("shoebodh/hydrusR")
 
+## run a test simulation
+source(system.file("examples/h1d_flow_example.R", package = "hydrusR"))
+
 To do:
 Add top constant boundary conditions (currently only time variable boundary conditions is checked)
 Add other processes(e.g. solute transport)
