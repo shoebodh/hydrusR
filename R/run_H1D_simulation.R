@@ -16,7 +16,6 @@
 #' @param obs.nodes Observation node points (vector)
 #' @param show.output Logical, whether the shell output of HYDRUS1D run should be displayed on R console, default = F
 #'
-#' #' @return
 #' @export
 #'
 #' @examples
@@ -72,7 +71,7 @@ run.H1D.simulation = function(project.path, hydrus.path = NULL, profile.depth,
 
             write.obs.nodes(project.path, Z = profile.depth, dz = deltaz, obs.nodes = obs.nodes)
 
-            write.hydraulic.para(project.path, para = soil_para)
+            write.hydraulic.para(project.path, para = soil.para)
 
             write.bottom.bc(constant.bc = const.bot.bc, bc.type = bot.bc.type,
                             bc.value = bot.bc.value, project.path = project.path)
@@ -96,7 +95,7 @@ run.H1D.simulation = function(project.path, hydrus.path = NULL, profile.depth,
 
             sapply(sim1_files, file.copy, to = sim1_folder)
 
-            hyd.output<- read.table(file.path(project.path, "NOD_INF.OUT"), header = T, sep = "", dec = ".",
+            h1d_output<- read.table(file.path(project.path, "NOD_INF.OUT"), header = T, sep = "", dec = ".",
                                     na.strings = "NA", colClasses = NA, as.is = TRUE,
                                     skip = 10, check.names = TRUE, fill = T,
                                     strip.white = FALSE, blank.lines.skip = TRUE,
@@ -106,10 +105,10 @@ run.H1D.simulation = function(project.path, hydrus.path = NULL, profile.depth,
                                     fileEncoding = "", encoding = "unknown")
 
             #################
-            time_ind = grep("Time:", hyd.output$Node)
+            time_ind = grep("Time:", h1d_output$Node)
             to_skip = time_ind[length(time_ind)]+2
 
-            head_profile = hyd.output[to_skip:nrow(hyd.output), c("Node", "Depth", "Head")]
+            head_profile = h1d_output[to_skip:nrow(h1d_output), c("Node", "Depth", "Head")]
             head_profile = head_profile[2:(nrow(head_profile) - 1), ]
 
             for(s in 2:sim_number) {
@@ -167,7 +166,7 @@ run.H1D.simulation = function(project.path, hydrus.path = NULL, profile.depth,
                   sim_s_files = list.files(project.path, include.dirs = F, full.names = T)
                   sapply(sim_s_files, FUN = file.copy, to = sim_out_dir)
 
-                  hyd.output<- read.table(file.path(project.path, "NOD_INF.OUT"), header = T, sep = "", dec = ".",
+                  h1d_output<- read.table(file.path(project.path, "NOD_INF.OUT"), header = T, sep = "", dec = ".",
                                           na.strings = "NA", colClasses = NA, as.is = TRUE,
                                           skip = 10, check.names = TRUE, fill = T,
                                           strip.white = FALSE, blank.lines.skip = TRUE,
@@ -177,10 +176,10 @@ run.H1D.simulation = function(project.path, hydrus.path = NULL, profile.depth,
                                           fileEncoding = "", encoding = "unknown")
 
                   #################
-                  time_ind = grep("Time:", hyd.output$Node)
+                  time_ind = grep("Time:", h1d_output$Node)
                   to_skip = time_ind[length(time_ind)]+2
 
-                  head_profile = hyd.output[to_skip:nrow(hyd.output), c("Node", "Depth", "Head")]
+                  head_profile = h1d_output[to_skip:nrow(h1d_output), c("Node", "Depth", "Head")]
                   head_profile = head_profile[2:(nrow(head_profile) - 1), ]
             }
 
