@@ -10,7 +10,8 @@
 #' @export
 #'
 #' @examples
-read.T_level.out<- function(project.path, out.file = "T_Level.out", output = NULL, warn = FALSE, ...){
+read.T_level.out<- function(project.path, out.file = "T_Level.out", output = NULL,
+         warn = FALSE, ...){
 
 
    if(is.null(output) | missing(output)) {
@@ -34,10 +35,38 @@ read.T_level.out<- function(project.path, out.file = "T_Level.out", output = NUL
                            stringsAsFactors = default.stringsAsFactors(),
                            fileEncoding = "", encoding = "unknown")
 
-  tlevel_out = tlevel_out[-c(1, nrow(tlevel_out)), ]
+     # tlevel_out = tlevel_out[-c(1, nrow(tlevel_out)), ]
 
  tlevel_out =  apply(tlevel_out, MARGIN = 2, FUN = as.numeric)
+ tlevel_out = na.omit(tlevel_out)
  tlevel_out = data.frame(tlevel_out, check.names = FALSE, row.names = NULL)
+
+### These steps are required to get a continuous sum(*) variables because
+ ### for each run, these variables start at 0 at the begining of simulation
+
+ tstart_ind = which(tlevel_out$TLevel == 1)
+
+ sum_cols_ind = grep("sum", names(tlevel_out))
+ sum_col_names = names(tlevel_out)[sum_cols_ind]
+
+  for(i in 2: length(tstart_ind)){
+        run1_totals = tlevel_out[(tstart_ind[i]-1), sum_cols_ind]
+
+    if(i == length(tstart_ind)){
+       run_i_ind = tstart_ind[i]:nrow(tlevel_out)
+    } else {
+          run_i_ind = tstart_ind[i]:(tstart_ind[i+1]-1)
+    }
+       tout_j = tlevel_out[run_i_ind, ]
+   for(j in sum_col_names) {
+         tlevel_out[run_i_ind, j] = tout_j[, j] + run1_totals[[j]]
+   }
+
+ }
+
+
+ # time_range = range(0, max(tlevel_out$Time))
+ # tlevel_out = subset(data.table(tlevel_out), Time %in% seq(0, max(Time), ))
 
   return(tlevel_out)
 

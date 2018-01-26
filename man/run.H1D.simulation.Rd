@@ -6,7 +6,7 @@
 \usage{
 run.H1D.simulation(project.path, hydrus.path = NULL, profile.depth, beginT,
   endT, deltaT, bot.bc.type, bot.bc.value, const.bot.bc, soil.para, atm.bc.data,
-  ini.wt, rdepth, obs.nodes, show.output = TRUE, ...)
+  ini.wt, TimeUnit = "days", rdepth, obs.nodes, show.output = TRUE, ...)
 }
 \arguments{
 \item{endT}{end time}
@@ -29,9 +29,7 @@ run.H1D.simulation(project.path, hydrus.path = NULL, profile.depth, beginT,
 
 \item{obs.nodes}{Observation node points (vector)}
 
-\item{show.output}{Logical, whether the shell output of HYDRUS1D run should be displayed on R console, default = F
-
-#' @return}
+\item{show.output}{Logical, whether the shell output of HYDRUS1D run should be displayed on R console, default = F}
 }
 \description{
 This is the main simulation function

@@ -41,20 +41,20 @@ run.H1D.simulation = function(project.path, hydrus.path = NULL, profile.depth,
 
       if(maxTp <= 960) {
 
-            write.ini.cond(project.path, profile.depth = profile.depth, wt.depth = ini.wt)
-
-            write.root.dist(project.path,  rdepth = rdepth, rbeta = 0.962)
-
-            write.obs.nodes(project.path, Z = profile.depth, dz = deltaz,
-                            obs.nodes = obs.nodes)
-
-            write.hydraulic.para(project.path, para = soil.para)
-
-            write.bottom.bc(constant.bc = const.bot.bc, bc.type = bot.bc.type,
-                            bc.value = bot.bc.value, project.path = project.path)
+            # write.ini.cond(project.path, profile.depth = profile.depth, wt.depth = ini.wt)
+            #
+            # write.root.dist(project.path,  rdepth = rdepth, rbeta = 0.962)
+            #
+            # write.obs.nodes(project.path, Z = profile.depth, dz = deltaz,
+            #                 obs.nodes = obs.nodes)
+            #
+            # write.hydraulic.para(project.path, para = soil.para)
+            #
+            # write.bottom.bc(constant.bc = const.bot.bc, bc.type = bot.bc.type,
+            #                 bc.value = bot.bc.value, project.path = project.path)
 
             write.atmosph.in(project.path, maxAL = maxTp, deltaT = deltaT,
-                             atm.bc.data = atm.bc.data[1:maxTp, ])
+                              atm.bc.data = atm.bc.data[1:maxTp, ])
 
             write.print.times(project.path, tmin = beginT, tmax = endT,
                         tstep = deltaT, TimeUnit = TimeUnit)
@@ -65,16 +65,17 @@ run.H1D.simulation = function(project.path, hydrus.path = NULL, profile.depth,
 
             cat("Running times", 1, "to", 960*deltaT, "...\n")
 
-            write.ini.cond(project.path, profile.depth = profile.depth, wt.depth = ini.wt)
-
-            write.root.dist(project.path,  rdepth = rdepth, rbeta = 0.962)
-
-            write.obs.nodes(project.path, Z = profile.depth, dz = deltaz, obs.nodes = obs.nodes)
-
-            write.hydraulic.para(project.path, para = soil.para)
-
-            write.bottom.bc(constant.bc = const.bot.bc, bc.type = bot.bc.type,
-                            bc.value = bot.bc.value, project.path = project.path)
+            # write.ini.cond(project.path, profile.depth = profile.depth, wt.depth = ini.wt)
+            #
+            # write.root.dist(project.path,  rdepth = rdepth, rbeta = 0.962)
+            #
+            # write.obs.nodes(project.path, Z = profile.depth, dz = deltaz, obs.nodes = obs.nodes)
+            #
+            # write.hydraulic.para(project.path, para = soil.para)
+            #
+            # write.bottom.bc(constant.bc = const.bot.bc, bc.type = bot.bc.type,
+            #                 bc.value = bot.bc.value, project.path = project.path)
+            #
 
             write.atmosph.in(project.path, maxAL = 960, deltaT = deltaT,
                              atm.bc.data = atm_bc_data[1:960, ])
@@ -95,21 +96,30 @@ run.H1D.simulation = function(project.path, hydrus.path = NULL, profile.depth,
 
             sapply(sim1_files, file.copy, to = sim1_folder)
 
-            h1d_output<- read.table(file.path(project.path, "NOD_INF.OUT"), header = T, sep = "", dec = ".",
-                                    na.strings = "NA", colClasses = NA, as.is = TRUE,
-                                    skip = 10, check.names = TRUE, fill = T,
-                                    strip.white = FALSE, blank.lines.skip = TRUE,
-                                    comment.char = "#",
-                                    allowEscapes = FALSE, flush = FALSE,
-                                    stringsAsFactors = F,
-                                    fileEncoding = "", encoding = "unknown")
+            # h1d_output<- read.table(file.path(project.path, "Nod_Inf.out"), header = T, sep = "", dec = ".",
+            #                         na.strings = "NA", colClasses = NA, as.is = TRUE,
+            #                         skip = 10, check.names = TRUE, fill = T,
+            #                         strip.white = T, blank.lines.skip = F,
+            #                         comment.char = "#",
+            #                         allowEscapes = FALSE, flush = FALSE,
+            #                         stringsAsFactors = F,
+            #                         fileEncoding = "", encoding = "unknown")
 
-            #################
-            time_ind = grep("Time:", h1d_output$Node)
+   options(warn = -1)
+            h1d_output =  data.table::fread(input = file.path(project.path, "Nod_Inf.out"),
+                              fill = TRUE, blank.lines.skip = FALSE, skip = 10)
+
+           time_ind = grep("Time:", h1d_output[["Node"]])
             to_skip = time_ind[length(time_ind)]+2
 
             head_profile = h1d_output[to_skip:nrow(h1d_output), c("Node", "Depth", "Head")]
-            head_profile = head_profile[2:(nrow(head_profile) - 1), ]
+            head_profile = as.data.frame(apply(head_profile, 2, as.numeric))
+            head_profile = na.omit(head_profile)
+            pressure_vec = head_profile$Head
+
+options(warn = 0)
+
+            #################
 
             for(s in 2:sim_number) {
 
@@ -138,18 +148,18 @@ run.H1D.simulation = function(project.path, hydrus.path = NULL, profile.depth,
                       endTnew*deltaT, "...\n")
 
                   write.ini.cond(project.path, profile.depth = profile.depth,
-                                 pr.vec = as.numeric(head_profile$Head))
+                                 pr.vec = pressure_vec)
 
-                  write.obs.nodes(project.path, Z = profile.depth, dz = deltaz,
-                                  obs.nodes = obs.nodes)
+                  # write.obs.nodes(project.path, Z = profile.depth, dz = deltaz,
+                  #                 obs.nodes = obs.nodes)
 
                   # write.print.times(project.path, tmin = deltaT, atm_bc_data_s$tAtm[nrow(atm_bc_data_s)], tstep = 0.25)
 
                   write.print.times(project.path, tmin = beginTnew, tmax = endTnew,
                                     tstep = deltaT, TimeUnit = TimeUnit)
 
-                  write.bottom.bc(constant.bc = const.bot.bc, bc.type = bot.bc.type,
-                                  bc.value = bot.bc.value, project.path = project.path)
+                  # write.bottom.bc(constant.bc = const.bot.bc, bc.type = bot.bc.type,
+                  #                 bc.value = bot.bc.value, project.path = project.path)
 
                   write.atmosph.in(project.path, maxAL = nrow(atm_bc_data_s), deltaT = deltaT,
                                    atm.bc.data = atm_bc_data_s)
@@ -166,22 +176,30 @@ run.H1D.simulation = function(project.path, hydrus.path = NULL, profile.depth,
                   sim_s_files = list.files(project.path, include.dirs = F, full.names = T)
                   sapply(sim_s_files, FUN = file.copy, to = sim_out_dir)
 
-                  h1d_output<- read.table(file.path(project.path, "NOD_INF.OUT"), header = T, sep = "", dec = ".",
-                                          na.strings = "NA", colClasses = NA, as.is = TRUE,
-                                          skip = 10, check.names = TRUE, fill = T,
-                                          strip.white = FALSE, blank.lines.skip = TRUE,
-                                          comment.char = "#",
-                                          allowEscapes = FALSE, flush = FALSE,
-                                          stringsAsFactors = F,
-                                          fileEncoding = "", encoding = "unknown")
+                  # h1d_output<- read.table(file.path(project.path, "NOD_INF.OUT"), header = T, sep = "", dec = ".",
+                  #                         na.strings = "NA", colClasses = NA, as.is = TRUE,
+                  #                         skip = 10, check.names = TRUE, fill = T,
+                  #                         strip.white = FALSE, blank.lines.skip = TRUE,
+                  #                         comment.char = "#",
+                  #                         allowEscapes = FALSE, flush = FALSE,
+                  #                         stringsAsFactors = F,
+                  #                         fileEncoding = "", encoding = "unknown")
 
                   #################
-                  time_ind = grep("Time:", h1d_output$Node)
+                  options(warn = -1)
+                  h1d_output =    data.table::fread(input = file.path(project.path, "Nod_Inf.out"),
+                                                    fill = TRUE, blank.lines.skip = FALSE, skip = 10)
+
+                  time_ind = grep("Time:", h1d_output[["Node"]])
                   to_skip = time_ind[length(time_ind)]+2
 
                   head_profile = h1d_output[to_skip:nrow(h1d_output), c("Node", "Depth", "Head")]
-                  head_profile = head_profile[2:(nrow(head_profile) - 1), ]
-            }
+                  head_profile = as.data.frame(apply(head_profile, 2, as.numeric))
+                  head_profile = na.omit(head_profile)
+                  pressure_vec = head_profile$Head
+                  options(warn = 0)
+
+                  }
 
             cat("combining all calculations, ...\n")
             #####

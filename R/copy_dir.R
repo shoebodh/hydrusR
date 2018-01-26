@@ -28,12 +28,12 @@ dir.copy<- function(src.dir, dest.dir, overwrite = TRUE, ask = FALSE, ...){
         askUser <- paste("would you like to create this directory?, y/n/c")
 
         userAnswer <- readline(askUser)
-        userInput <- substr(userAnswer, start = 1, stop = 1)
+        userInput <- substr(toupper(userAnswer), start = 1, stop = 1)
 
-        if(userInput == "n"|| userInput == "N"){
+        if(userInput == "N"){
             return(FALSE)
 
-        } else if(userInput == "y" || userInput == "Y"){
+        } else if(userInput == "Y"){
 
             dir.create(dest.dir)
         }

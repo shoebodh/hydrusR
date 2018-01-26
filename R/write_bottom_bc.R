@@ -11,8 +11,8 @@
 #'
 #' @examples
 write.bottom.bc<- function(constant.bc, bc.type, bc.value, project.path, ...) {
-      ## Writes bottom constant boundary conditions "flux" and "head"
-      input_data = readLines(con = file.path(project.path, "selector.in"),
+      ## Writes bottom constant boundary conditions "flux" or "head"
+      input_data = readLines(con = file.path(project.path, "SELECTOR.IN"),
                              n = -1L, encoding = "unknown")
       flow_block_ind = grep("BLOCK B", input_data)
       time_block_ind = grep("BLOCK C", input_data)
@@ -101,7 +101,7 @@ write.bottom.bc<- function(constant.bc, bc.type, bc.value, project.path, ...) {
       input_data_new = c(input_data[1:(flow_block_ind-1)], flow_block_new,
                          input_data[time_block_ind:length(input_data)])
 
-      write(input_data_new, file = file.path(project.path, "selector.in"), append = F)
+      write(input_data_new, file = file.path(project.path, "SELECTOR.IN"), append = F)
 
 
 }

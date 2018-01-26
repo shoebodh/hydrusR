@@ -2,9 +2,9 @@
 % Please edit documentation in R/write_print_times.R
 \name{write.print.times}
 \alias{write.print.times}
-\title{Write print times in selector.in}
+\title{Write print times in SELECTOR.IN}
 \usage{
-write.print.times(project.path, tmin, tmax, tstep, ...)
+write.print.times(project.path, tmin, tmax, tstep, TimeUnit, ...)
 }
 \arguments{
 \item{project.path}{Location of the H1D project in the directory}
@@ -18,5 +18,5 @@ write.print.times(project.path, tmin, tmax, tstep, ...)
 \item{...}{}
 }
 \description{
-Write print times in selector.in
+Write print times in SELECTOR.IN
 }

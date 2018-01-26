@@ -11,18 +11,22 @@
 #' @examples
 write.root.dist<- function(project.path, rdepth, rbeta = 0.962, ...) {
       file.profile.dat = file.path(project.path, "PROFILE.DAT")
-        profile_dat = readLines(con = file.profile.dat, n = -1L, encoding = "unknown")
+        profile_data1 = readLines(con = file.profile.dat, n = -1L, encoding = "unknown")
 
        # profile_dat = readLines(con = file.profile.dat, n = -1L, encoding = "unknown")
-      node_ind = grep(pattern =  ("^[0-9]"), profile_dat)
+      node_num_ind = grep(pattern =  ("^[0-9]"), profile_data1)
 
-      header_split = unlist(strsplit(profile_dat[5], split = " "))
+      node_info_lines = profile_data1[node_num_ind:(length(profile_data1))]
+
+      profile_summary = profile_data1[1:5]
+
+      header_split = unlist(strsplit(profile_data1[5], split = " "))
       header_split2 = header_split[header_split != ""]
 
-      if(length(node_ind) == 0) {
-            profile_data = profile_dat[6:length(profile_dat)]
+      if(length(node_num_ind) == 0) {
+            profile_data = profile_data1[6:length(profile_data1)]
       } else {
-            profile_data = profile_dat[6:(node_ind - 1)]
+            profile_data = profile_data1[6:(node_num_ind - 1)]
       }
 
       profile_data_split = strsplit(profile_data, split = " ")
@@ -57,7 +61,7 @@ write.root.dist<- function(project.path, rdepth, rbeta = 0.962, ...) {
       profile_data_fmt2 = apply(profile_data_fmt, MARGIN = 1, FUN = paste, collapse = "")
       profile_data_fmt2 = paste(profile_data_fmt2, tspace)
 
-      profile_data_new = c(profile_dat[1:5], profile_data_fmt2)
+      profile_data_new = c(profile_summary, profile_data_fmt2, node_info_lines)
 
       write(profile_data_new, file.profile.dat, append = FALSE)
 

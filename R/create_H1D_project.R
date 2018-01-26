@@ -21,23 +21,25 @@
 
 create.H1D.project<-function(project.name, parent.dir, discription = NULL,
       TimeUnit = "days", SpaceUnit = "cm", PrintTimes = 1,
-       processes = c(WaterFlow = T, RootWaterUptake = T), geometry, initial.cond, ...) {
+       processes = c(WaterFlow = T, RootWaterUptake = F), geometry, initial.cond, ...) {
 
-      # main_processes = c(WaterFlow = F, SoluteTransport = F, RootWaterUptake = F,
-      #                      RootGrowth = F, Unsatchem = F, HP1 = F, EquillibriumAdsorption = F,
-      #                      NumberOfSolutes = 0, InitialCondition = 0)
-      #
+      all_args = c("WaterFlow", "SoluteTransport", "RootWaterUptake",
+            "RootGrowth", "Unsatchem", "HP1", "EquillibriumAdsorption",
+              "NumberOfSolutes", "InitialCondition", "geometry",
+              "project.name", "parent.dir", "discription",
+              "TimeUnit", "SpaceUnit", "PrintTimes")
+
 
       project_path = file.path(parent.dir, project.name)
       discript_file = file.path(project_path, "DISCRIPT.TXT")
       h1ddat_file = file.path(project_path, "HYDRUS1D.DAT")
       discription = ifelse(is.null(discription), paste("project title", project.name), discription)
 
-      prompt_msg = paste("Folder", project.name, "already exists.All files will be deleted.Proceed? y/n \n")
+      disp_msg = paste("Folder", project.name, "already exists.All files will be deleted.Proceed? y/n \n")
 
-      if(dir.exists(project_path)) {
+ if(dir.exists(project_path)) {
 
-            dir_answer = readline(prompt = prompt_msg)
+            dir_answer = readline(prompt = disp_msg)
             dir_answer = substr(toupper(dir_answer), start = 1, stop = 1)
 
             if(dir_answer == "Y") {
@@ -51,8 +53,6 @@ create.H1D.project<-function(project.name, parent.dir, discription = NULL,
             dir.create(project_path)
       }
 
-    # args_vec  = (sys.calls())
-    # args_vec = as.list(args_vec[[1]])
 
             args_vec = as.list(match.call())
             args_vec = lapply(args_vec[-1], FUN = function(x) unlist(x))

@@ -10,7 +10,7 @@
 #' @export
 #'
 #' @examples
-read.A_level.out<- function(project.path,out.file = "A_Level.out", output = NULL, warn = FALSE, ...) {
+read.A_level.out<- function(project.path, out.file = "A_Level.out", output = NULL, warn = FALSE, ...) {
 
    if(is.null(output) | missing(output)) {
       output = c("sum(rTop)", "sum(rRoot)", "sum(vTop)", "sum(vRoot)",
@@ -27,10 +27,33 @@ read.A_level.out<- function(project.path,out.file = "A_Level.out", output = NULL
                            allowEscapes = FALSE, flush = FALSE,
                            stringsAsFactors = default.stringsAsFactors(),
                            fileEncoding = "", encoding = "unknown")
-    alevel_out = alevel_out[-c(1, nrow(alevel_out)), ]
+
+     # alevel_out = alevel_out[-c(1, nrow(alevel_out)), ]
 
     alevel_out =  apply(alevel_out, MARGIN = 2, FUN = as.numeric)
+    alevel_out = na.omit(alevel_out)
+
     alevel_out = data.frame(alevel_out, check.names = FALSE, row.names = NULL)
+
+    astart_ind = which(alevel_out$`A-level` == 1)
+
+    sum_cols_ind = grep("sum", names(alevel_out))
+    sum_col_names = names(alevel_out)[sum_cols_ind]
+
+    for(i in 2: length(astart_ind)){
+          run1_totals = alevel_out[(astart_ind[i]-1), sum_cols_ind]
+
+          if(i == length(astart_ind)){
+                run_i_ind = astart_ind[i]:nrow(alevel_out)
+          } else {
+                run_i_ind = astart_ind[i]:(astart_ind[i+1]-1)
+          }
+          aout_j = alevel_out[run_i_ind, ]
+          for(j in sum_col_names) {
+                alevel_out[run_i_ind, j] = aout_j[, j] + run1_totals[[j]]
+          }
+
+    }
 
     return(alevel_out)
 

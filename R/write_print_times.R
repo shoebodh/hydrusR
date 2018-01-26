@@ -1,4 +1,4 @@
-#' Write print times in selector.in
+#' Write print times in SELECTOR.IN
 #'
 #' @param project.path Location of the H1D project in the directory
 #' @param tmin Begining print time (e.g., 1)
@@ -11,7 +11,7 @@
 #'
 #' @examples
 write.print.times<- function(project.path, tmin, tmax, tstep, TimeUnit, ...){
-      input.file = file.path(project.path, "selector.in")
+      input.file = file.path(project.path, "SELECTOR.IN")
 
       hydrus_input = readLines(con = input.file, n = -1L, encoding = "unknown")
 

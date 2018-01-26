@@ -20,7 +20,7 @@ write.hydraulic.para<- function(project.path, model = 0, hysteresis = 0, para, .
        hydraulic_models <- data.frame(code = c(0:7, 9),
                    model = smr_models)
 
-      input_data = readLines(con = file.path(project.path, "selector.in"),
+      input_data = readLines(con = file.path(project.path, "SELECTOR.IN"),
                              n = -1L, encoding = "unknown")
 
       basic_inf_ind  = grep("BLOCK A", input_data)
@@ -64,6 +64,6 @@ write.hydraulic.para<- function(project.path, model = 0, hysteresis = 0, para, .
 
       input_data[flow_block_ind : (time_block_ind - 1)] = flow_block
 
-      write(input_data, file =  file.path(project.path, "selector.in"), append = F)
+      write(input_data, file =  file.path(project.path, "SELECTOR.IN"), append = F)
 
 }

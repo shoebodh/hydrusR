@@ -12,7 +12,7 @@
 call.H1D<- function(project.path, hydrus.path, show.output = TRUE, ...){
       os.type = .Platform$OS.type
 
-      hydrus.exe = "H1D_CALC.exe"  #### Windows sepcific executable name
+      hydrus.exe = "H1D_CALC.EXE"  #### Windows sepcific executable name
 
       oldwd = getwd()
       level_01 = file.path(hydrus.path, "LEVEL_01.DIR")
@@ -21,8 +21,13 @@ call.H1D<- function(project.path, hydrus.path, show.output = TRUE, ...){
 
       setwd(hydrus.path)
 
-      system(hydrus.exe, show.output.on.console = show.output,
-             minimized = TRUE, invisible = TRUE)
+ if(os.type == "unix") {
+       system(paste0("./", hydrus.exe))
+ } else {
+       system(hydrus.exe, show.output.on.console = show.output,
+              minimized = TRUE, invisible = TRUE)
+ }
+
 
       setwd(oldwd)
 

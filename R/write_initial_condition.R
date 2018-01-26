@@ -10,19 +10,30 @@
 #' @export
 #'
 #' @examples
-write.ini.cond<- function(project.path, profile.depth, pr.vec = NULL, wt.depth, ...) {
+write.ini.cond<- function(project.path, pr.vec = NULL, wt.depth, ...) {
       file.profile.dat = file.path(project.path, "PROFILE.DAT")
-      profile_dat = readLines(con = file.profile.dat, n = -1L, encoding = "unknown")
-      node_ind = grep(pattern =  ("^[0-9]"), profile_dat)
+      profile_data1 = readLines(con = file.profile.dat, n = -1L, encoding = "unknown")
 
-      header_split = unlist(strsplit(profile_dat[5], split = " "))
+      profile_summary = profile_data1[1:5]
+
+      node_num_ind = grep(pattern =  ("^[0-9]"), profile_data1)
+      node_info_lines = profile_data1[node_num_ind:(length(profile_data1))]
+
+      header_split = unlist(strsplit(profile_data1[5], split = " "))
       header_split2 = header_split[header_split != ""]
 
-      if(length(node_ind) == 0) {
-            profile_data = profile_dat[6:length(profile_dat)]
+      if(length(node_num_ind) == 0) {
+            profile_data = profile_data1[6:length(profile_data1)]
       } else {
-            profile_data = profile_dat[6:(node_ind - 1)]
+            profile_data = profile_data1[6:(node_num_ind - 1)]
       }
+
+      end_row = profile_data[length(profile_data)]
+      end_row_split = unlist(strsplit(end_row, split = " "))
+      end_row_split = end_row_split[end_row_split != ""]
+
+      profile_depth = abs(as.numeric(end_row_split[2]))
+
 
       profile_data_split = strsplit(profile_data, split = " ")
       profile_data_split2 = sapply(profile_data_split, FUN = function(x) x[x!= ""])
@@ -33,7 +44,7 @@ write.ini.cond<- function(project.path, profile.depth, pr.vec = NULL, wt.depth, 
       if(!is.null(pr.vec)){
             ini_pr_vec = pr.vec
       } else {
-            ini_pr_vec = seq(0, profile.depth, by = deltaz) - wt.depth
+            ini_pr_vec = seq(0, profile_depth, by = deltaz) - wt.depth
 
       }
 
@@ -57,7 +68,7 @@ write.ini.cond<- function(project.path, profile.depth, pr.vec = NULL, wt.depth, 
       profile_data_fmt2 = apply(profile_data_fmt, MARGIN = 1, FUN = paste, collapse = "")
       profile_data_fmt2 = paste(profile_data_fmt2, tspace)
 
-      profile_data_new = c(profile_dat[1:5], profile_data_fmt2)
+      profile_data_new = c(   profile_summary, profile_data_fmt2, node_info_lines)
 
       write(profile_data_new, file.profile.dat, append = FALSE)
 
