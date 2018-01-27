@@ -2,6 +2,12 @@ library(hydrusR)
 library(data.table)
 library(dplyr)
 
+
+project_name = "testproj2"
+parent_dir = path.expand("~/Documents")
+project_path = path.expand(file.path(parent_dir, project_name))
+
+
 ## Basic inputs
 profile_depth = 200
 ntimes = 1200
@@ -11,14 +17,11 @@ rdepth = 100
 time_step = 1
 soil_para = list(thr = 0.045, ths = 0.43,
                  Alfa = 0.145, n = 2.69,Ks = 29.7, l = 0.45)
+smr_model = 0
+
 
  # hydrus_path =  "C:/Program Files (x86)/PC-Progress/Hydrus-1D 4.xx"
  hydrus_path = "/home/sacharya/.PlayOnLinux/wineprefix/Hydrus_1D/drive_c/Program Files/PC-Progress/Hydrus-1D 4.xx"
-
-
-project_name = "h1dExample"
-parent_dir = path.expand("~")
-project_path = path.expand(file.path(parent_dir, project_name))
 
 ## Basic inputs
 TimeUnit = "cm" ## Space units
@@ -45,7 +48,6 @@ ntimesteps = length(1:total_timesteps)
 input_pet = TRUE
 LAI = 4.0
 et_rate = 0.6
-smr_model = 1
 
 ## Boundary conditions inputs
 const_botbc = TRUE
@@ -107,7 +109,7 @@ write.ini.cond(project.path = project_path, wt.depth = initial_wtable)
 
 write.root.dist(project.path = project_path,  rdepth = rooting_depth, rbeta = 0.962)
 
-write.hydraulic.para(project.path = project_path, model = 1, para = soil_para)
+write.hydraulic.para(project.path = project_path, model = smr_model, para = soil_para)
 
 write.bottom.bc(constant.bc = TRUE, bc.type = bot_bc_type,
                 bc.value = const_botFlux, project.path = project_path)
