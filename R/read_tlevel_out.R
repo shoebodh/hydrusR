@@ -10,9 +10,9 @@
 #' @export
 #'
 #' @examples
-read.T_level.out<- function(project.path, out.file = "T_Level.out", output = NULL,
+read.tlevel.out<- function(project.path, out.file = "T_Level.out", output = NULL,
          warn = FALSE, ...){
-
+playone
 
    if(is.null(output) | missing(output)) {
             output = output = c("rTop", "rRoot", "vTop", "vRoot",
@@ -25,17 +25,19 @@ read.T_level.out<- function(project.path, out.file = "T_Level.out", output = NUL
 
       }
 
-    tlevel_out<- read.table(file.path(project.path, out.file),
-                           header = T, sep = "", dec = ".",
-                           na.strings = "NA", colClasses = NA, as.is = TRUE,
-                           skip = 6, check.names = FALSE, fill = T,
-                           strip.white = FALSE, blank.lines.skip = TRUE,
-                           comment.char = "#",
-                           allowEscapes = FALSE, flush = FALSE,
-                           stringsAsFactors = default.stringsAsFactors(),
-                           fileEncoding = "", encoding = "unknown")
+    # tlevel_out<- read.table(file.path(project.path, out.file),
+    #                        header = T, sep = "", dec = ".",
+    #                        na.strings = "NA", colClasses = NA, as.is = TRUE,
+    #                        skip = 6, check.names = FALSE, fill = T,
+    #                        strip.white = FALSE, blank.lines.skip = TRUE,
+    #                        comment.char = "#",
+    #                        allowEscapes = FALSE, flush = FALSE,
+    #                        stringsAsFactors = default.stringsAsFactors(),
+    #                        fileEncoding = "", encoding = "unknown")
 
-     # tlevel_out = tlevel_out[-c(1, nrow(tlevel_out)), ]
+    options(warn = -1)
+ tlevel_out = data.table::fread(input = file.path(project.path, out.file),
+                  fill = TRUE, blank.lines.skip = T,  skip = 6, header = T)
 
  tlevel_out =  apply(tlevel_out, MARGIN = 2, FUN = as.numeric)
  tlevel_out = na.omit(tlevel_out)
@@ -64,9 +66,7 @@ read.T_level.out<- function(project.path, out.file = "T_Level.out", output = NUL
 
  }
 
-
- # time_range = range(0, max(tlevel_out$Time))
- # tlevel_out = subset(data.table(tlevel_out), Time %in% seq(0, max(Time), ))
+optins(warn = 0)
 
   return(tlevel_out)
 

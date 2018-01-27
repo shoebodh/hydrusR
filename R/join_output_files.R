@@ -1,6 +1,6 @@
-#' Join the output files
+#' Join the output files from several H1D simulations (for longer simulation times than allowed by H1D (1000))
 #'
-#' @param project.path
+#' @param project.path path of hydrus project
 #' @param ...
 #'
 #' @return
@@ -10,7 +10,7 @@
 
 join.output.files<- function(project.path, ...) {
 
-      output_files = c("A_Level.out", "T_level.out", "Nod_Inf.out", "Obs_node.out")
+      output_files = c("A_Level.out", "T_Level.out", "Nod_Inf.out", "Obs_Node.out")
 
       mapply(file.remove, file.path(project.path, output_files))
 

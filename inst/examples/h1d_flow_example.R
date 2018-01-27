@@ -20,10 +20,6 @@ project_name = "h1dExample"
 parent_dir = path.expand("~")
 project_path = path.expand(file.path(parent_dir, project_name))
 
-library(hydrusR)
-library(data.table)
-library(dplyr)
-
 ## Basic inputs
 TimeUnit = "cm" ## Space units
 SpaceUnit = "hours" ## time units
@@ -125,12 +121,11 @@ run.H1D.simulation(project.path = project_path, hydrus.path = hydrus_path,
                    const.bot.bc = TRUE,atm.bc.data = atm_bc_data, TimeUnit = TimeUnit,
                    show.output = show_output)
 
-
-run.H1D.simulation(project.path = project_path, hydrus.path = hydrus_path,
-                   profile.depth = profile_depth,
-                   beginT = 0, endT = endTime, deltaT = tstep,
-                   bot.bc.type = bot_bc_type, bot.bc.value = const_botFlux,
-                   const.bot.bc = TRUE, soil.para = soil_para,
-                   atm.bc.data = atm_bc_data, ini.wt = initial_wtable,
-                   TimeUnit = TimeUnit, rdepth = rdepth,
-                   obs.nodes = obs_nodes_all, show.output = T)
+# run.H1D.simulation(project.path = project_path, hydrus.path = hydrus_path,
+#                    profile.depth = profile_depth,
+#                    beginT = 0, endT = endTime, deltaT = tstep,
+#                    bot.bc.type = bot_bc_type, bot.bc.value = const_botFlux,
+#                    const.bot.bc = TRUE, soil.para = soil_para,
+#                    atm.bc.data = atm_bc_data, ini.wt = initial_wtable,
+#                    TimeUnit = TimeUnit, rdepth = rdepth,
+#                    obs.nodes = obs_nodes_all, show.output = T)

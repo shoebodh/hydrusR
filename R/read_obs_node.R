@@ -10,7 +10,8 @@
 #' @export
 #'
 #' @examples
-read.obs_node<- function(project.path, out.file = "Obs_Node.out", obs.output = c("h", "theta"), obs.nodes, ...) {
+read.obs_node<- function(project.path, out.file = "Obs_Node.out", obs.output = NULL,
+            obs.nodes.all, ...) {
 
       # obs_node_out = read.table(file.path(simulation.path, "Obs_Node.out"),
       #                           header = F, sep = "", dec = ".",
@@ -23,7 +24,7 @@ read.obs_node<- function(project.path, out.file = "Obs_Node.out", obs.output = c
       # #
       #   output_names = obs_node_out[1, ]
       #   obs_node_out = obs_node_out[-c(1, nrow(obs_node_out)), ]
-
+options(warn = -1)
       obs_node_out = data.table::fread(input = file.path(project.path, out.file),
                                        fill = TRUE, blank.lines.skip = FALSE)
 
@@ -46,8 +47,8 @@ read.obs_node<- function(project.path, out.file = "Obs_Node.out", obs.output = c
       } else {
           output_cols = grepl(obs.output, names(obs_node_out))
             # output_ind = grepl(pattern = paste(c("Time", obs.output), collapse = "|"), x = names(obs_node_out))
-            cols = c("Time", names(obs_node_out)[output_cols])
-            obs_node_out =  obs_node_out[, cols]
+            in_cols = c("Time", names(obs_node_out)[output_cols])
+            obs_node_out =  obs_node_out[, in_cols]
 
       }
 
@@ -60,6 +61,8 @@ read.obs_node<- function(project.path, out.file = "Obs_Node.out", obs.output = c
 
       obs_node_out = rbind(t1, obs_node_out[rem_ind, ])
       row.names(obs_node_out) = NULL
+
+      options(warn = 0)
 
       return(obs_node_out)
 
