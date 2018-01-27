@@ -4,8 +4,8 @@
 \alias{read.obs_node}
 \title{Read observation point outputs from}
 \usage{
-read.obs_node(project.path, out.file = "Obs_Node.out", obs.output = c("h",
-  "theta"), obs.nodes, ...)
+read.obs_node(project.path, out.file = "Obs_Node.out", obs.output = NULL,
+  obs.nodes.all, ...)
 }
 \arguments{
 \item{...}{}

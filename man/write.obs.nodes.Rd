@@ -4,7 +4,7 @@
 \alias{write.obs.nodes}
 \title{Write observation nodes in profile.dat}
 \usage{
-write.obs.nodes(project.path, Z, dz, obs.nodes)
+write.obs.nodes(project.path, obs.nodes, ...)
 }
 \arguments{
 \item{obs.nodes}{}

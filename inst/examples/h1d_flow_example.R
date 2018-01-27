@@ -4,7 +4,7 @@ library(dplyr)
 
 ## Basic inputs
 profile_depth = 200
-ntimes = 3000
+ntimes = 1200
 tstep = 1
 deltaz = 1
 rdepth = 100
@@ -45,6 +45,7 @@ ntimesteps = length(1:total_timesteps)
 input_pet = TRUE
 LAI = 4.0
 et_rate = 0.6
+smr_model = 1
 
 ## Boundary conditions inputs
 const_botbc = TRUE
@@ -106,7 +107,7 @@ write.ini.cond(project.path = project_path, wt.depth = initial_wtable)
 
 write.root.dist(project.path = project_path,  rdepth = rooting_depth, rbeta = 0.962)
 
-write.hydraulic.para(project.path = project_path, para = soil_para)
+write.hydraulic.para(project.path = project_path, model = 1, para = soil_para)
 
 write.bottom.bc(constant.bc = TRUE, bc.type = bot_bc_type,
                 bc.value = const_botFlux, project.path = project_path)

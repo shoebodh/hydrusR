@@ -2,13 +2,15 @@
 % Please edit documentation in R/join_output_files.R
 \name{join.output.files}
 \alias{join.output.files}
-\title{Join the output files}
+\title{Join the output files from several H1D simulations (for longer simulation times than allowed by H1D (1000))}
 \usage{
 join.output.files(project.path, ...)
 }
 \arguments{
+\item{project.path}{path of hydrus project}
+
 \item{...}{}
 }
 \description{
-Join the output files
+Join the output files from several H1D simulations (for longer simulation times than allowed by H1D (1000))
 }
