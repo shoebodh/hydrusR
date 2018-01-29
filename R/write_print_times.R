@@ -19,7 +19,6 @@ write.print.times<- function(project.path, tmin, tmax, tstep, TimeUnit, ...){
       end_Tprint_ind = grep("BLOCK G", hydrus_input)
 
 
-      ptimes = seq((tmin + tstep), tmax, by = tstep)
 
       get.decimals <- function(x) {
             if ((x %% 1) != 0) {
@@ -29,15 +28,16 @@ write.print.times<- function(project.path, tmin, tmax, tstep, TimeUnit, ...){
             }
       }
 
+      ptimes = seq((tmin + tstep), tmax, by = tstep)
+
       if(length(ptimes) > 1000){
             stop("ERROR!Hydrus 1D doesnot allow printing > 1000 time steps!")
       }
 
       nrows = floor(length(ptimes)/6)
-
       p1 = ptimes[1:(nrows*6)]
-      rem_tstep= tmax - max(p1)
-
+      rem_tstep = length(ptimes) - length(p1)
+      rem_times = ptimes[(length(ptimes) - rem_tstep + 1):length(ptimes)]
 
       ptimes_mat = matrix(p1, nrow = nrows, ncol = 6, byrow = TRUE)
       fmt_vec = character(6)
@@ -57,7 +57,7 @@ write.print.times<- function(project.path, tmin, tmax, tstep, TimeUnit, ...){
       ptimes_mat_fmt = apply(ptimes_mat_fmt, MARGIN = 1, FUN = paste, collapse = "")
 
       if(rem_tstep > 0) {
-            last_line = (tmax - rem_tstep + tstep):tmax
+            last_line = rem_times
             last_line_fmt = sprintf(fmt = fmt_vec[1:length(last_line)], last_line)
             last_line_fmt = paste(last_line_fmt, collapse = "")
 

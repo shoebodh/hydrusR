@@ -53,7 +53,6 @@ create.H1D.project<-function(project.name, parent.dir, discription = NULL,
             dir.create(project_path)
       }
 
-
             args_vec = as.list(match.call())
             args_vec = lapply(args_vec[-1], FUN = function(x) unlist(x))
             # args_vec = unlist(unclass(args_vec))

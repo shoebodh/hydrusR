@@ -2,32 +2,29 @@ library(hydrusR)
 library(data.table)
 library(dplyr)
 
-
-project_name = "testproj2"
-parent_dir = path.expand("~/Documents")
-project_path = path.expand(file.path(parent_dir, project_name))
-
-
 ## Basic inputs
-profile_depth = 200
-ntimes = 1200
-tstep = 1
-deltaz = 1
-rdepth = 100
-time_step = 1
-soil_para = list(thr = 0.045, ths = 0.43,
-                 Alfa = 0.145, n = 2.69,Ks = 29.7, l = 0.45)
-smr_model = 0
-
-
- # hydrus_path =  "C:/Program Files (x86)/PC-Progress/Hydrus-1D 4.xx"
- hydrus_path = "/home/sacharya/.PlayOnLinux/wineprefix/Hydrus_1D/drive_c/Program Files/PC-Progress/Hydrus-1D 4.xx"
 
 ## Basic inputs
 TimeUnit = "cm" ## Space units
 SpaceUnit = "hours" ## time units
 PrintTimes = 1
-show_output = T
+
+profile_depth = 200
+endTime = 200
+deltaz = 1
+rdepth = 100
+time_step = 0.25
+soil_para = list(thr = 0.045, ths = 0.43,
+                 Alfa = 0.145, n = 2.69, Ks = 29.7, l = 0.45)
+
+ hydrus_path =  "C:/Program Files (x86)/PC-Progress/Hydrus-1D 4.xx"
+ # hydrus_path = "/home/shoebodh/PlayOnLinux's virtual drives/Windows7/drive_c/Program Files/PC-Progress/Hydrus-1D 4.xx/"
+
+
+project_name = "h1dExample"
+parent_dir = path.expand("~")
+project_path = path.expand(file.path(parent_dir, project_name))
+
 
 ##Process inputs
 rwu = T   ###  rootwater uptake
@@ -40,8 +37,7 @@ nObsNodes = length(obs_nodes_all)
 rooting_depth = 120
 
 ### Time inputs
-endTime = ntimes ### total time steps
-total_timesteps = endTime/tstep
+total_timesteps = endTime/time_step
 ntimesteps = length(1:total_timesteps)
 
 ## LAI and pet
@@ -55,7 +51,8 @@ bot_bc_type = "flux"
 const_botFlux = 0.0000 ##### in cm/hr
 
 ### Atmospheric top boundary conditions
-atm_bc_data = data.frame(tAtm = seq(time_step, endTime, tstep),
+### Time variable boundary conditions.
+atm_bc_data = data.frame(tAtm = seq(time_step, endTime, time_step),
                          Prec = numeric(ntimesteps),
                          rSoil = numeric(ntimesteps),
                          rRoot = numeric(ntimesteps),
@@ -65,12 +62,20 @@ atm_bc_data = data.frame(tAtm = seq(time_step, endTime, tstep),
                          ht = numeric(ntimesteps),
                          RootDepth = numeric(ntimesteps))
 
+
+if(isTRUE(input_pet)) {
+      atm_bc_data$rRoot = rep(LAI, nrow(atm_bc_data))
+      atm_bc_data$rSoil = rep(et_rate/2, nrow(atm_bc_data))
+} else {
+      atm_bc_data$rRoot = rep(et_rate/2, nrow(atm_bc_data))
+      atm_bc_data$rSoil = rep(et_rate/2, nrow(atm_bc_data))
+
+}
+
+################## for hourly time units
 const_et = rep(et_rate, 365)
 hourly_et =  et.hourly(Et.Daily = const_et)
-
 hourly_et = hourly_et[rep(seq_len(nrow(hourly_et)), each = 1/time_step), ] ### for 0.25 time steps
-hourly_et = dplyr::mutate(hourly_et, et = et/(1/time_step))
-
 hourly_et$rSoil = hourly_et$et/2
 hourly_et$rRoot = hourly_et$et/2
 
@@ -109,7 +114,7 @@ write.ini.cond(project.path = project_path, wt.depth = initial_wtable)
 
 write.root.dist(project.path = project_path,  rdepth = rooting_depth, rbeta = 0.962)
 
-write.hydraulic.para(project.path = project_path, model = smr_model, para = soil_para)
+write.hydraulic.para(project.path = project_path, para = soil_para)
 
 write.bottom.bc(constant.bc = TRUE, bc.type = bot_bc_type,
                 bc.value = const_botFlux, project.path = project_path)
@@ -119,16 +124,7 @@ write.bottom.bc(constant.bc = TRUE, bc.type = bot_bc_type,
 
 run.H1D.simulation(project.path = project_path, hydrus.path = hydrus_path,
                    profile.depth = profile_depth,
-                   beginT = 0, endT = endTime, deltaT = tstep,
+                   beginT = 0, endT = endTime, deltaT = time_step,
                    bot.bc.type = bot_bc_type, bot.bc.value = const_botFlux,
                    const.bot.bc = TRUE,atm.bc.data = atm_bc_data, TimeUnit = TimeUnit,
-                   show.output = show_output)
-
-# run.H1D.simulation(project.path = project_path, hydrus.path = hydrus_path,
-#                    profile.depth = profile_depth,
-#                    beginT = 0, endT = endTime, deltaT = tstep,
-#                    bot.bc.type = bot_bc_type, bot.bc.value = const_botFlux,
-#                    const.bot.bc = TRUE, soil.para = soil_para,
-#                    atm.bc.data = atm_bc_data, ini.wt = initial_wtable,
-#                    TimeUnit = TimeUnit, rdepth = rdepth,
-#                    obs.nodes = obs_nodes_all, show.output = T)
+                   show.output = T)
