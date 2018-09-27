@@ -10,15 +10,15 @@ SpaceUnit = "hours" ## time units
 PrintTimes = 1
 
 profile_depth = 200
-endTime = 200
+endTime = 500
 deltaz = 1
 rdepth = 100
 time_step = 0.25
 soil_para = list(thr = 0.045, ths = 0.43,
                  Alfa = 0.145, n = 2.69, Ks = 29.7, l = 0.45)
 
- hydrus_path =  "C:/Program Files (x86)/PC-Progress/Hydrus-1D 4.xx"
- # hydrus_path = "/home/shoebodh/PlayOnLinux's virtual drives/Windows7/drive_c/Program Files/PC-Progress/Hydrus-1D 4.xx/"
+ # hydrus_path =  "C:/Program Files (x86)/PC-Progress/Hydrus-1D 4.xx"
+ hydrus_path = "/home/sacharya/.PlayOnLinux/wineprefix/Hydrus_1D/drive_c/Program Files/PC-Progress/Hydrus-1D 4.xx/"
 
 
 project_name = "h1dExample"

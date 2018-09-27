@@ -12,7 +12,6 @@
 #' @examples
 read.tlevel.out<- function(project.path, out.file = "T_Level.out", output = NULL,
          warn = FALSE, ...){
-playone
 
    if(is.null(output) | missing(output)) {
             output = output = c("rTop", "rRoot", "vTop", "vRoot",
@@ -51,6 +50,12 @@ playone
  sum_cols_ind = grep("sum", names(tlevel_out))
  sum_col_names = names(tlevel_out)[sum_cols_ind]
 
+ if(length(tstart_ind) == 1){
+
+   tlevel_out = tlevel_out
+
+ } else {
+
   for(i in 2: length(tstart_ind)){
         run1_totals = tlevel_out[(tstart_ind[i]-1), sum_cols_ind]
 
@@ -65,8 +70,8 @@ playone
    }
 
  }
-
-optins(warn = 0)
+}
+options(warn = 0)
 
   return(tlevel_out)
 

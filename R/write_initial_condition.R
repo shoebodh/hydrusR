@@ -16,7 +16,7 @@ write.ini.cond<- function(project.path, pr.vec = NULL, wt.depth, ...) {
 
       profile_summary = profile_data1[1:5]
 
-      node_num_ind = grep(pattern =  ("^[0-9]"), profile_data1)
+      node_num_ind = grep(pattern =  ("^[0-9]$"), profile_data1)
       node_info_lines = profile_data1[node_num_ind:(length(profile_data1))]
 
       header_split = unlist(strsplit(profile_data1[5], split = " "))

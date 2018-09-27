@@ -27,8 +27,10 @@ read.nod_inf<- function(project.path, out.file = "Nod_Inf.out", output = NULL, w
       # colnames(nod_inf) = as.character(nod_inf[10, ])
 
       time_lines = nod_inf[grepl("Time:", nod_inf[["Node"]]), ]
-      times = c(0, as.numeric(time_lines[[2]]))
-      dup_times = times[duplicated(times)]
+
+       times = c(0, as.numeric(time_lines$Depth))
+
+      # dup_times_index = which(duplicated(times))
 
       for (col in colnames(nod_inf)) set(nod_inf, j=col, value= as.numeric(nod_inf[[col]]))
 
@@ -40,7 +42,18 @@ read.nod_inf<- function(project.path, out.file = "Nod_Inf.out", output = NULL, w
 
       nod_inf[, Time:= rep(times, each = length(nodes))]
 
-      nod_inf = nod_inf[!Time %in% dup_times, ]
+      nod_split = split(nod_inf, f = nod_inf$Time)
+
+      nrow_split = sapply(nod_split, nrow)
+
+      extra_index = which(nrow_split > length(nodes))
+
+      for(i in extra_index){
+            nod_split[[i]] = nod_split[[i]][1:length(nodes), ]
+      }
+
+
+      nod_inf =  rbindlist(nod_split)
 
       output_names = intersect(output, colnames(nod_inf))
       output_names = c("Time", "Node", "Depth", output_names)

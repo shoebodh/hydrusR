@@ -11,7 +11,7 @@
 #'
 #' @examples
 read.obs_node<- function(project.path, out.file = "Obs_Node.out", obs.output = NULL,
-            obs.nodes.all, ...) {
+            obs.nodes, ...) {
 
       # obs_node_out = read.table(file.path(simulation.path, "Obs_Node.out"),
       #                           header = F, sep = "", dec = ".",
@@ -28,14 +28,20 @@ options(warn = -1)
       obs_node_out = data.table::fread(input = file.path(project.path, out.file),
                                        fill = TRUE, blank.lines.skip = FALSE)
 
-      output_names = unlist(unclass(obs_node_out[10]))
+      node_ind = grep("Node", data.frame(obs_node_out)[, 1])
+      output_names = unlist(unclass(obs_node_out[node_ind + 2]))
       output_names = unique(output_names[!is.na(output_names)])
+      output_names = output_names[output_names != ""]
       output_names = output_names[2:length(output_names)]
 
-      obs_node_out = obs_node_out[-c(1:10, nrow(obs_node_out)), ]
+      obs_node_out = obs_node_out[-c(1:(node_ind + 2), nrow(obs_node_out)), ]
       obs_node_out = obs_node_out[, colnames(obs_node_out) := lapply(.SD, as.numeric), .SDcols = colnames(obs_node_out)]
 
+    all_na_ind =   sapply(X = obs_node_out, function(x) !all(is.na(x)))
+     obs_node_out = obs_node_out[, (all_na_ind), with = F]
+
       output_names_rep = rep(output_names, times = length(obs.nodes))
+
       obs_nodes_rep = rep(obs.nodes, each = length(output_names))
       output_names_all = paste(output_names_rep, obs_nodes_rep, sep = "_")
       colnames(obs_node_out) = c("Time", output_names_all)

@@ -29,8 +29,8 @@ para_name_list = list("0" = c("thr", "ths", "Alfa", "n", "Ks", "l"),
                       "6" = c("thr", "ths", "Alfa", "n", "Ks", "l", "thrIm", "thsIm", "Omega"),
                       "7" = c("thr", "ths", "Alfa", "n", "Ks", "l", "thrIm", "thsIm", "AlfaIm", "nIm", "Omega"))
 
-      input_data = readLines(con = file.path(project.path, "SELECTOR.IN"),
-                             n = -1L, encoding = "unknown")
+input_data = readLines(con = file.path(project.path, "SELECTOR.IN"),
+                       n = -1L, encoding = "unknown")
 
       basic_inf_ind  = grep("BLOCK A", input_data)
       flow_block_ind = grep("BLOCK B", input_data)

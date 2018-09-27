@@ -31,6 +31,7 @@ join.output.files<- function(project.path, ...) {
       Alevel_data[-1] = lapply(Alevel_data[-1], FUN = function(x) x[-c(1:5, length(x))])
       Alevel_data_all = do.call("c", Alevel_data)
       Alevel_data_all = c(Alevel_data_all, "end")
+
       names(Alevel_data_all) = NULL
 
 

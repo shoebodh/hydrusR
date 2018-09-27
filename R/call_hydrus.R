@@ -28,7 +28,6 @@ call.H1D<- function(project.path, hydrus.path, show.output = TRUE, ...){
               minimized = TRUE, invisible = TRUE)
  }
 
-
       setwd(oldwd)
 
 }
