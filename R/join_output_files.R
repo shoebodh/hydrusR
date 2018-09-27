@@ -1,6 +1,7 @@
 #' Join the output files from several H1D simulations (for longer simulation times than allowed by H1D (1000))
 #'
-#' @param project.path path of hydrus project
+#' @param project.path Path of the hydrus project
+#' @param out.files.path Directory of output files. Default is 'defaults' which = project.path
 #' @param ...
 #'
 #' @return
@@ -8,7 +9,7 @@
 #'
 #' @examples
 
-join.output.files<- function(project.path, ...) {
+join.output.files<- function(project.path, out.files.path = "default", ...) {
 
       output_files = c("A_Level.out", "T_Level.out", "Nod_Inf.out", "Obs_Node.out")
 
@@ -34,7 +35,6 @@ join.output.files<- function(project.path, ...) {
 
       names(Alevel_data_all) = NULL
 
-
       Tlevel_files = sapply(sim_dirs_ordered, FUN = list.files, pattern = "T_Level.out",
                             full.names = TRUE)
 
@@ -45,8 +45,6 @@ join.output.files<- function(project.path, ...) {
       Tlevel_data_all = do.call("c", Tlevel_data)
       Tlevel_data_all = c(Tlevel_data_all, "end")
       names(Tlevel_data_all) = NULL
-
-
 
       nod_inf_files = sapply(sim_dirs_ordered, FUN = list.files,
                              pattern = "Nod_Inf.out", full.names = T)
@@ -67,17 +65,25 @@ join.output.files<- function(project.path, ...) {
       obs_node_data_all = do.call("c", obs_node_data)
       obs_node_data_all = c(obs_node_data_all, "end")
 
-      write(Alevel_data_all, file = file.path(project.path, "A_Level.out"),
+      if(missing(out.files.path)| (out.files.path == "default")) {
+            out.files.path = project.path
+      } else {
+            out.files.path = out.files.path
+      }
+
+      if(!dir.exists(out.files.path)) dir.create(out.files.path)
+
+      write(Alevel_data_all, file = file.path(out.files.path, "A_Level.out"),
             append = F)
       cat("A_Level.out...\n")
 
-       write(Tlevel_data_all, file = file.path(project.path, "T_Level.out"), append = F)
-        cat("T_Level.out...\n")
+      write(Tlevel_data_all, file = file.path(out.files.path, "T_Level.out"), append = F)
+      cat("T_Level.out...\n")
 
-      write(obs_node_data_all, file = file.path(project.path, "Obs_Node.out"))
+      write(obs_node_data_all, file = file.path(out.files.path, "Obs_Node.out"))
 
-       cat("Nod_Inf.out...\n")
-      write(nod_inf_data_all, file = file.path(project.path, "Nod_Inf.out"),
+      cat("Nod_Inf.out...\n")
+      write(nod_inf_data_all, file = file.path(out.files.path, "Nod_Inf.out"),
             append = F)
       cat("Obs_Node.out...\n")
 

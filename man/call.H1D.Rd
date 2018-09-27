@@ -7,7 +7,12 @@
 call.H1D(project.path, hydrus.path, show.output = TRUE, ...)
 }
 \arguments{
-\item{show.output}{Logical (Default = TRUE) whether the shell output should be  visible on R console}
+\item{project.path}{Path of the hydrus project}
+
+\item{hydrus.path}{Path of the Hydrus 1D executable}
+
+\item{show.output}{Logical (Default = TRUE) whether the shell
+output should be visible on R console (relevant only on windows)}
 
 \item{...}{}
 }

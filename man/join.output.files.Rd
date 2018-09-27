@@ -4,10 +4,12 @@
 \alias{join.output.files}
 \title{Join the output files from several H1D simulations (for longer simulation times than allowed by H1D (1000))}
 \usage{
-join.output.files(project.path, ...)
+join.output.files(project.path, out.files.path = "default", ...)
 }
 \arguments{
-\item{project.path}{path of hydrus project}
+\item{project.path}{Path of the hydrus project}
+
+\item{out.files.path}{Directory of output files. Default is 'defaults' which = project.path}
 
 \item{...}{}
 }

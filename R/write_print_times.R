@@ -18,16 +18,6 @@ write.print.times<- function(project.path, tmin, tmax, tstep, TimeUnit, ...){
       Tprint_ind = grep("TPrint", hydrus_input)
       end_Tprint_ind = grep("BLOCK G", hydrus_input)
 
-
-
-      get.decimals <- function(x) {
-            if ((x %% 1) != 0) {
-                  nchar(strsplit(sub('0+$', '', as.character(x)), ".", fixed=TRUE)[[1]][[2]])
-            } else {
-                  return(0)
-            }
-      }
-
       ptimes = seq((tmin + tstep), tmax, by = tstep)
 
       if(length(ptimes) > 1000){
@@ -41,7 +31,7 @@ write.print.times<- function(project.path, tmin, tmax, tstep, TimeUnit, ...){
 
       ptimes_mat = matrix(p1, nrow = nrows, ncol = 6, byrow = TRUE)
       fmt_vec = character(6)
-      tstep_decimals = get.decimals(tstep)
+      tstep_decimals = get.decimalplaces(tstep)
       fmt_vec = c("%11.0f", rep("%12.0f", 5))
 
       if(tstep_decimals > 0){

@@ -13,7 +13,8 @@
 #' @examples
 #'
 read.nod_inf<- function(project.path, out.file = "Nod_Inf.out", output = NULL, warn = FALSE, ...){
-      if(is.null(output) | missing(output)) {
+
+    if(is.null(output) | missing(output)) {
             output = c("Head", "Moisture", "K", "C", "Flux",
                        "Sink", "Kappa", "v/KsTop", "Temp")
       }
