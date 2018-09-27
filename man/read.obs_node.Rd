@@ -2,14 +2,23 @@
 % Please edit documentation in R/read_obs_node.R
 \name{read.obs_node}
 \alias{read.obs_node}
-\title{Read observation point outputs from}
+\title{Read observation point outputs}
 \usage{
-read.obs_node(project.path, out.file = "Obs_Node.out", obs.output = NULL,
-  obs.nodes.all, ...)
+read.obs_node(project.path, out.file = "Obs_Node.out",
+  obs.output = NULL, obs.nodes, ...)
 }
 \arguments{
+\item{project.path}{Directory of the model input/outputs}
+
+\item{out.file}{The output file name. Default is "Obs_Node.out", produced by the Hydrus 1D program}
+
+\item{obs.output}{The output to be returned.Default = NULL, i.e., all the outputs are read
+Other options are "h", "theta", "Flux". example, obs.output = c("h", "theta")}
+
+\item{obs.nodes}{Numeric Vector of the observation nodes defined in the PROFILE.DAT}
+
 \item{...}{}
 }
 \description{
-Read observation point outputs from
+Read observation point outputs
 }

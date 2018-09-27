@@ -4,8 +4,8 @@
 \alias{create.soil.profile}
 \title{Creates a new PROFILE.DAT file using a template included in the package.}
 \usage{
-create.soil.profile(project.path, out.file = "PROFILE.DAT", profile.depth,
-  dz = 1, Temp = 20, Conc = 0, ...)
+create.soil.profile(project.path, out.file = "PROFILE.DAT",
+  profile.depth, dz = 1, Temp = 20, Conc = 0, ...)
 }
 \arguments{
 \item{project.path}{Location of the H1D project in the directory}

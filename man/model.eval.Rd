@@ -4,7 +4,8 @@
 \alias{model.eval}
 \title{Calculate RMSE and Nash-Sutcliffe CEFF of the simulation}
 \usage{
-model.eval(data, var.name = "", print.stats = TRUE, plot = FALSE, ...)
+model.eval(data, var.name = "", print.stats = TRUE, plot = FALSE,
+  ...)
 }
 \arguments{
 \item{...}{}

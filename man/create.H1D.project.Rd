@@ -6,8 +6,8 @@
 \usage{
 create.H1D.project(project.name, parent.dir, discription = NULL,
   TimeUnit = "days", SpaceUnit = "cm", PrintTimes = 1,
-  processes = c(WaterFlow = T, RootWaterUptake = F), geometry, initial.cond,
-  ...)
+  processes = c(WaterFlow = T, RootWaterUptake = F), geometry,
+  initial.cond, ...)
 }
 \arguments{
 \item{project.name}{Name of the project}

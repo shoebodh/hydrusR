@@ -4,7 +4,8 @@
 \alias{write.hydraulic.para}
 \title{Write soil hydraulic parameters to selector.in}
 \usage{
-write.hydraulic.para(project.path, model = 0, hysteresis = 0, para, ...)
+write.hydraulic.para(project.path, model = 0, hysteresis = 0, para,
+  ...)
 }
 \arguments{
 \item{...}{}

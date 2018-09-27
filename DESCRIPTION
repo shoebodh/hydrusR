@@ -9,7 +9,7 @@ Description: Create, run and analyze HYDRUS-1D simulations, all inside R
 License: GPL 3.0
 LazyData: TRUE
 Depends: data.table (>= 1.9.7)
-RoxygenNote: 6.0.1
+RoxygenNote: 6.1.0
 Suggests: knitr,
     rmarkdown
 VignetteBuilder: knitr
