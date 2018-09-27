@@ -1,9 +1,10 @@
-#' Read observation point outputs from
-#'
-#' @param project.path
-#' @param out.file
-#' @param obs.output
-#' @param obs.nodes
+#' @Description Reads observation point outputs of h, theta and flux, that is produced in the "Obs_Node.out" file
+#' @title Read observation point outputs
+#' @param project.path Directory of the model input/outputs
+#' @param out.file   The output file name. Default is "Obs_Node.out", produced by the Hydrus 1D program
+#' @param obs.output The output to be returned.Default = NULL, i.e., all the outputs are read
+#'                   Other options are "h", "theta", "Flux". example, obs.output = c("h", "theta")
+#' @param obs.nodes Numeric Vector of the observation nodes defined in the PROFILE.DAT
 #' @param ...
 #'
 #' @return
