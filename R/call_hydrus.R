@@ -18,6 +18,8 @@ call.H1D<- function(project.path, hydrus.path, show.output = TRUE, ...){
 
       oldwd = getwd()
       level_01 = file.path(hydrus.path, "LEVEL_01.DIR")
+      Sys.chmod(level_01, "666")
+
       write(x = noquote(project.path), file = level_01, append = F)
 
       setwd(hydrus.path)
