@@ -8,7 +8,7 @@ Maintainer: <shoebodh@gmail.com>
 Description: Create, run and analyze HYDRUS-1D simulations, all inside R
 License: GPL 3.0
 LazyData: TRUE
-Depends: data.table (>= 1.12.8)
+Depends: data.table (>= 1.10.0)
 RoxygenNote: 7.1.0
 Suggests: knitr,
     rmarkdown
