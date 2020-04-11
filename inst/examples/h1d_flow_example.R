@@ -1,6 +1,6 @@
 library(hydrusR)
-library(data.table)
-library(dplyr)
+suppressWarnings(library(data.table))
+suppressWarnings(library(dplyr))
 
 ## Basic inputs
 
