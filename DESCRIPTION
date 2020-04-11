@@ -1,14 +1,14 @@
 Package: hydrusR
 Type: Package
-Title: Package to run HYDRUS-1D and analyse results
-Version: 0.2.0
-Date: 2016-03-22
+Title: Utility package to run HYDRUS-1D and analyse results
+Version: 0.3.0
+Date: 2020-04-11
 Author: Subodh Acharya
-Maintainer: Who to complain to <shoebodh@gmail.com>
+Maintainer: <shoebodh@gmail.com>
 Description: Create, run and analyze HYDRUS-1D simulations, all inside R
 License: GPL 3.0
 LazyData: TRUE
-Depends: data.table (>= 1.9.7)
+Depends: data.table (>= 1.12.8)
 RoxygenNote: 6.1.0
 Suggests: knitr,
     rmarkdown

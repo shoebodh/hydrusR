@@ -15,7 +15,7 @@
 #' @param rdepth rooting depth
 #' @param obs.nodes Observation node points (vector)
 #' @param show.output Logical, whether the shell output of HYDRUS1D run should be displayed on R console, default = F
-#'
+#' @import data.table
 #' @export
 #'
 #' @examples
@@ -55,7 +55,7 @@ run.H1D.simulation = function(project.path, hydrus.path = NULL, profile.depth,
 
    } else {
 
-      cat("Calculating times", 1, "to", 960*deltaT, ".....\n")
+      message("Calculating times ", 1, " to ", 960*deltaT, ".....\n")
 
       write.atmosph.in(project.path, maxAL = 960, deltaT = deltaT,
                        atm.bc.data = atm_bc_data[1:960, ])
@@ -99,7 +99,7 @@ run.H1D.simulation = function(project.path, hydrus.path = NULL, profile.depth,
 
          options(warn = 0)
 
-         cat("Calculations from time", 1, "to", 960*deltaT, "success .....\n")
+         message("Calculations from time ", 1, " to ", 960*deltaT, " success .....\n")
 
          for(s in 2:sim_number) {
 
@@ -131,7 +131,7 @@ run.H1D.simulation = function(project.path, hydrus.path = NULL, profile.depth,
 
                atm_bc_data_s = atm.bc.data[sim_times_s, ]
 
-               cat("Calculating times", ceiling(beginTnew*deltaT), "to",
+               message("Calculating times ", ceiling(beginTnew*deltaT), " to ",
                    endTnew*deltaT, "\n")
 
                write.ini.cond(project.path, profile.depth = profile.depth,
@@ -169,10 +169,8 @@ run.H1D.simulation = function(project.path, hydrus.path = NULL, profile.depth,
 
                options(warn = 0)
 
-
-
-               cat("simulation from time", ceiling(beginTnew*deltaT), "to",
-                   endTnew*deltaT, "success .....\n")
+               message("simulation from time ", ceiling(beginTnew*deltaT), " to ",
+                   endTnew*deltaT, " success .....\n")
 
                next;
 
@@ -181,7 +179,7 @@ run.H1D.simulation = function(project.path, hydrus.path = NULL, profile.depth,
 
          }
 
-         cat("combining all calculations .....\n")
+         message("combining all output files .....")
          #####
          join.output.files(project.path)
 
@@ -189,7 +187,7 @@ run.H1D.simulation = function(project.path, hydrus.path = NULL, profile.depth,
          mapply(FUN = unlink, sim_dirs, recursive = T, force = T)
 
       }
-      cat("Calculations have finished successfully.")
+      message("Calculations have finished successfully...")
    }
 
 }
