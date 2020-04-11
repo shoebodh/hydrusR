@@ -4,8 +4,13 @@
 \alias{read.alevel.out}
 \title{Read outputs of ALEVEL.OUT}
 \usage{
-read.alevel.out(project.path, out.file = "A_Level.out", output = NULL,
-  warn = FALSE, ...)
+read.alevel.out(
+  project.path,
+  out.file = "A_Level.out",
+  output = NULL,
+  warn = FALSE,
+  ...
+)
 }
 \arguments{
 \item{project.path}{path of hydrus project}
@@ -17,6 +22,9 @@ read.alevel.out(project.path, out.file = "A_Level.out", output = NULL,
 \item{warn}{Logical for displaying/suppressing warnings producted by data.table::fread()}
 
 \item{...}{}
+}
+\value{
+
 }
 \description{
 Read outputs of ALEVEL.OUT

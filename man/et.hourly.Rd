@@ -9,6 +9,9 @@ et.hourly(Et.Daily, hours = 6:20)
 \arguments{
 \item{hours}{}
 }
+\value{
+
+}
 \description{
 Generates hourly ET inputs from provided daily value.
 }

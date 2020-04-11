@@ -4,14 +4,20 @@
 \alias{write.obs.nodes}
 \title{Write observation nodes in profile.dat}
 \usage{
-write.obs.nodes(project.path, obs.nodes, ...)
+write.obs.nodes(project.path, obs.nodes = NULL, ...)
 }
 \arguments{
-\item{obs.nodes}{}
+\item{project.path}{path to the hydrus project}
+
+\item{obs.nodes}{Observation nodes}
 }
 \description{
 Write observation nodes in profile.dat
 }
 \examples{
+\dontrun{
+write.obs.nodes(project.path, obs.nodes = c(5, 10, 20, 30)) ## Writes at these depths
+write.obs.nodes(project.path) ##
+}
 
 }

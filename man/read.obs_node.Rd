@@ -4,8 +4,13 @@
 \alias{read.obs_node}
 \title{Read observation point outputs}
 \usage{
-read.obs_node(project.path, out.file = "Obs_Node.out",
-  obs.output = NULL, obs.nodes, ...)
+read.obs_node(
+  project.path,
+  out.file = "Obs_Node.out",
+  obs.output = NULL,
+  obs.nodes,
+  ...
+)
 }
 \arguments{
 \item{project.path}{Directory of the model input/outputs}
@@ -18,6 +23,9 @@ Other options are "h", "theta", "Flux". example, obs.output = c("h", "theta")}
 \item{obs.nodes}{Numeric Vector of the observation nodes defined in the PROFILE.DAT}
 
 \item{...}{}
+}
+\value{
+
 }
 \description{
 Read observation point outputs

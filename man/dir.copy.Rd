@@ -17,6 +17,9 @@ dir.copy(src.dir, dest.dir, overwrite = TRUE, ask = FALSE, ...)
 
 \item{...}{}
 }
+\value{
+
+}
 \description{
 Copy contents of a folder to another
 }

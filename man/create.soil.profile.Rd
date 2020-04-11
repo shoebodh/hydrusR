@@ -4,8 +4,16 @@
 \alias{create.soil.profile}
 \title{Creates a new PROFILE.DAT file using a template included in the package.}
 \usage{
-create.soil.profile(project.path, out.file = "PROFILE.DAT",
-  profile.depth, dz = 1, Temp = 20, Conc = 0, ...)
+create.soil.profile(
+  project.path,
+  out.file = "PROFILE.DAT",
+  profile.depth,
+  dz = 1,
+  Temp = 20,
+  Conc = 0,
+  obs.nodes = NULL,
+  ...
+)
 }
 \arguments{
 \item{project.path}{Location of the H1D project in the directory}
@@ -18,7 +26,10 @@ create.soil.profile(project.path, out.file = "PROFILE.DAT",
 
 \item{Conc}{Concentration, zero in initial profile}
 
-\item{obs.nodes}{Vector of observation points in the profile}
+\item{obs.nodes}{Observation nodes}
+}
+\value{
+
 }
 \description{
 Creates a new PROFILE.DAT file using a template included in the package.

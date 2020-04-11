@@ -17,6 +17,9 @@ write.ini.cond(project.path, pr.vec = NULL, wt.depth, ...)
 
 \item{profile.depth}{Depth of soil profile}
 }
+\value{
+
+}
 \description{
 Write root distribution in profile.dat
 }

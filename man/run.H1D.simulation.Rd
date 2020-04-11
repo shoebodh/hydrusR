@@ -4,10 +4,25 @@
 \alias{run.H1D.simulation}
 \title{This is the main simulation function}
 \usage{
-run.H1D.simulation(project.path, hydrus.path = NULL, profile.depth,
-  beginT, endT, deltaT, bot.bc.type, bot.bc.value, const.bot.bc, soil.para,
-  atm.bc.data, ini.wt, TimeUnit = "days", rdepth, obs.nodes,
-  show.output = TRUE, ...)
+run.H1D.simulation(
+  project.path,
+  hydrus.path = NULL,
+  profile.depth,
+  beginT,
+  endT,
+  deltaT,
+  bot.bc.type,
+  bot.bc.value,
+  const.bot.bc,
+  soil.para,
+  atm.bc.data,
+  ini.wt,
+  TimeUnit = "days",
+  rdepth,
+  obs.nodes,
+  show.output = TRUE,
+  ...
+)
 }
 \arguments{
 \item{endT}{end time}

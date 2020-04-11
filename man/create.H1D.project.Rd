@@ -4,10 +4,18 @@
 \alias{create.H1D.project}
 \title{Creates a new hydrus project folder with "HYDRUS1D.DAT" and "DISCRIPT.TXT" files}
 \usage{
-create.H1D.project(project.name, parent.dir, discription = NULL,
-  TimeUnit = "days", SpaceUnit = "cm", PrintTimes = 1,
-  processes = c(WaterFlow = T, RootWaterUptake = F), geometry,
-  initial.cond, ...)
+create.H1D.project(
+  project.name,
+  parent.dir,
+  discription = NULL,
+  TimeUnit = "days",
+  SpaceUnit = "cm",
+  PrintTimes = 1,
+  processes = c(WaterFlow = T, RootWaterUptake = F),
+  geometry,
+  initial.cond,
+  ...
+)
 }
 \arguments{
 \item{project.name}{Name of the project}

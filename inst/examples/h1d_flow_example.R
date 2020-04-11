@@ -21,7 +21,7 @@ soil_para = list(thr = 0.045, ths = 0.43,
  # hydrus_path = "/home/sacharya/.PlayOnLinux/wineprefix/Hydrus_1D/drive_c/Program Files/PC-Progress/Hydrus-1D 4.xx/"
 
 
-project_name = "h1dExample2"
+project_name = "h1dExample3"
 parent_dir = path.expand("~")
 project_path = path.expand(file.path(parent_dir, project_name))
 

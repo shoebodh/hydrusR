@@ -9,6 +9,9 @@ get.decimalplaces(x)
 \arguments{
 \item{x}{A double numerical}
 }
+\value{
+
+}
 \description{
 Get the number of decimal digits in a numeric value
 }

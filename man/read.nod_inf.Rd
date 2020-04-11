@@ -4,8 +4,13 @@
 \alias{read.nod_inf}
 \title{READ outputs of NOD_INF.OUT}
 \usage{
-read.nod_inf(project.path, out.file = "Nod_Inf.out", output = NULL,
-  warn = FALSE, ...)
+read.nod_inf(
+  project.path,
+  out.file = "Nod_Inf.out",
+  output = NULL,
+  warn = FALSE,
+  ...
+)
 }
 \arguments{
 \item{project.path}{Path to the H1D project}
@@ -18,6 +23,9 @@ Default is NULL, meaning all the outputs is read.}
 \item{warn}{Should the warning of coercion of character to NA be shown}
 
 \item{...}{}
+}
+\value{
+
 }
 \description{
 READ outputs of NOD_INF.OUT

@@ -13,6 +13,9 @@ format2sci(x, ndec, power.digits, ...)
 
 \item{power.digits}{Number of power digits to apply (e.g., e+002)}
 }
+\value{
+
+}
 \description{
 Format number to scientific format according to HYDRUS inputs
 }

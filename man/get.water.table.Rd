@@ -9,6 +9,9 @@ get.water.table(tlevel.out, profile.depth)
 \arguments{
 \item{profile.depth}{}
 }
+\value{
+
+}
 \description{
 Extracts water table depth at each time step
 }
