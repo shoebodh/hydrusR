@@ -11,16 +11,35 @@
 #'
 #' @examples
 
-call.H1D<- function(project.path, hydrus.path, show.output = TRUE, ...){
-      os.type = .Platform$OS.type
+call.H1D<- function(project.path, hydrus.path = NULL, show.output = TRUE, ...){
+
+   os.type = .Platform$OS.type
+
+   if(is.null(hydrus.path)) {
+
+      if(os.type == "windows"){
+         win_def_hdir = "C:/Program Files (x86)/PC-Progress"
+         h1d_version_dir = list.files(win_def_hdir, full.names = T, pattern = "Hydrus-1D")
+         h1d_versions = sapply(basename(h1d_version_dir),
+                                        function(x) {
+                                          name_split = unlist(strsplit(x, " |\\."))
+                                          return(as.numeric(name_split[2]))
+                                          })
+
+          hydrus.path = h1d_version_dir[which.max(h1d_versions)]
+
+         }
+
+   }
 
       hydrus.exe = "H1D_CALC.EXE"  #### Windows sepcific executable name
 
       oldwd = getwd()
-      level_01 = file.path(hydrus.path, "LEVEL_01.DIR")
-      Sys.chmod(level_01, "666")
+      file_level01 = file.path(hydrus.path, "LEVEL_01.DIR")
+      Sys.chmod(file_level01, "0777")
+      # if(!file.exists(file_level01)) file(file_level01, "w+")
 
-      write(x = noquote(project.path), file = level_01, append = F)
+      write(x = noquote(project.path), file = file_level01, append = F)
 
       setwd(hydrus.path)
 

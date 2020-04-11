@@ -1,51 +1,45 @@
 #' Write observation nodes in profile.dat
 #'
-#' @param project.path
-#' @param obs.nodes
+#' @param project.path path to the hydrus project
+#' @param obs.nodes Observation nodes
 #'
 #' @export
 #'
-#' @examples
+#' @examples \dontrun{
+#' write.obs.nodes(project.path, obs.nodes = c(5, 10, 20, 30)) ## Writes at these depths
+#' write.obs.nodes(project.path) ##
+#' }
 #'
-write.obs.nodes<- function(project.path, obs.nodes, ...) {
-      profile_data1 =   readLines(con = file.path(project.path, "PROFILE.DAT"),
+write.obs.nodes<- function(project.path, obs.nodes = NULL, ...) {
+      def_profile_data =   readLines(con = file.path(project.path, "PROFILE.DAT"),
                                  n = -1L, encoding = "unknown", warn = F)
 
-      profile_summary = profile_data1[1:5]
+      profile_summary = def_profile_data[1:4]
 
-      node_num_ind = grep(pattern =  ("^[0-9]"), profile_data1)
+      pr_header = trimws(def_profile_data[4])
+      num_nodes = as.numeric(unlist(strsplit(pr_header, " "))[1])
+      profile_depth = num_nodes - 1
 
-      if(length(node_num_ind) == 0) {
-            profile_data = profile_data1[6:length(profile_data1)]
+       profile_body = def_profile_data[5:(5 + num_nodes - 1)]
+
+       if(length(obs.nodes) == 1 && obs.nodes == 0) obs.nodes = NULL
+
+      if(missing(obs.nodes)|is.null(obs.nodes)) {
+         num_obs_nodes = sprintf("%5.0f", 0)
+
       } else {
-            profile_data = profile_data1[6:(node_num_ind - 1)]
+         num_obs_nodes = sprintf("%5.0f", length(obs.nodes))
+         if(max(obs.nodes) > profile_depth){
+            cat ("omitting observation noded deeper than  profile  depth ...\n" )
+            obs.nodes = obs.nodes[obs.nodes <= profile_depth]
+
+         }
       }
 
-      profile_summary_line = unlist(strsplit(profile_data1[4], split = " "))
-      profile_summary_line = profile_summary_line[profile_summary_line!= ""]
+      nodes_fmt = sprintf(fmt = "%5.0f", obs.nodes)
+      nodes_new = paste(nodes_fmt, collapse = "")
 
-      end_row = profile_data[length(profile_data)]
-      end_row_split = unlist(strsplit(end_row, split = " "))
-      end_row_split = end_row_split[end_row_split != ""]
-
-      profile_depth = abs(as.numeric(end_row_split[2]))
-
-      if(max(obs.nodes) > profile_depth){
-           cat ("omitting observation noded deeper than  profile  depth ...\n" )
-      obs.nodes = obs.nodes[obs.nodes <= profile_depth]
-
-      }
-
-      num_of_nodes = length(obs.nodes)
-
-      nodes_fmt = format(fmt = "%5.0f", obs.nodes)
-      nodes_new = paste(nodes_fmt, collapse = "  ")
-
-      # last_node_ind = grep(pattern = as.character(total_nodes), profile_data)
-      # last_node_ind = last_node_ind[length(last_node_ind)]
-
-
-      profile_data = c(profile_summary, profile_data, as.character(num_of_nodes), nodes_new)
+      profile_data = c(profile_summary, profile_body, num_obs_nodes, nodes_new)
 
       write(profile_data, file = file.path(project.path, "PROFILE.DAT"),
             append = F)

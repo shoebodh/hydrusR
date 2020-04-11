@@ -6,21 +6,23 @@
 #' @param obs.nodes Vector of observation points in the profile
 #' @param Temp Temperate input default is 20 degree C
 #' @param Conc Concentration, zero in initial profile
+#' @param obs.nodes Observation nodes
 #'
 #' @return
 #' @export
 #'
 #' @examples
 
-create.soil.profile<- function(project.path, out.file = "PROFILE.DAT", profile.depth,  dz = 1,
-                               Temp = 20, Conc = 0, ...) {
+create.soil.profile<- function(project.path, out.file = "PROFILE.DAT", profile.depth,
+                               dz = 1,
+                               Temp = 20, Conc = 0, obs.nodes = NULL, ...) {
 
       profile.template = system.file("templates/PROFILE.DAT", package = "hydrusR")
       profile_dat = readLines(profile.template, n = -1L, encoding = "unknown")
 
-      header_line = profile_dat[1:3]
+      header_line = profile_dat[1:2]
 
-      dline = profile_dat[4]
+      dline = profile_dat[3]
       dline_split  = unlist(strsplit(dline, " "))
       dline_split = dline_split[dline_split!= ""]
 
@@ -30,7 +32,7 @@ create.soil.profile<- function(project.path, out.file = "PROFILE.DAT", profile.d
 
       dline_split_new = dline_split
       dline_split_new[2] = dformat_new
-      dline_split_new = dline_split_new[]
+   #   dline_split_new = dline_split_new[]
 
 
       fmt_space = c(5, 15, 15, 15)
@@ -39,16 +41,17 @@ create.soil.profile<- function(project.path, out.file = "PROFILE.DAT", profile.d
       dline_fmt_new = sprintf(fmt = fmt_vec, dline_split_new)
       dline_fmt_new = paste(dline_fmt_new, collapse = "")
 
-      table_header = profile_dat[5]
+      table_header = profile_dat[4]
 
       dhead_val = substr(table_header, start = 1, stop = 5)
-      dhead_val = as.numeric(gsub(" ", "", dhead_val))
+      dhead_val = as.numeric(trimws(dhead_val))
+
       header_rest = substr(table_header, start = 6, stop = nchar(table_header))
       dhead_val_new = sprintf("%5s", (profile.depth + 1))
 
       table_header_new = paste0(dhead_val_new, header_rest)
 
-      table_body = profile_dat[6:length(profile_dat)]
+      table_body = profile_dat[5:length(profile_dat)]
       table_body = table_body[-length(table_body)] #### row with number of observation points value
 
       body_split = strsplit(table_body, split = " ")
@@ -117,10 +120,12 @@ create.soil.profile<- function(project.path, out.file = "PROFILE.DAT", profile.d
       tspace = sprintf("%13s", "")
       profile_mat_fmt2 = paste(profile_mat_fmt2, tspace)
 
-      profile_data_new = c(header_line, dline_fmt_new, table_header_new, profile_mat_fmt2, 0)
+      profile_data_new = c(header_line, dline_fmt_new, table_header_new, profile_mat_fmt2, " 0")
 
       profile_file = file.path(project.path, out.file)
 
       write(profile_data_new, file = profile_file, append = FALSE)
+
+      if(!is.null(obs.nodes)) write.obs.nodes(project.path, obs.nodes)
 
 }

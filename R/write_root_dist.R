@@ -9,34 +9,33 @@
 #' @export
 #'
 #' @examples
-write.root.dist<- function(project.path, rdepth, rbeta = 0.962, ...) {
+write.root.dist<- function(project.path, rdepth, rBeta = 0.962, ...) {
       file.profile.dat = file.path(project.path, "PROFILE.DAT")
-        profile_data1 = readLines(con = file.profile.dat, n = -1L, encoding = "unknown")
+        def_profile_data = readLines(con = file.profile.dat, n = -1L, encoding = "unknown")
 
-       # profile_dat = readLines(con = file.profile.dat, n = -1L, encoding = "unknown")
-      node_num_ind = grep(pattern =  ("^[0-9]"), profile_data1)
+        profile_summary = def_profile_data[1:4]
 
-      node_info_lines = profile_data1[node_num_ind:(length(profile_data1))]
+        pr_header = trimws(def_profile_data[4])
+        num_nodes = as.numeric(unlist(strsplit(pr_header, " "))[1])
+        profile_depth = num_nodes - 1
 
-      profile_summary = profile_data1[1:5]
+        profile_body = def_profile_data[5:(5 + num_nodes - 1)]
 
-      header_split = unlist(strsplit(profile_data1[5], split = " "))
+
+      node_info_lines = def_profile_data[(num_nodes + 5):(length(def_profile_data))]
+
+      header_split = unlist(strsplit(def_profile_data[4], split = " "))
       header_split2 = header_split[header_split != ""]
 
-      if(length(node_num_ind) == 0) {
-            profile_data = profile_data1[6:length(profile_data1)]
-      } else {
-            profile_data = profile_data1[6:(node_num_ind - 1)]
-      }
-
-      profile_data_split = strsplit(profile_data, split = " ")
+      profile_data_split = strsplit(profile_body, split = " ")
       profile_data_split2 = sapply(profile_data_split, FUN = function(x) x[x!= ""])
       profile_data_new = t(profile_data_split2)
 
       deltaz = abs(as.numeric(profile_data_new[3, 2]) - as.numeric(profile_data_new[2, 2]))
+
       rdepth_coord = seq(0, rdepth, by = deltaz)
 
-      rdist = 1 - rbeta^rdepth_coord
+      rdist = 1 - rBeta^rdepth_coord
 
       rdist = rev(rdist)
       rdist = c(1, rdist)
