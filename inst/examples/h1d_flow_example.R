@@ -62,7 +62,6 @@ atm_bc_data = data.frame(tAtm = seq(time_step, endTime, time_step),
                          ht = numeric(ntimesteps),
                          RootDepth = numeric(ntimesteps))
 
-
 if(isTRUE(input_pet)) {
       atm_bc_data$rRoot = rep(LAI, nrow(atm_bc_data))
       atm_bc_data$rSoil = rep(et_rate/2, nrow(atm_bc_data))
