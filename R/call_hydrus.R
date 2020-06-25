@@ -34,10 +34,13 @@ call.H1D<- function(project.path, hydrus.path = NULL, show.output = TRUE, ...){
 
       hydrus.exe = "H1D_CALC.EXE"  #### Windows sepcific executable name
 
+
       oldwd = getwd()
       file_level01 = file.path(hydrus.path, "LEVEL_01.DIR")
+      if(!file.exists(file_level01)) file(file_level01, "w+")
+
+
       Sys.chmod(file_level01, "0777")
-      # if(!file.exists(file_level01)) file(file_level01, "w+")
 
       write(x = noquote(project.path), file = file_level01, append = F)
 
