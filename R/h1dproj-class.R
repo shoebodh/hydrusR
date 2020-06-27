@@ -6,24 +6,35 @@ convert_units = function(x, from, to) {
         return(x)
 }
 
+
+
+
+#' @import units
+#' @rdname h1dproj-class
 h1dproj<- setClass("h1dproj",
                      slots = c(
                              projname = "character",
                              projpath = "character",
-                             depthUnit = "character",
-                             timeUnit = "character",
-                             tempUnit = "character",
-                             massUnit = "character",
-                             soil = "list",
+                             processes = "character",
+                             geometry = "list",
                              timeInfo = "list",
+                             printInfo = "list",
+                             iterCriteria = "list",
+                             hydraulicModel = "character",
+                             hystereisModel = "character",
+                             watflowpars = "list",
+                             bctype = "list",
+                             ictype = "character",
+                             projunits = "list",
                              temperature = "numeric"),
 
                      prototype = list(
-                             depthUnit = "cm",
-                             timeUnit = "hour",
-                             tempUnit = "degC",
-                             massUnit = "g",
-                             temperature = 20.0)
+                             projname = paste0("h1dProj", as.integer(Sys.time())),
+                             projunits = list(depthunit = "cm",
+                                         timeunit = "day",
+                                         tempunit = "degC",
+                                         massunit = "g"),
+                                         projpath = path.expand("~"))
 )
 
 
@@ -34,33 +45,151 @@ h1dproj<- setClass("h1dproj",
 #' @import units
 #' @aliases h1dproj
 setMethod(f = "initialize", signature = "h1dproj",
-          definition = function(.Object, projname, projpath, ...) {
+          definition = function(.Object, ...) {
 
                   ### callNextMethod() transfers any value attached to .Object slots during the new() call
                   .Object = callNextMethod(.Object, ...)
-                  projname = ifelse(missing(projname),"h1dproj", projname)
-                  ##Define generic/default values to assign to slot if needed
-                  projpath = ifelse(missing(projpath),
-                                    file.path(path.expand("~"), projname),
-                                    file.path(projpath, projname))
+                  # projname = ifelse(missing(projname),"h1dproj", projname)
+                  # ##Define generic/default values to assign to slot if needed
+                  # projpath = ifelse(missing(projpath),
+                  #                   file.path(path.expand("~"), projname),
+                  #                   file.path(projpath, projname))
 
-                  def_soil <- list(nmat = 1,
-                                   nlyrs = 1,
-                                   zmax = convert_units(600, from = "cm", to = .Object@depthUnit),
-                                   delz = convert_units(1, from  = "cm", to = .Object@depthUnit))
+                  isempty = function(x) length(x) == 0
 
-                  def_time = list(itime = convert_units(0.0, from = "hour", to = .Object@timeUnit),
-                                  ftime = convert_units(100, from = "hour", to = .Object@timeUnit),
-                                  delt = convert_units(1.0, from = "hour", to = .Object@timeUnit))
+                  timeunit = .Object@projunits$timeunit
+                  depthunit = .Object@projunits$depthunit
+                  tempunit = .Object@projunits$tempunit
+                  massunit = .Object@projunits$massunit
+
+                  # if(is.null(.Object@projname)) projname = paste0("h1dproj", as.numeric(Sys.time()))
+                  if(isempty(.Object@processes)) .Object@processes = "Water Flow"
+
+                  if(isempty(.Object@geometry)) .Object@geometry = list(nsoilmat = 1L,
+                                                        nsubregion = 1L,
+                                                        vertical = TRUE,
+                                                        deltaz = convert_units(1.0,
+                                                                               from = "cm",
+                                                                               to = depthunit),
+                                                        depth = convert_units(100,
+                                                                              from = 'cm',
+                                                                              to = depthunit))
+
+                  def_timeInfo = list(initialtime = convert_units(0.0,
+                                                                  from = "day",
+                                                                  to = projunits$timeunit),
+                                      finaltime = convert_units(100,
+                                                                from = "day",
+                                                                to = projunits$timeunit),
+                                      initialtstep = convert_units(0.001,
+                                                                   from = "day",
+                                                                   to = projunits$timeunit),
+                                      mintstep = convert_units(1e-005,
+                                                               from = "day",
+                                                               to = projunits$timeunit),
+                                      maxtstep = convert_units(5.0,
+                                                               from = "day",
+                                                               to = projunits$timeunit))
+
+                  if(isempty(.Object@timeInfo)) {
+                          .Object@timeInfo = def_timeInfo
+                  } else {
+
+                        new_timeInfo = c(.Object@timeInfo, def_timeInfo[!names(def_timeInfo) %in% names(.Object@timeInfo)])
+                        # new_timeInfo = setNames(new_timeInfo,  union(names(def_timeInfo), names(.Object@timeInfo)))
+                        .Object@timeInfo = new_timeInfo
+                  }
+
+
+
+                  def_printInfo = .Object@printInfo = list(nprintTimes = 100,
+                                                          ntlevel = 1,
+                                                          printRegInt = TRUE,
+                                                          printInterval = 1,
+                                                          screenOut = TRUE,
+                                                          hitEnteeAtEnd = FALSE)
+
+                  if(isempty(.Object@printInfo)) {
+                          .Object@printInfo = def_printInfo
+                  } else {
+
+                          new_printInfo = c(.Object@printInfo, def_printInfo[!names(def_printInfo) %in% names(.Object@printInfo)])
+                          #new_printInfo = setNames(new_printInfo,  union(names(def_printInfo), names(.Object@printInfo)))
+                          .Object@printInfo = new_printInfo
+
+                  }
+
+                  def_iterCriteria = list(maxiter = 10,
+                                          wctol = 0.001,
+                                          prtol = convert_units(1.0, "cm", depthunit))
+
+
+                  hydmodel_list = list(singlePorosity = c("VG_Mualem",
+                                                          "VG_Mualem_wae",
+                                                          "VG_modified",
+                                                          "Brooks_Corey",
+                                                          "Kosugi"),
+                                       dualPorosity = c("Durner",
+                                                        "mim_wmt",
+                                                        "mim_hmt",
+                                                        "dualPerm"))
+
+
+
+                 hystModel_list = c("no_hyst",
+                                  "hyst_rc",
+                                  "hyst_rc_hc",
+                                   "hyst_nopump_idc",
+                                   "hyst_nopump_iwc")
+
+                 # bc_list = list(top = c("cph", "cf", "abcsl", "abcsro", "vph", "vphf"),
+                 #                bottom = c("cph", "cf", "vph", "vf", "fd", "dd", "sf", "hd"))
+
+
+                def_watflowpars = list(soiltype = "Loam",
+                                       pars = list(Qr = 0.078,
+                                                     Qs = 0.43,
+                                                     Alpha = convert_units(0.036,
+                                                                           from = "cm^-1",
+                                                                           to = paste0(depthunit, "^-1")),
+                                                     n = 1.56,
+                                                     Ks = convert_units(24.96,
+                                                                        from = "cm/day",
+                                                                        to = paste0(depthunit, "/", timeunit)),
+                                                     l = 0.5))
+
+                if(isempty(.Object@iterCriteria)) .Object@iterCriteria = def_iterCriteria
+                if(isempty(.Object@hydraulicModel)) .Object@hydraulicModel = "VG_Mualem"
+                if(isempty(.Object@bctype))  .Object@bctype = list(top = "cph", bottom = "fd")
+                if(isempty(.Object@ictype)) .Object@ictype = "iph"
+                if(isempty(.Object@watflowpars)) .Object@watflowpars = def_watflowpars
+                if(isempty(.Object@temperature)) .Object@temperature = convert_units(20, from = "degC", projunits$tempunit)
+
+
+                  # def_soil <- list(nmat = 1,
+                  #                  nlyrs = 1,
+                  #                  zmax = convert_units(600, from = "cm", to = .Object@depthUnit),
+                  #                  delz = convert_units(1, from  = "cm", to = .Object@depthUnit))
+                  #
+
 
                     ##Assign values to each slot depending onn the initialization conditions
-                  .Object@projname <- projname
-                  .Object@projpath = projpath
+                  # .Object@projname <- projname
+                  # .Object@projpath = projpath
+                  # .Object@processes = processes
+                  # .Object@geometry = geometry
+                  # .Object@timeInfo = timeInfo
+                  # .Object@printInfo = printInfo
+                  # .Object@iterCriteria = iterCriteria
+                  # .Object@hydraulicModel = hydraulicModel
+                  # .Object@watflowpars = watflowpars
+                  # .Object@bctype = bctype
+                  # .Object@ictype = ictype
 
-                  if(length(.Object@soil) == 0) .Object@soil <- def_soil
-                  if(length(.Object@timeInfo) == 0) .Object@timeInfo <- def_time
+                  # if(length(.Object@soil) == 0) .Object@soil <- def_soil
+                  # if(length(.Object@timeInfo) == 0) .Object@timeInfo <- def_time
 
-                  if(!dir.exists(projpath)) dir.create(projpath)
+                  if(!dir.exists(.Object@projpath)) dir.create(file.path(.Object@projpath, projname))
                   return(.Object)
           })
 
@@ -75,40 +204,42 @@ setMethod(f = "initialize", signature = "h1dproj",
 #'
 setMethod("show", signature = "h1dproj", definition =
                   function(object) {
-                          soil = object@soil
+                          geometry = object@geometry
                           timeInfo = object@timeInfo
+                          projunits = object@projunits
 
                           yw <- function(x) cyan(x)
-                                                     message(bold(blue("AN OBJECT OF CLASS ")), bold(yw(class(object))))
-                          message(yw("     Initial time:  "), yw(object@timeInfo$itime))
-                          message(yw("     Final time:      "),   yw(object@timeInfo$ftime))
-                          message(yw("     Time step:       "), yw(object@timeInfo$delt))
+                          message(bold(blue("HYDRUS-1D project: ")))
+                          message(yw("     Project name:  "), blue(object@projname))
+                          message(yw("     Project path:  "), blue(dirname(object@projpath)))
+                          message(yw("     Initial time:  "), blue(timeInfo$initialtime))
+                          message(yw("     Final time:     "),   blue(timeInfo$finaltime))
 
                           # message(bold(magenta("..................\n")))
                           message(bold(blue("UNITS:")),
-                                  yw("\n     Depth         = "), yw(object@depthUnit),
-                                  yw("\n     Mass        = "), yw(object@massUnit),
-                                  yw("\n     Temperature   = "), yw(object@tempUnit),
-                                  yw("\n     Time          = "), yw(object@timeUnit))
+                                  yw("\n     Depth         = "), blue(projunits$depthunit),
+                                  yw("\n     Mass        = "), blue(projunits$massunit),
+                                  yw("\n     Temperature   = "), blue(projunits$tempunit),
+                                  yw("\n     Time          = "), blue(projunits$timeunit))
 
                           # message(bold(magenta("..................\n")))
                           message(bold(blue("SOIL INFO:")))
-                          message(yw("     Number of materials = "), yw(soil$nmat))
-                          message(yw("     Number of Layers    = "), yw(soil$nlyrs))
-                          message(yw(paste0("     Soil Depth (", object@depthUnit, ") = ")), yw(sprintf("%.2f", soil$zmax)))
-                          message(yw(paste0("     delz (", object@depthUnit, ") = ")), yw(sprintf("%.2f", soil$delz)))
+                          message(yw("     Number of materials = "), blue(geometry$nsoilmat))
+                          message(yw("     Number of Layers    = "), blue(geometry$depth/geometry$deltaz))
+                          message(yw(paste0("     Soil Depth (", projunits$depthunit, ") = ")), blue(sprintf("%.2f", geometry$depth)))
+                          message(yw(paste0("     delz (", projunits$depthunit, ") = ")), blue(sprintf("%.2f", geometry$deltaz)))
 
                           return(invisible(NULL))
                   }
+
 )
 
+create.profile_dat<- function(H1Dproj, obs.nodes = NULL, Conc = 0.0, ...) {
 
-h1d_create.profile<- function(h1d.proj, obs.nodes = NULL, Temp = 20.0, Conc = 0, ...) {
-
-        profile.depth = h1d.proj@soil$zmax
-        dz = h1d.proj@soil$delz
-        Temp = h1d.proj@temperature
-        out.file = file.path(h1d.proj@projpath,  "PROFILE.DAT")
+        profile.depth = H1Dproj@geometry$depth
+        dz = H1Dproj@geometry$deltaz
+        Temp = H1Dproj@temperature
+        out.file = file.path(H1Dproj@projpath, H1Dproj@projname, "PROFILE.DAT")
 
         profile.template = system.file("templates/PROFILE.DAT", package = "hydrusR")
         profile_dat = readLines(profile.template, n = -1L, encoding = "unknown")
@@ -215,9 +346,15 @@ h1d_create.profile<- function(h1d.proj, obs.nodes = NULL, Temp = 20.0, Conc = 0,
 
         profile_data_new = c(header_line, dline_fmt_new, table_header_new, profile_mat_fmt2, " 0")
 
+        if(!is.null(obs.nodes)) {
+                profile_data_new[length(profile_data_new)] = paste0(" ", length(obs.nodes))
+                obs_node_line = paste(obs.nodes, collapse = "  ")
+                profile_data_new = c(profile_data_new, paste0(" ", obs_node_line))
+        }
+
          write(profile_data_new, file = out.file, append = FALSE)
 
-         if(!is.null(obs.nodes)) write.obs.nodes(h1d.proj@projpath, obs.nodes)
+         # if(!is.null(obs.nodes)) write.obs.nodes(H1Dproj@projpath, obs.nodes)
 
 }
 
