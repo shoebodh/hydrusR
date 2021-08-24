@@ -1,3 +1,6 @@
+[![R-CMD-check](https://github.com/shoebodh/hydrusR/workflows/R-CMD-check/badge.svg)](https://github.com/shoebodh/hydrusR/actions?query=workflow%3AR-CMD-check)
+[![pkgdown](https://github.com/shoebodh/hydrusR/workflows/pkgdown/badge.svg)](https://github.com/shoebodh/hydrusR/actions?query=workflow%3Apkgdown)
+
 #Some utility functions to run the HYDRUS-1D soil-water flow model through R (variably saturated flow through soils). ###NOTE: This package requires the open-source HYDRUS-1D software installed in the system, which can be downloaded from https://www.pc-progress.com/en/Default.aspx?H1d-downloads.
 
 hydrusR came out of my own need to simulate soil water flow experiments using HYDRUS-1D, (Simunek et al., 1988) for relatively longer time periods than typically allowed (in one simulation) by the HYDRUS-1D software. For example, running simulations for a year and printing outputs at 15 minute intervals. Hydrus GUI currently allows only 250 print times while you can set up upto 1000 print times in the 'selector.in' if run from the command line.
@@ -14,13 +17,20 @@ This is now slightly improved and is more seamless in producing hydrus outputs a
 
 Also check out the package RHydrus that attempts to convert the original FORTRAN code to C and create a more native HYDRUS1D package in R. https://github.com/mespe/RHydrus
 
-Installation
+### Installation
 
-devtools::install_github("shoebodh/hydrusR")
+```r
+remotes::install_github("shoebodh/hydrusR")
+```
 
-## run a test simulation
+### Run a test simulation
+
+```r
 source(system.file("examples/h1d_flow_example.R", package = "hydrusR"))
+```
 
-To do:
-Add top constant boundary conditions (currently only time variable boundary conditions is checked)
-Add other processes(e.g. solute transport)
+### To do
+
+* Add top constant boundary conditions (currently only time variable boundary conditions is checked)
+
+* Add other processes(e.g. solute transport)

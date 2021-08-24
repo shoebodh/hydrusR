@@ -9,7 +9,16 @@
 #' @return
 #' @export
 #'
-#' @examples
+#' @details Available soil moisture retention models in the hydrus1D
+#' van Genuchten (VG)
+#' 6 parameter van Genuchten (VGM),
+#' Brooks Corey (BC)
+#' Kosugi model (KOS)
+#' Dual porosity model (DUR)
+#' Dual porosity model 2 (DUR2)
+#' Dual porosity model 3 (DUR3)
+#' Details on the models on hydrus help manual and elsewhere in the literature
+#'
 write.hydraulic.para<- function(project.path, model = 0, hysteresis = 0, para, ...) {
 
     smr_models<- c("van Genuchten (VG)","van Genuchten 6 para (VGM)",
