@@ -1,15 +1,28 @@
-Package: hydrusR
 Type: Package
+Package: hydrusR
 Title: Utility package to run HYDRUS-1D and analyse results
 Version: 0.3.0
-Date: 2020-04-11
-Author: Subodh Acharya
-Maintainer: <shoebodh@gmail.com>
-Description: Create, run and analyze HYDRUS-1D simulations, all inside R
-License: GPL 3.0
-LazyData: TRUE
-Depends: data.table (>= 1.10.0)
-RoxygenNote: 7.1.0
-Suggests: knitr,
+Authors@R: 
+    c(person(given = "Subodh",
+             family = "Acharya",
+             role = c("aut", "cre"),
+             email = "shoebodh@gmail.com"),
+      person(given = "Michael",
+             family = "Rustler",
+             role = "ctb",
+             email = "michael.rustler@kompetenz-wasser.de",
+             comment = c(ORCID = "0000-0003-0647-7726")))
+Description: Create, run and analyze HYDRUS-1D simulations, all inside R.
+License: GPL (>= 3)
+URL: https://github.com/shoebodh/hydrusR
+BugReports: https://github.com/shoebodh/hydrusR/issues
+Depends: 
+    data.table (>= 1.10.0)
+Suggests: 
+    knitr,
     rmarkdown
-VignetteBuilder: knitr
+VignetteBuilder: 
+    knitr
+Encoding: UTF-8
+LazyData: TRUE
+RoxygenNote: 7.1.1
