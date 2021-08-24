@@ -12,7 +12,8 @@
 #'
 #' @examples
 #'
-read.nod_inf<- function(project.path, out.file = "Nod_Inf.out", output = NULL, warn = FALSE, ...){
+read.nod_inf<- function(project.path, out.file = "Nod_Inf.out",
+                        output = NULL, warn = FALSE, asDT = TRUE){
 
     if(is.null(output) | missing(output)) {
             output = c("Head", "Moisture", "K", "C", "Flux",
@@ -30,8 +31,6 @@ read.nod_inf<- function(project.path, out.file = "Nod_Inf.out", output = NULL, w
       time_lines = nod_inf[grepl("Time:", nod_inf[["Node"]]), ]
 
        times = c(0, as.numeric(time_lines$Depth))
-
-      # dup_times_index = which(duplicated(times))
 
       for (col in colnames(nod_inf)) set(nod_inf, j=col, value= as.numeric(nod_inf[[col]]))
 
@@ -72,6 +71,8 @@ read.nod_inf<- function(project.path, out.file = "Nod_Inf.out", output = NULL, w
       # node_out = data.frame(Time = rep(times, each = length(nodes)), node_out,
       #                       row.names = NULL, check.names = FALSE)
     options(warn = 0)
+
+    if(!asDT) nod_out = data.frame(nod_out)
 
      return(nod_out)
 
