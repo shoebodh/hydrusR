@@ -4,7 +4,7 @@
 \alias{dir.copy}
 \title{Copy contents of a folder to another}
 \usage{
-dir.copy(src.dir, dest.dir, overwrite = TRUE, ask = FALSE, ...)
+dir.copy(src.dir, dest.dir, overwrite = TRUE, ask = FALSE)
 }
 \arguments{
 \item{src.dir}{Source directory}
@@ -14,11 +14,9 @@ dir.copy(src.dir, dest.dir, overwrite = TRUE, ask = FALSE, ...)
 \item{overwrite}{Logical, if true overwrites the existing directory, default = T}
 
 \item{ask}{Logical, should ask whether to create/delete directories if required, default = FALSE}
-
-\item{...}{}
 }
 \value{
-
+Copy contents of a folder to another
 }
 \description{
 Copy contents of a folder to another

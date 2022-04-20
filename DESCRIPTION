@@ -1,7 +1,7 @@
 Type: Package
 Package: hydrusR
 Title: Utility package to run HYDRUS-1D and analyse results
-Version: 0.3.0
+Version: 0.3.0.9000
 Authors@R: 
     c(person(given = "Subodh",
              family = "Acharya",
@@ -16,8 +16,11 @@ Description: Create, run and analyze HYDRUS-1D simulations, all inside R.
 License: GPL (>= 3)
 URL: https://github.com/shoebodh/hydrusR
 BugReports: https://github.com/shoebodh/hydrusR/issues
-Depends: 
-    data.table (>= 1.10.0)
+Imports:
+    crayon,
+    data.table (>= 1.10.0),
+    methods,
+    units
 Suggests: 
     knitr,
     rmarkdown
@@ -25,4 +28,4 @@ VignetteBuilder:
     knitr
 Encoding: UTF-8
 LazyData: TRUE
-RoxygenNote: 7.1.1
+RoxygenNote: 7.1.2

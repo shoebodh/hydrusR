@@ -1,16 +1,12 @@
 #' Write root distribution in profile.dat
 #'
 #' @param project.path Path of HYDRUS1D project
-#' @param profile.depth Depth of soil profile
 #' @param pr.vec A vector of pressure head values (length = # of total nodes in the profile)
 #' @param wt.depth Depth of water table (to assign hydrostatic initial condition)
-#' @param ...
 #'
-#' @return
+#' @return Write root distribution in "PROFILE.DAT"
 #' @export
-#'
-#' @examples
-write.ini.cond<- function(project.path, pr.vec = NULL, wt.depth, ...) {
+write.ini.cond<- function(project.path, pr.vec = NULL, wt.depth) {
       file.profile.dat = file.path(project.path, "PROFILE.DAT")
       def_profile_data = readLines(con = file.profile.dat, n = -1L, encoding = "unknown")
 

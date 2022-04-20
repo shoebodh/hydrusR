@@ -2,20 +2,19 @@
 #'
 #' @param project.path Location of the H1D project in the directory
 #' @param out.file Default is always 'PROFILE.OUT'
-#' @param dz Descretization step of the profile.
-#' @param obs.nodes Vector of observation points in the profile
+#' @param profile.depth profile.depth
+#' @param dz Descretization step of the profile. (default: 1)
 #' @param Temp Temperate input default is 20 degree C
-#' @param Conc Concentration, zero in initial profile
-#' @param obs.nodes Observation nodes
+#' @param Conc Concentration, zero in initial profile (default: 0)
+#' @param obs.nodes Vector of observation points in the profile (default: NULL)
 #'
-#' @return
+#' @return creates a new PROFILE.DAT
 #' @export
 #'
-#' @examples
 
 create.soil.profile<- function(project.path, out.file = "PROFILE.DAT", profile.depth,
                                dz = 1,
-                               Temp = 20, Conc = 0, obs.nodes = NULL, ...) {
+                               Temp = 20, Conc = 0, obs.nodes = NULL) {
 
       profile.template = system.file("templates/PROFILE.DAT", package = "hydrusR")
       profile_dat = readLines(profile.template, n = -1L, encoding = "unknown")

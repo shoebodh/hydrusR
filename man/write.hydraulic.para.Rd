@@ -4,14 +4,31 @@
 \alias{write.hydraulic.para}
 \title{Write soil hydraulic parameters to selector.in}
 \usage{
-write.hydraulic.para(project.path, model = 0, hysteresis = 0, para, ...)
+write.hydraulic.para(project.path, model = 0, hysteresis = 0, para)
 }
 \arguments{
-\item{...}{}
+\item{project.path}{project.path}
+
+\item{model}{model id (default: 0)}
+
+\item{hysteresis}{hysteresis (default: 0)}
+
+\item{para}{para}
 }
 \value{
-
+Write soil hydraulic parameters to "selector.in"
 }
 \description{
 Write soil hydraulic parameters to selector.in
+}
+\details{
+Available soil moisture retention models in the hydrus1D
+van Genuchten (VG)
+6 parameter van Genuchten (VGM),
+Brooks Corey (BC)
+Kosugi model (KOS)
+Dual porosity model (DUR)
+Dual porosity model 2 (DUR2)
+Dual porosity model 3 (DUR3)
+Details on the models on hydrus help manual and elsewhere in the literature
 }

@@ -4,13 +4,11 @@
 #' @param dest.dir Destination directory
 #' @param overwrite Logical, if true overwrites the existing directory, default = T
 #' @param ask Logical, should ask whether to create/delete directories if required, default = FALSE
-#' @param ...
 #'
-#' @return
+#' @return Copy contents of a folder to another
 #' @export
 #'
-#' @examples
-dir.copy<- function(src.dir, dest.dir, overwrite = TRUE, ask = FALSE, ...){
+dir.copy<- function(src.dir, dest.dir, overwrite = TRUE, ask = FALSE){
 
       if(!file.exists(src.dir)){
 
@@ -50,7 +48,7 @@ dir.copy<- function(src.dir, dest.dir, overwrite = TRUE, ask = FALSE, ...){
 #' @param x A double numerical
 #' @export
 #' @return
-#' @example
+#' @examples
 #' get.decimalplaces(10.343434)
 
 get.decimalplaces <- function(x) {
@@ -66,13 +64,12 @@ get.decimalplaces <- function(x) {
 #' @param x  A numeric vector to be formatted
 #' @param ndec Number of decimal places to apply (e.g, .000xx)
 #' @param power.digits Number of power digits to apply (e.g., e+002)
-#' @param ...
-#' @return
+#' @return formatted vector
 #' @export
-#' @example
+#' @examples
 #' format2sci(120.5, ndec = 5, power.digits = 2)
 
-format2sci<- function (x, ndec, power.digits, ...) {
+format2sci<- function (x, ndec, power.digits) {
 
         format.scalar<- function(x, ndec, power.digits) {
 

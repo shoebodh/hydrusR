@@ -1,4 +1,12 @@
-plot.pressure.profile = function(project.path, output = "Head", ...){
+#' Plot pressure profile
+#'
+#' @param project.path project.path
+#' @param output default: "Head"
+#'
+#' @return plot pressure profile
+#' @export
+#'
+plot_pressure.profile <- function(project.path, output = "Head"){
 
       h1d_output = read.nod_inf(project.path, out.file = "Nod_Inf.out", output = output)
       Depth = unique(h1d_output$Depth)
@@ -23,12 +31,19 @@ plot_range = range(max(output_p), -(max(output_p)))
 
 matplot(x = output_p, y = Depth, xlim = plot_range, type = "l", xlab = "Hean (L)")
 
-abline(v = 0, lwd = 2, col = "grey40")
+graphics::abline(v = 0, lwd = 2, col = "grey40")
 
 }
 
-##
-plot.moisture.profile = function(project.path, output = "Moisture", ...){
+#' Plot moisture profile
+#'
+#' @param project.path project.path
+#' @param output default: "Moisture"
+#'
+#' @return plot moisture profile
+#' @export
+#' @importFrom graphics abline matplot
+plot_moisture.profile <- function(project.path, output = "Moisture"){
 
       h1d_output = read.nod_inf(project.path, out.file = "Nod_Inf.out", output = output)
       Depth = unique(h1d_output$Depth)
@@ -51,6 +66,6 @@ plot.moisture.profile = function(project.path, output = "Moisture", ...){
 
       plot_range = range(0, (max(output_p)))
 
-      matplot(x = output_p, y = Depth, xlim = plot_range, type = "l",
+      graphics::matplot(x = output_p, y = Depth, xlim = plot_range, type = "l",
       xlab = parse(text = "Theta~(L^3~L^-3)"))
 }

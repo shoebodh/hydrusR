@@ -9,7 +9,7 @@ read.nod_inf(
   out.file = "Nod_Inf.out",
   output = NULL,
   warn = FALSE,
-  ...
+  asDT = TRUE
 )
 }
 \arguments{
@@ -22,14 +22,11 @@ Default is NULL, meaning all the outputs is read.}
 
 \item{warn}{Should the warning of coercion of character to NA be shown}
 
-\item{...}{}
+\item{asDT}{as data.table (default: TRUE) or data.frame (FALSE)}
 }
 \value{
-
+read "Nod_Inf.out" as data.frame or data.table
 }
 \description{
 READ outputs of NOD_INF.OUT
-}
-\examples{
-
 }

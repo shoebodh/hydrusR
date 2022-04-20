@@ -8,8 +8,7 @@ read.obs_node(
   project.path,
   out.file = "Obs_Node.out",
   obs.output = NULL,
-  obs.nodes,
-  ...
+  obs.nodes
 )
 }
 \arguments{
@@ -21,12 +20,10 @@ read.obs_node(
 Other options are "h", "theta", "Flux". example, obs.output = c("h", "theta")}
 
 \item{obs.nodes}{Numeric Vector of the observation nodes defined in the PROFILE.DAT}
-
-\item{...}{}
 }
 \value{
-
+read "Obs_Node.out" as data.table
 }
 \description{
-Read observation point outputs
+Reads observation point outputs of h, theta and flux, that is produced in the "Obs_Node.out" file
 }

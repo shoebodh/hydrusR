@@ -8,8 +8,7 @@ read.alevel.out(
   project.path,
   out.file = "A_Level.out",
   output = NULL,
-  warn = FALSE,
-  ...
+  warn = FALSE
 )
 }
 \arguments{
@@ -20,11 +19,9 @@ read.alevel.out(
 \item{output}{vector of output names that should be read}
 
 \item{warn}{Logical for displaying/suppressing warnings producted by data.table::fread()}
-
-\item{...}{}
 }
 \value{
-
+read "A_Level.out" as data.frame
 }
 \description{
 Read outputs of ALEVEL.OUT

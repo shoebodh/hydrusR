@@ -13,14 +13,15 @@ create.H1D.project(
   PrintTimes = 1,
   processes = c(WaterFlow = T, RootWaterUptake = F),
   geometry,
-  initial.cond,
-  ...
+  initial.cond
 )
 }
 \arguments{
 \item{project.name}{Name of the project}
 
 \item{parent.dir}{Path to the project folder}
+
+\item{discription}{default: NULL}
 
 \item{TimeUnit}{Simulation time unit information (default = days)}
 
@@ -31,17 +32,23 @@ create.H1D.project(
 \item{processes}{Main processes (e.g., WaterFlow, SoluteTransport etc) to be simualted}
 
 \item{geometry}{Profile geometry info (Depth, # of nodes and # of obs nodes)}
+
+\item{initial.cond}{initial conditions}
 }
 \description{
 Creates a new hydrus project folder with "HYDRUS1D.DAT" and "DISCRIPT.TXT" files
 }
 \examples{
-
-create.H1D.project(project.name = "testproj2", parent.dir = parent_dir, discription = NULL,
-SpaceUnit = "cm", TimeUnit = "days", PrintTimes = 1,
+create.H1D.project(project.name = "testproj2",
+parent.dir = "~",
+discription = NULL,
+SpaceUnit = "cm",
+TimeUnit = "days",
+PrintTimes = 1,
 processes = c(WaterFlow = T, SoluteTransport = F, RootWaterUptake = F,
-RootGrowth = F, Unsatchem = F, HP1 = F, EquillibriumAdsorption = F,
-initial.cond = c(NumberOfSolutes = 0, InitialCondition = 0),
+RootGrowth = F, Unsatchem = F, HP1 = F, EquillibriumAdsorption = F),
 geometry = c(ProfileDepth = 200, NumberOfNodes = 4,
-         ObservationNodes = 0, MaterialNumber = 1, SubregionNumber = 1))
+ObservationNodes = 0, MaterialNumber = 1, SubregionNumber = 1),
+initial.cond = c(NumberOfSolutes = 0, InitialCondition = 0)
+)
 }

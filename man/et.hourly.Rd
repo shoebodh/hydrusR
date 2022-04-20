@@ -7,10 +7,12 @@
 et.hourly(Et.Daily, hours = 6:20)
 }
 \arguments{
-\item{hours}{}
+\item{Et.Daily}{Et.Daily}
+
+\item{hours}{default: 6:20}
 }
 \value{
-
+data.frame with columns "hour" and "et"
 }
 \description{
 Generates hourly ET inputs from provided daily value.

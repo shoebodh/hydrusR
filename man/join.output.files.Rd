@@ -4,17 +4,15 @@
 \alias{join.output.files}
 \title{Join the output files from several H1D simulations (for longer simulation times than allowed by H1D (1000))}
 \usage{
-join.output.files(project.path, out.files.path = "default", ...)
+join.output.files(project.path, out.files.path = "default")
 }
 \arguments{
 \item{project.path}{Path of the hydrus project}
 
-\item{out.files.path}{Directory of output files. Default is 'defaults' which = project.path}
-
-\item{...}{}
+\item{out.files.path}{Directory of output files. Default is 'default' which = project.path}
 }
 \value{
-
+writes joined output files
 }
 \description{
 Join the output files from several H1D simulations (for longer simulation times than allowed by H1D (1000))

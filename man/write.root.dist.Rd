@@ -4,13 +4,17 @@
 \alias{write.root.dist}
 \title{Write root distribution in profile.dat}
 \usage{
-write.root.dist(project.path, rdepth, rBeta = 0.962, ...)
+write.root.dist(project.path, rdepth, rBeta = 0.962)
 }
 \arguments{
-\item{...}{}
+\item{project.path}{project.path}
+
+\item{rdepth}{root depth}
+
+\item{rBeta}{default: 0.962}
 }
 \value{
-
+Write root distribution in "PROFILE.DAT"
 }
 \description{
 Write root distribution in profile.dat

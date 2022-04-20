@@ -1,15 +1,12 @@
 #' Join the output files from several H1D simulations (for longer simulation times than allowed by H1D (1000))
 #'
 #' @param project.path Path of the hydrus project
-#' @param out.files.path Directory of output files. Default is 'defaults' which = project.path
-#' @param ...
+#' @param out.files.path Directory of output files. Default is 'default' which = project.path
 #'
-#' @return
+#' @return writes joined output files
 #' @export
 #'
-#' @examples
-
-join.output.files<- function(project.path, out.files.path = "default", ...) {
+join.output.files<- function(project.path, out.files.path = "default") {
 
       output_files = c("A_Level.out", "T_Level.out", "Nod_Inf.out", "Obs_Node.out")
 

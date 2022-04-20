@@ -11,8 +11,7 @@ create.soil.profile(
   dz = 1,
   Temp = 20,
   Conc = 0,
-  obs.nodes = NULL,
-  ...
+  obs.nodes = NULL
 )
 }
 \arguments{
@@ -20,16 +19,18 @@ create.soil.profile(
 
 \item{out.file}{Default is always 'PROFILE.OUT'}
 
-\item{dz}{Descretization step of the profile.}
+\item{profile.depth}{profile.depth}
+
+\item{dz}{Descretization step of the profile. (default: 1)}
 
 \item{Temp}{Temperate input default is 20 degree C}
 
-\item{Conc}{Concentration, zero in initial profile}
+\item{Conc}{Concentration, zero in initial profile (default: 0)}
 
-\item{obs.nodes}{Observation nodes}
+\item{obs.nodes}{Vector of observation points in the profile (default: NULL)}
 }
 \value{
-
+creates a new PROFILE.DAT
 }
 \description{
 Creates a new PROFILE.DAT file using a template included in the package.

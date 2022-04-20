@@ -1,12 +1,11 @@
 #' Generates hourly ET inputs from provided daily value.
 #'
-#' @param Et.Daily
-#' @param hours
+#' @param Et.Daily Et.Daily
+#' @param hours default: 6:20
 #'
-#' @return
+#' @return data.frame with columns "hour" and "et"
 #' @export
 #'
-#' @examples
 et.hourly<- function(Et.Daily, hours = 6:20) {
       et_hours = length(hours)
       thours = 1:et_hours

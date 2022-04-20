@@ -4,13 +4,12 @@
 #' @param tmin Begining print time (e.g., 1)
 #' @param tmax End print time (e.g. 240 hours)
 #' @param tstep Time step to print out put at
-#' @param ...
-#'
-#' @return
+#' @param TimeUnit Simulation time unit information
+
+#' @return  Write print times in "SELECTOR.IN"
 #' @export
-#'
-#' @examples
-write.print.times<- function(project.path, tmin, tmax, tstep, TimeUnit, ...){
+
+write.print.times <- function(project.path, tmin, tmax, tstep, TimeUnit){
       input.file = file.path(project.path, "SELECTOR.IN")
 
       hydrus_input = readLines(con = input.file, n = -1L, encoding = "unknown")

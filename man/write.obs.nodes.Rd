@@ -4,7 +4,7 @@
 \alias{write.obs.nodes}
 \title{Write observation nodes in profile.dat}
 \usage{
-write.obs.nodes(project.path, obs.nodes = NULL, ...)
+write.obs.nodes(project.path, obs.nodes = NULL)
 }
 \arguments{
 \item{project.path}{path to the hydrus project}

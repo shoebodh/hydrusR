@@ -4,7 +4,7 @@
 \alias{write.print.times}
 \title{Write print times in SELECTOR.IN}
 \usage{
-write.print.times(project.path, tmin, tmax, tstep, TimeUnit, ...)
+write.print.times(project.path, tmin, tmax, tstep, TimeUnit)
 }
 \arguments{
 \item{project.path}{Location of the H1D project in the directory}
@@ -15,10 +15,10 @@ write.print.times(project.path, tmin, tmax, tstep, TimeUnit, ...)
 
 \item{tstep}{Time step to print out put at}
 
-\item{...}{}
+\item{TimeUnit}{Simulation time unit information}
 }
 \value{
-
+Write print times in "SELECTOR.IN"
 }
 \description{
 Write print times in SELECTOR.IN

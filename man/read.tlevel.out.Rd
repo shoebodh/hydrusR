@@ -8,15 +8,20 @@ read.tlevel.out(
   project.path,
   out.file = "T_Level.out",
   output = NULL,
-  warn = FALSE,
-  ...
+  warn = FALSE
 )
 }
 \arguments{
-\item{...}{}
+\item{project.path}{project.path}
+
+\item{out.file}{out.file (default: "T_Level.out")}
+
+\item{output}{output (default: NULL)}
+
+\item{warn}{default: FALSE}
 }
 \value{
-
+read "T_Level.out" as data.table
 }
 \description{
 READ outputs of TLEVEL.OUT

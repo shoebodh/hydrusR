@@ -1,15 +1,13 @@
 #' Write root distribution in profile.dat
 #'
-#' @param project.path
-#' @param rdepth
-#' @param rbeta
-#' @param ...
+#' @param project.path project.path
+#' @param rdepth root depth
+#' @param rBeta default: 0.962
 #'
-#' @return
+#' @return Write root distribution in "PROFILE.DAT"
 #' @export
-#'
-#' @examples
-write.root.dist<- function(project.path, rdepth, rBeta = 0.962, ...) {
+
+write.root.dist<- function(project.path, rdepth, rBeta = 0.962) {
       file.profile.dat = file.path(project.path, "PROFILE.DAT")
         def_profile_data = readLines(con = file.profile.dat, n = -1L, encoding = "unknown")
 

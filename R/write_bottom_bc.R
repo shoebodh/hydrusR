@@ -1,16 +1,14 @@
 #' Write bottom Boundary Condition
 #'
-#' @param constant.bc
-#' @param bc.type
-#' @param bc.value
-#' @param project.path
-#' @param ...
+#' @param constant.bc constant.bc
+#' @param bc.type bc.type
+#' @param bc.value bc.value
+#' @param project.path project.path
 #'
-#' @return
+#' @return Write bottom Boundary Condition to "SELECTOR.IN"
 #' @export
-#'
-#' @examples
-write.bottom.bc<- function(constant.bc, bc.type, bc.value, project.path, ...) {
+
+write.bottom.bc<- function(constant.bc, bc.type, bc.value, project.path) {
         ## Writes bottom constant boundary conditions "flux" or "head"
         input_data = readLines(con = file.path(project.path, "SELECTOR.IN"),
                                n = -1L, encoding = "unknown")

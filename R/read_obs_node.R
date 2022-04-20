@@ -1,19 +1,16 @@
-#' @Description Reads observation point outputs of h, theta and flux, that is produced in the "Obs_Node.out" file
+#' @description Reads observation point outputs of h, theta and flux, that is produced in the "Obs_Node.out" file
 #' @title Read observation point outputs
 #' @param project.path Directory of the model input/outputs
 #' @param out.file   The output file name. Default is "Obs_Node.out", produced by the Hydrus 1D program
 #' @param obs.output The output to be returned.Default = NULL, i.e., all the outputs are read
-#'                   Other options are "h", "theta", "Flux". example, obs.output = c("h", "theta")
+#' Other options are "h", "theta", "Flux". example, obs.output = c("h", "theta")
 #' @param obs.nodes Numeric Vector of the observation nodes defined in the PROFILE.DAT
-#' @param ...
-#'
-#' @return
+#' @return read "Obs_Node.out" as data.table
 #' @export
-#'
-#' @examples
+#' @importFrom data.table fread
 
 read.obs_node <-  function(project.path, out.file = "Obs_Node.out",
-                           obs.output = NULL, obs.nodes, ...) {
+                           obs.output = NULL, obs.nodes) {
       # obs_node_out = read.table(file.path(simulation.path, "Obs_Node.out"),
       #                           header = F, sep = "", dec = ".",
       #                           na.strings = "NA", colClasses = NA, as.is = TRUE,

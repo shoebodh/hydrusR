@@ -2,26 +2,32 @@
 #'
 #' @param project.name Name of the project
 #' @param parent.dir  Path to the project folder
+#' @param discription  default: NULL
 #' @param processes Main processes (e.g., WaterFlow, SoluteTransport etc) to be simualted
 #' @param TimeUnit Simulation time unit information (default = days)
 #' @param SpaceUnit Vertical spatial unit (decault = cm)
 #' @param PrintTimes Time levels at which the outputs should be printed
 #' @param geometry Profile geometry info (Depth, # of nodes and # of obs nodes)
+#' @param initial.cond initial conditions
 #'
 #' @export
 #' @examples
-#'
-#' create.H1D.project(project.name = "testproj2", parent.dir = parent_dir, discription = NULL,
-#' SpaceUnit = "cm", TimeUnit = "days", PrintTimes = 1,
+#' create.H1D.project(project.name = "testproj2",
+#' parent.dir = "~",
+#' discription = NULL,
+#' SpaceUnit = "cm",
+#' TimeUnit = "days",
+#' PrintTimes = 1,
 #' processes = c(WaterFlow = T, SoluteTransport = F, RootWaterUptake = F,
-#' RootGrowth = F, Unsatchem = F, HP1 = F, EquillibriumAdsorption = F,
-#' initial.cond = c(NumberOfSolutes = 0, InitialCondition = 0),
+#' RootGrowth = F, Unsatchem = F, HP1 = F, EquillibriumAdsorption = F),
 #' geometry = c(ProfileDepth = 200, NumberOfNodes = 4,
-#'          ObservationNodes = 0, MaterialNumber = 1, SubregionNumber = 1))
+#' ObservationNodes = 0, MaterialNumber = 1, SubregionNumber = 1),
+#' initial.cond = c(NumberOfSolutes = 0, InitialCondition = 0)
+#' )
 
-create.H1D.project<-function(project.name, parent.dir, discription = NULL,
+create.H1D.project <- function(project.name, parent.dir, discription = NULL,
       TimeUnit = "days", SpaceUnit = "cm", PrintTimes = 1,
-       processes = c(WaterFlow = T, RootWaterUptake = F), geometry, initial.cond, ...) {
+       processes = c(WaterFlow = T, RootWaterUptake = F), geometry, initial.cond) {
 
       all_args = c("WaterFlow", "SoluteTransport", "RootWaterUptake",
             "RootGrowth", "Unsatchem", "HP1", "EquillibriumAdsorption",

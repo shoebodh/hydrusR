@@ -1,12 +1,12 @@
 #' Extracts water table depth at each time step
 #'
-#' @param tlevel.out
-#' @param profile.depth
+#' @param tlevel.out tlevel.out
+#' @param profile.depth profile.depth
 #'
-#' @return
+#' @return get water table data
 #' @export
-#'
-#' @examples
+#' @importFrom utils read.table
+#' @importFrom stats na.omit
 get.water.table<- function(tlevel.out, profile.depth) {
       Tlevel<- read.table(file = tlevel.out,
                           header = T, sep = "", dec = ".",
@@ -28,7 +28,7 @@ get.water.table<- function(tlevel.out, profile.depth) {
       options(warn = 0)
       rm(Tlevel)
 
-      Tdat = na.omit(Tlevel.dat)
+      Tdat = stats::na.omit(Tlevel.dat)
       wtdepth = profile.depth - Tdat$hBot
 
       wtdata = data.frame(Time = Tdat$Time, wtdepth = wtdepth)

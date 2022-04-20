@@ -19,12 +19,20 @@ run.H1D.simulation(
   ini.wt,
   TimeUnit = "days",
   rdepth,
+  watertable_depth,
   obs.nodes,
-  show.output = TRUE,
-  ...
+  show.output = TRUE
 )
 }
 \arguments{
+\item{project.path}{project.path}
+
+\item{hydrus.path}{hydrus.path}
+
+\item{profile.depth}{profile.depth}
+
+\item{beginT}{beginT}
+
 \item{endT}{end time}
 
 \item{deltaT}{time step}
@@ -41,7 +49,11 @@ run.H1D.simulation(
 
 \item{ini.wt}{Initial water table depth}
 
+\item{TimeUnit}{default: "days"}
+
 \item{rdepth}{rooting depth}
+
+\item{watertable_depth}{Depth of water table (to assign hydrostatic initial condition)}
 
 \item{obs.nodes}{Observation node points (vector)}
 
