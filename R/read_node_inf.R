@@ -5,12 +5,12 @@
 #' @param output Vector of output types to be read (e.g., "Head", "Moisture", "Flux")
 #' Default is NULL, meaning all the outputs is read.
 #' @param warn Should the warning of coercion of character to NA be shown
-#' @param ...
+#' @param asDT  as data.table (default: TRUE) or data.frame (FALSE)
 #'
-#' @return
+#' @return read "Nod_Inf.out" as data.frame or data.table
 #' @export
 #'
-#' @examples
+#' @importFrom data.table fread set rbindlist
 #'
 read.nod_inf<- function(project.path, out.file = "Nod_Inf.out",
                         output = NULL, warn = FALSE, asDT = TRUE){
@@ -32,11 +32,11 @@ read.nod_inf<- function(project.path, out.file = "Nod_Inf.out",
 
        times = c(0, as.numeric(time_lines$Depth))
 
-      for (col in colnames(nod_inf)) set(nod_inf, j=col, value= as.numeric(nod_inf[[col]]))
+      for (col in colnames(nod_inf)) data.table::set(nod_inf, j=col, value= as.numeric(nod_inf[[col]]))
 
       # nod_inf[, colnames(nod_inf) := lapply(.SD, as.numeric), .SDcols = colnames(nod_inf)]
 
-      nod_inf = na.omit(nod_inf)
+      nod_inf = stats::na.omit(nod_inf)
 
       nodes = sort(unique(nod_inf[["Node"]]))
 
@@ -53,7 +53,7 @@ read.nod_inf<- function(project.path, out.file = "Nod_Inf.out",
       }
 
 
-      nod_inf =  rbindlist(nod_split)
+      nod_inf =  data.table::rbindlist(nod_split)
 
       output_names = intersect(output, colnames(nod_inf))
       output_names = c("Time", "Node", "Depth", output_names)

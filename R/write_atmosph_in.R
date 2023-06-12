@@ -1,18 +1,20 @@
 #' Write atmospheric boundary condition inputs
 #'
-#' @param project.path
-#' @param maxAL
-#' @param deltaT
-#' @param atm.bc.data
-#' @param ...
+#' @param project.path project.path
+#' @param maxAL maxAL
+#' @param deltaT deltaT
+#' @param atm.bc.data atm.bc.data
+#' @param hCritS default: 0
+#' @param input.pet default: T
+#' @param LAI  default: 0.39
 #'
-#' @return
+#' @return write ATMOSPH.IN
 #' @export
 #'
-#' @examples
 write.atmosph.in<- function(project.path, maxAL, deltaT,
                             atm.bc.data, hCritS = 0, input.pet = T,
-                            LAI = 0.39, ...){
+                            LAI = 0.39
+                            ){
 
         out.file = "ATMOSPH.IN"
         # default.filename = "ATMOSPH.IN"

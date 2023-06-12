@@ -1,12 +1,11 @@
 #' Write soil hydraulic parameters to selector.in
 #'
-#' @param project.path
-#' @param model
-#' @param hysteresis
-#' @param para
-#' @param ...
+#' @param project.path project.path
+#' @param model model id (default: 0)
+#' @param hysteresis hysteresis (default: 0)
+#' @param para para
 #'
-#' @return
+#' @return Write soil hydraulic parameters to "selector.in"
 #' @export
 #'
 #' @details Available soil moisture retention models in the hydrus1D
@@ -19,7 +18,7 @@
 #' Dual porosity model 3 (DUR3)
 #' Details on the models on hydrus help manual and elsewhere in the literature
 #'
-write.hydraulic.para<- function(project.path, model = 0, hysteresis = 0, para, ...) {
+write.hydraulic.para<- function(project.path, model = 0, hysteresis = 0, para) {
 
     smr_models<- c("van Genuchten (VG)","van Genuchten 6 para (VGM)",
                    "Brooks Corey(BC)","mod van Genuchten (VGM2)",

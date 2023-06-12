@@ -4,13 +4,19 @@
 \alias{model.eval}
 \title{Calculate RMSE and Nash-Sutcliffe CEFF of the simulation}
 \usage{
-model.eval(data, var.name = "", print.stats = TRUE, plot = FALSE, ...)
+model.eval(data, var.name = "", print.stats = TRUE, plot = FALSE)
 }
 \arguments{
-\item{...}{}
+\item{data}{data}
+
+\item{var.name}{var.name (default: "")}
+
+\item{print.stats}{TRUE or FALSE (default: TRUE)}
+
+\item{plot}{TRUE or FALSE (default: FALSE)}
 }
 \value{
-
+vector with RMSE and CEFF of simulation
 }
 \description{
 Calculate RMSE and Nash-Sutcliffe CEFF of the simulation

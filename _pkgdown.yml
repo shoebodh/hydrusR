@@ -1,0 +1,11 @@
+authors:
+  Subodh Acharya:
+    href: https://github.com/shoebodh
+  Michael Rustler:
+    href: https://mrustl.de
+template:
+  params:
+    bootswatch: cerulean
+development:
+  mode: auto
+

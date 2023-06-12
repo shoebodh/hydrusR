@@ -17,11 +17,9 @@ time_step = 0.25
 soil_para = list(thr = 0.045, ths = 0.43,
                  Alfa = 0.145, n = 2.69, Ks = 29.7, l = 0.45)
 
-  hydrus_path =  "C:/Program Files (x86)/PC-Progress/Hydrus-1D 4.xx"
- # hydrus_path = "/home/sacharya/.PlayOnLinux/wineprefix/Hydrus_1D/drive_c/Program Files/PC-Progress/Hydrus-1D 4.xx/"
+# hydrus_path =  "C:/Program Files (x86)/PC-Progress/Hydrus-1D 4.xx"
 
-
-project_name = "h1dExample3"
+project_name = "h1dExample5"
 parent_dir = path.expand("~")
 project_path = path.expand(file.path(parent_dir, project_name))
 
@@ -103,7 +101,7 @@ create.H1D.project(project.name = project_name, parent.dir = parent_dir,
                                 ObservationNodes = nObsNodes))
 
 ### create the soil profile (PROFILE.DAT) info
-create.soil.profile(project.path = project_path, out.file = "PROFILE.DAT",
+create.soil.profile(project.path = project_path,
                     profile.depth = profile_depth,
                     dz = deltaz, obs.nodes = NULL)
 
@@ -124,7 +122,7 @@ write.atmosph.in(project.path = project_path, maxAL = 2000, deltaT = time_step,
 
  ##### Default hydrus path in Windows
 
-run.H1D.simulation(project.path = project_path, hydrus.path = hydrus_path,
+run.H1D.simulation(project.path = project_path,
                    profile.depth = profile_depth,
                    beginT = 0, endT = endTime, deltaT = time_step,
                    bot.bc.type = bot_bc_type, bot.bc.value = const_botFlux,

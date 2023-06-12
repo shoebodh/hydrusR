@@ -4,7 +4,7 @@
 \alias{write.ini.cond}
 \title{Write root distribution in profile.dat}
 \usage{
-write.ini.cond(project.path, pr.vec = NULL, wt.depth, ...)
+write.ini.cond(project.path, pr.vec = NULL, wt.depth)
 }
 \arguments{
 \item{project.path}{Path of HYDRUS1D project}
@@ -12,13 +12,9 @@ write.ini.cond(project.path, pr.vec = NULL, wt.depth, ...)
 \item{pr.vec}{A vector of pressure head values (length = # of total nodes in the profile)}
 
 \item{wt.depth}{Depth of water table (to assign hydrostatic initial condition)}
-
-\item{...}{}
-
-\item{profile.depth}{Depth of soil profile}
 }
 \value{
-
+Write root distribution in "PROFILE.DAT"
 }
 \description{
 Write root distribution in profile.dat

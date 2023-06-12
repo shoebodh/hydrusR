@@ -11,15 +11,26 @@ write.atmosph.in(
   atm.bc.data,
   hCritS = 0,
   input.pet = T,
-  LAI = 0.39,
-  ...
+  LAI = 0.39
 )
 }
 \arguments{
-\item{...}{}
+\item{project.path}{project.path}
+
+\item{maxAL}{maxAL}
+
+\item{deltaT}{deltaT}
+
+\item{atm.bc.data}{atm.bc.data}
+
+\item{hCritS}{default: 0}
+
+\item{input.pet}{default: T}
+
+\item{LAI}{default: 0.39}
 }
 \value{
-
+write ATMOSPH.IN
 }
 \description{
 Write atmospheric boundary condition inputs

@@ -1,3 +1,13 @@
+#' Convert Units
+#'
+#' @param x x
+#' @param from from
+#' @param to to
+#'
+#' @return new units
+#' @export
+#'
+
 convert_units = function(x, from, to) {
         x = as.numeric(x)
         units(x) = from
@@ -9,10 +19,15 @@ convert_units = function(x, from, to) {
 
 
 
+#' Set H1D Project Class
+
+#' @name h1dproj-class_set
+#' @rdname h1dproj-class_set
+#' @slot balance A length-one numeric vector
+#' @param .Object .Object
 #' @import units
-#' @rdname h1dproj-class
-h1dproj<- setClass("h1dproj",
-                     slots = c(
+h1dproj <- setClass(Class = "h1dproj",
+                    slots = c(
                              projname = "character",
                              projpath = "character",
                              processes = "character",
@@ -27,7 +42,6 @@ h1dproj<- setClass("h1dproj",
                              ictype = "character",
                              projunits = "list",
                              temperature = "numeric"),
-
                      prototype = list(
                              projname = paste0("h1dProj", as.integer(Sys.time())),
                              projunits = list(depthunit = "cm",
@@ -38,17 +52,19 @@ h1dproj<- setClass("h1dproj",
 )
 
 
-#############################
+
 #' Constructor method for the h1dproj
-#' @name h1dproj
-#' @rdname h1dproj-class
+#' @name h1dproj_initialize
+#' @rdname h1dproj_initialize
+#' @param .Object .Object
+#' @aliases h1dproj_initialize
 #' @import units
-#' @aliases h1dproj
+#' @importFrom methods callNextMethod new
 setMethod(f = "initialize", signature = "h1dproj",
-          definition = function(.Object, ...) {
+          definition = function(.Object) {
 
                   ### callNextMethod() transfers any value attached to .Object slots during the new() call
-                  .Object = callNextMethod(.Object, ...)
+                  .Object = methods::callNextMethod(.Object)
                   # projname = ifelse(missing(projname),"h1dproj", projname)
                   # ##Define generic/default values to assign to slot if needed
                   # projpath = ifelse(missing(projpath),
@@ -196,11 +212,14 @@ setMethod(f = "initialize", signature = "h1dproj",
 ###########
 ##Method to print hydrus 1d project summary
 #'Show Method for the h1dproj class
+#' @name h1dproj_show
+#' @rdname h1dproj_show
+#' @param object object
+#' @aliases h1dproj_show
 #' @import crayon
-#' @name show
-#' @rdname h1droj-class
-#' @aliases h1dproj
-#' @usage h1dproj(), new("h1dproj")
+#' @examples
+#' h1dproj()
+#' methods::new("h1dproj")
 #'
 setMethod("show", signature = "h1dproj", definition =
                   function(object) {
@@ -234,7 +253,16 @@ setMethod("show", signature = "h1dproj", definition =
 
 )
 
-create.profile_dat<- function(H1Dproj, obs.nodes = NULL, Conc = 0.0, ...) {
+#' Create PROFILE.DAT
+#'
+#' @param H1Dproj  H1Dproj
+#' @param obs.nodes obs.nodes (default: NULL)
+#' @param Conc concentation (default: 0.0)
+#'
+#' @return create PROFILE.DAT
+#' @export
+#'
+create.profile_dat <- function(H1Dproj, obs.nodes = NULL, Conc = 0.0) {
 
         profile.depth = H1Dproj@geometry$depth
         dz = H1Dproj@geometry$deltaz

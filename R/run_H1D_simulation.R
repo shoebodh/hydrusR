@@ -1,9 +1,9 @@
 #' This is the main simulation function
 #'
-#' @param project.path
-#' @param hydrus.path
-#' @param profile.depth
-#' @param beginT
+#' @param project.path project.path
+#' @param hydrus.path hydrus.path
+#' @param profile.depth profile.depth
+#' @param beginT beginT
 #' @param endT  end time
 #' @param deltaT time step
 #' @param bot.bc.type head or flux type
@@ -12,18 +12,18 @@
 #' @param soil.para Hydraulic parameters of soil (van Genuchten)
 #' @param atm.bc.data data frame containing atmonspheric boundary conditions (time variable BC)
 #' @param ini.wt Initial water table depth
+#' @param TimeUnit default: "days"
 #' @param rdepth rooting depth
+#' @param watertable_depth Depth of water table (to assign hydrostatic initial condition)
 #' @param obs.nodes Observation node points (vector)
 #' @param show.output Logical, whether the shell output of HYDRUS1D run should be displayed on R console, default = F
-#' @import data.table
 #' @export
-#'
-#' @examples
+#' @importFrom stats na.omit
 
 run.H1D.simulation = function(project.path, hydrus.path = NULL, profile.depth,
                               beginT, endT, deltaT, bot.bc.type, bot.bc.value, const.bot.bc,
                               soil.para, atm.bc.data, ini.wt, TimeUnit = "days",
-                              rdepth, obs.nodes, show.output = TRUE, ...) {
+                              rdepth, watertable_depth, obs.nodes, show.output = TRUE) {
 
    sapply(list.files(project.path, pattern = "\\.OUT|\\.out", full.names = T), file.remove)
 
@@ -94,7 +94,7 @@ run.H1D.simulation = function(project.path, hydrus.path = NULL, profile.depth,
 
          head_profile = h1d_output[to_skip:nrow(h1d_output), c("Node", "Depth", "Head")]
          head_profile = as.data.frame(apply(head_profile, 2, as.numeric))
-         head_profile = na.omit(head_profile)
+         head_profile = stats::na.omit(head_profile)
          pressure_vec = head_profile$Head
 
          options(warn = 0)
@@ -134,8 +134,9 @@ run.H1D.simulation = function(project.path, hydrus.path = NULL, profile.depth,
                message("Calculating times ", ceiling(beginTnew*deltaT), " to ",
                    endTnew*deltaT, "\n")
 
-               write.ini.cond(project.path, profile.depth = profile.depth,
-                              pr.vec = pressure_vec)
+               write.ini.cond(project.path,
+                              pr.vec = pressure_vec,
+                              wt.depth = watertable_depth)
 
                write.print.times(project.path, tmin = beginTnew*deltaT, tmax = endTnew*deltaT,
                                  tstep = deltaT, TimeUnit = TimeUnit)
@@ -162,7 +163,7 @@ run.H1D.simulation = function(project.path, hydrus.path = NULL, profile.depth,
 
                head_profile = h1d_output[to_skip:nrow(h1d_output), c("Node", "Depth", "Head")]
                head_profile = as.data.frame(apply(head_profile, 2, as.numeric))
-               head_profile = na.omit(head_profile)
+               head_profile = stats::na.omit(head_profile)
                pressure_vec = head_profile$Head
 
                # sapply(list.files(project.path, pattern = "\\.OUT|\\.out", full.names = T), file.remove)

@@ -4,7 +4,7 @@
 \alias{format2sci}
 \title{Format number to scientific format according to HYDRUS inputs}
 \usage{
-format2sci(x, ndec, power.digits, ...)
+format2sci(x, ndec, power.digits)
 }
 \arguments{
 \item{x}{A numeric vector to be formatted}
@@ -14,8 +14,11 @@ format2sci(x, ndec, power.digits, ...)
 \item{power.digits}{Number of power digits to apply (e.g., e+002)}
 }
 \value{
-
+formatted vector
 }
 \description{
 Format number to scientific format according to HYDRUS inputs
+}
+\examples{
+format2sci(120.5, ndec = 5, power.digits = 2)
 }

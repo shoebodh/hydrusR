@@ -15,3 +15,6 @@ get.decimalplaces(x)
 \description{
 Get the number of decimal digits in a numeric value
 }
+\examples{
+get.decimalplaces(10.343434)
+}

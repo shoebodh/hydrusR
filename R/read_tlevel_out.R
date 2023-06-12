@@ -1,17 +1,15 @@
 #' READ outputs of TLEVEL.OUT
 #'
-#' @param project.path
-#' @param out.file
-#' @param output
-#' @param warn
-#' @param ...
+#' @param project.path project.path
+#' @param out.file out.file (default: "T_Level.out")
+#' @param output output (default: NULL)
+#' @param warn default: FALSE
 #'
-#' @return
+#' @return read "T_Level.out" as data.table
 #' @export
 #'
-#' @examples
 read.tlevel.out<- function(project.path, out.file = "T_Level.out", output = NULL,
-         warn = FALSE, ...){
+         warn = FALSE){
 
    if(is.null(output) | missing(output)) {
             output = output = c("rTop", "rRoot", "vTop", "vRoot",
@@ -39,7 +37,7 @@ read.tlevel.out<- function(project.path, out.file = "T_Level.out", output = NULL
                   fill = TRUE, blank.lines.skip = T,  skip = 6, header = T)
 
  tlevel_out =  apply(tlevel_out, MARGIN = 2, FUN = as.numeric)
- tlevel_out = na.omit(tlevel_out)
+ tlevel_out = stats::na.omit(tlevel_out)
  tlevel_out = data.frame(tlevel_out, check.names = FALSE, row.names = NULL)
 
 ### These steps are required to get a continuous sum(*) variables because

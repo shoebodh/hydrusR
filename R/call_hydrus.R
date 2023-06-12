@@ -4,14 +4,10 @@
 #' @param hydrus.path  Path of the Hydrus 1D executable
 #' @param show.output Logical (Default = TRUE) whether the shell
 #'                    output should be visible on R console (relevant only on windows)
-#' @param ...
-#'
-#' @return
+#' @return run Hydrus1D
 #' @export
 #'
-#' @examples
-
-call.H1D<- function(project.path, hydrus.path = NULL, show.output = TRUE, ...){
+call.H1D<- function(project.path, hydrus.path = NULL, show.output = TRUE){
 
    os.type = .Platform$OS.type
 
